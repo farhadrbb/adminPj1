@@ -1,0 +1,313 @@
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  @font-face {
+    font-family: vazir;
+    font-style: normal;
+    font-weight: normal;
+    src: url("../assest/font/Vazirmatn-Medium.woff2") format("woff2");
+  }
+
+  body,
+  html {
+    @apply w-full h-full overflow-hidden;
+    direction: rtl;
+    font-family: "vazir";
+  }
+
+  body {
+    @apply m-0  text-white bg-slate-300;
+  }
+  .input-date {
+    @apply  w-full rounded !bg-slate-400;
+    height: 32px !important;
+    &:focus{
+      @apply outline-none border-none;
+    }
+  }
+
+  .box-white {
+    @apply bg-white py-4 px-3 w-full;
+  }
+
+  .icon-input {
+    @apply  min-w-[32px] flex justify-center rounded items-center absolute top-0 left-0;
+  }
+
+  .container {
+    @apply mx-auto px-2;
+  }
+
+  .pagination {
+    @apply flex justify-center mt-2.5;
+  }
+
+  .pagination li {
+    @apply flex items-center justify-center w-8 h-8 bg-black-100 border border-black-250 m-0.5 rounded;
+    font-size: 12px;
+  }
+
+  .activePage {
+    @apply text-cyan-50;
+    border-color: #08979c !important;
+  }
+
+  .pagination li a {
+    width: 2rem;
+    height: 2rem;
+    @apply flex items-center justify-center;
+  }
+
+  .pagination .disabled {
+    @apply opacity-5;
+  }
+
+  .date {
+    @apply w-[70px] xl:w-[120px] h-[30px] bg-black-100 border-0 rounded-t-sm;
+  }
+
+  .li-style {
+    padding: 10px;
+    cursor: pointer;
+  }
+
+  .li-style:hover {
+    @apply bg-cyan-50;
+  }
+
+  .active-status {
+    @apply bg-green-150 border-2 border-green-50 text-green-100 px-1 h-[26px];
+  }
+
+  .inactive-status {
+    @apply bg-red-200 border-2 border-red-100 w-[61px] h-[26px] text-red-150;
+  }
+
+  .detail-btn {
+    @apply bg-cyan border-2 border-cyan-50 w-[65px] h-[32px] rounded-sm text-[14px] cursor-pointer;
+  }
+
+  .btn-searching {
+    @apply bg-cyan text-[12px] w-[100px] h-[32px] rounded mx-[8px] border border-cyan-50;
+  }
+
+  .li-style {
+    @apply p-2.5 cursor-pointer;
+  }
+
+  .li-style:hover {
+    @apply bg-cyan-50;
+  }
+
+  .overall-div {
+    @apply flex flex-wrap gap-y-5 gap-x-5;
+  }
+
+  .disable-div {
+    @apply flex items-center bg-black-300 h-[40px] pr-[10px] w-[288px] rounded-sm;
+  }
+
+  .iconBd {
+    @apply w-[40px] h-[40px] bg-[#6B6B6B] flex items-center justify-center rounded-sm;
+  }
+  /* .css-b62m3t-container{
+    @apply bg-black-100
+} */
+
+  .css-qbdosj-Input {
+    @apply !h-[40px];
+  }
+  .css-qbdosj-Input {
+    @apply m-0 p-0 !important;
+  }
+  .css-eo85ql-menu {
+    @apply mt-1 p-0 !important;
+  }
+  .css-1fdsijx-ValueContainer {
+    @apply !h-[40px] !flex !items-center;
+  }
+  /* .css-1jqq78o-placeholder{
+    @apply !mt-[5px]
+
+} */
+  /* .css-1xc3v61-indicatorContainer{
+    @apply bg-cyan-50 rounded-sm h-[40px]
+} */
+  .css-1hb7zxy-IndicatorsContainer {
+    @apply bg-cyan-50 rounded-sm h-[40px];
+  }
+  .css-1u9des2-indicatorSeparator {
+    @apply invisible;
+  }
+  .css-1dimb5e-singleValue {
+    @apply text-white  flex items-center justify-center  !important;
+  }
+
+  /* .css-1fdsijx-ValueContainer{
+    @apply mt-[-3px]
+} */
+  .css-166bipr-Input {
+    @apply text-white flex items-center justify-center  !important;
+  }
+  .css-1jqq78o-placeholder {
+    @apply text-white flex  justify-center items-center !important;
+  }
+}
+
+@layer components {
+  input[type="text"]:not(.date, .search, .inputPass, .counter, .dataInput),
+  input[type="number"],
+  textarea,
+  .password,
+  .counterContainer {
+    @apply outline-0 h-[40px] rounded-t-sm border-b-2 border-cyan-50 bg-slate-100 outline-none px-2;
+    resize: none;
+  }
+
+  input[type="checkbox"] {
+    accent-color: #08979c;
+    -ms-transform: scale(1.3); /* IE */
+    -moz-transform: scale(1.3); /* FF */
+    -webkit-transform: scale(1.3); /* Safari and Chrome */
+    -o-transform: scale(1.3); /* Opera */
+    transform: scale(1.3);
+  }
+
+  input[type="text"]:focus {
+    @apply border-cyan transition-all ease-in-out duration-300;
+  }
+
+  .btn-cyan {
+    @apply bg-cyan-50 h-10 rounded-sm text-sm border border-cyan-50 px-1 w-[109px];
+  }
+
+  .btn-cyan-around {
+    @apply rounded-sm text-sm border border-cyan-50 px-1 w-[109px] text-cyan-50 text-sm;
+  }
+
+  .btn-cyan:hover,
+  .btn-cyan-around:hover {
+    @apply bg-cyan transition-all ease-in-out duration-300 text-white;
+  }
+
+  input {
+    @apply outline-none text-sm;
+  }
+
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    transition: background-color 5000s ease-in-out 0s;
+    -webkit-text-fill-color: white;
+  }
+
+  .activeMenu {
+    @apply border-r-4 border-cyan-50 bg-slate-500 transition-all bg-opacity-10;
+  }
+
+  /***modal***/
+  .Modal {
+    @apply absolute pt-5 pb-5 flex items-center top-0 right-0 left-0 bottom-0 overflow-auto;
+  }
+
+  .content {
+    @apply bg-black-200 rounded-lg p-4 m-auto border-cyan-50 border-[3px];
+    max-width: 1000px;
+  }
+
+  .ReactModal__Body--open {
+    @apply fixed w-full h-full overflow-hidden;
+  }
+
+  .Overlay {
+    @apply opacity-0 fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 z-10 w-screen h-screen;
+    transition: opacity 300ms ease-in-out;
+  }
+
+  .Overlay.ReactModal__Overlay--before-close {
+    @apply opacity-0;
+  }
+
+  .Overlay.ReactModal__Overlay--after-open {
+    @apply opacity-100;
+  }
+
+  .Overlay.ReactModal__Overlay--before-close {
+    @apply opacity-0;
+  }
+
+  /*****/
+  .border-red {
+    border-color: #ad2102 !important;
+  }
+
+  th {
+    @apply font-medium;
+  }
+
+  /* Chrome, Safari, Edge, Opera */
+  input::-webkit-outer-spin-button,
+  input::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+  }
+
+  /* Firefox */
+  input[type="number"] {
+    -moz-appearance: textfield;
+  }
+
+  /***text editor***/
+  .textEditor .rsw-editor {
+    @apply h-[150px] border-cyan-50;
+  }
+  .textEditor .rsw-toolbar {
+    @apply bg-cyan-50 border-cyan border-cyan-50;
+  }
+  .textEditor .rsw-separator {
+    @apply border-cyan;
+  }
+  .textEditor .rsw-dd {
+    @apply bg-black-100;
+  }
+  .textEditor .rsw-dd,
+  .textEditor .rsw-dd option {
+    @apply text-cyan rounded px-1;
+  }
+  .textEditor .rsw-ce ul {
+    list-style: disc;
+    padding-right: 15px;
+  }
+  .textEditor a {
+    @apply text-cyan-50 cursor-pointer hover:text-cyan;
+  }
+  .textEditor h1 {
+    @apply text-xl;
+  }
+  .textEditor h2 {
+    @apply text-lg;
+  }
+  .gradient-login{
+    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background-size: 400% 400%;
+    animation: gradient 15s ease infinite;
+    height: 100vh;
+  }
+
+  @keyframes gradient {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+}

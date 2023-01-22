@@ -3,12 +3,12 @@ import {baseQuery} from "../../baseUrl";
 
 export const authApi = createApi({
     reducerPath: "authApi",
-    baseQuery:  fetchBaseQuery({ baseUrl: 'http://193.151.139.79:8083/api/v1/RegisterInformation/' }),
+    baseQuery:  fetchBaseQuery({ baseUrl: 'http://193.151.139.79:8082/api/v1/RegisterInformation/' }),
     endpoints: (builder) => ({
 
         sendotp: builder.mutation({
-            query: (mobile) => ({
-                url: `SendOtp?mobile=${mobile}`,
+            query: (info) => ({
+                url: `SendOtp?mobile=${info.mobile}&captcha=${info.captcha}`,
                 method: "POST",
             }),
         }),
@@ -24,6 +24,8 @@ export const authApi = createApi({
                 method: "POST",
             }),
         }),
+
+        
 
     }),
 });

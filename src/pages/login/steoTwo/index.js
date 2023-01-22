@@ -1,22 +1,29 @@
 import React from 'react';
-import { Button, Checkbox, Form, Input } from "antd";
+import { Button, Checkbox, Form, Image, Input } from "antd";
 import { useSendotpCodeMutation, useSendotpMutation } from '../../../redux/api/auth';
+import { useLazyGetCaptchaApiQuery } from '../../../redux/api/getCaptcha';
+import { useEffect } from 'react';
 
 
 
-const StepTwoLogin = ({step,setstep,mobile}) => {
+const StepTwoLogin = ({ step, setstep, mobile }) => {
 
-    const [sendotpCode,resultSendOtpCode] = useSendotpCodeMutation()
+    const [sendotpCode, resultSendOtpCode] = useSendotpCodeMutation()
+    const [getCaptcha, resultCaptcha] = useLazyGetCaptchaApiQuery()
+
+    useEffect(() => {
+        getCaptcha("getcaptcha")
+    }, [getCaptcha]);
 
     const onFinish = (values) => {
         console.log("Success:", values);
-        sendotpCode({...values,mobile})
+        sendotpCode({ ...values, mobile })
         setstep(3)
     };
     const onFinishFailed = (errorInfo) => {
         console.log("Failed:", errorInfo);
     };
-    
+
     return (
         <>
             <Form
@@ -37,7 +44,7 @@ const StepTwoLogin = ({step,setstep,mobile}) => {
                 layout="vertical"
             >
                 <Form.Item
-                    label="کد ارسالی"
+                    // label="کد ارسالی"
                     name="otp"
                     rules={[
                         {
@@ -46,10 +53,10 @@ const StepTwoLogin = ({step,setstep,mobile}) => {
                         },
                     ]}
                 >
-                    <Input />
+                    <Input placeholder='کد ارسالی' />
                 </Form.Item>
                 <Form.Item
-                    label="کد ملی"
+                    // label="کد ملی"
                     name="nationalCode"
                     rules={[
                         {
@@ -58,10 +65,40 @@ const StepTwoLogin = ({step,setstep,mobile}) => {
                         },
                     ]}
                 >
-                    <Input />
+                    <Input placeholder='کد ملی' />
                 </Form.Item>
-             
+
                 <Form.Item className="w-full">
+                    <div className='flex justify-center items-center rounded-md w-[250px] h-[100px] overflow-hidden'>
+                        <img src={`data:image/png;base64,${resultCaptcha.data?.data?.captchBase64Data}`} className="w-full h-full" />
+
+                        {/* <Image
+                                    width={250}
+                                    height={100}
+                                    src=""
+                                /> */}
+                    </div>
+                </Form.Item>
+
+                <Form.Item
+                    // label="شماره موبایل"
+                    name="captcha"
+                    rules={[
+                        {
+                            required: true,
+                            message: "متن داخل عکس را وارد کنید",
+                        },
+                        // {
+                        //     pattern: ^(\+98|0)?9\d{9}$,
+                        //     message: "شماره موبایل اشتباه است",
+                        // },
+                    ]}
+                >
+
+                    <Input placeholder="کد امنیتی" />
+                </Form.Item>
+
+                <Form.Item className="w-full mt-20">
                     <Button
                         type="primary bg-cyan-50"
                         htmlType="submit"
@@ -70,6 +107,7 @@ const StepTwoLogin = ({step,setstep,mobile}) => {
                         کد ارسالی را وارد نمایید
                     </Button>
                 </Form.Item>
+
             </Form>
         </>
     );

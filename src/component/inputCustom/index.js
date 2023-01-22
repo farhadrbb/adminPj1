@@ -24,7 +24,7 @@ const InputCustom = ({ width, height, itm, field, setChange, placeholder, clickI
                 <div className='absolute bottom-0 w-full h-[2px] bg-cyan-50'></div>
 
                 <input
-                    className={`bg-slate-400 text-white w-full focus:outline-none focus:border-none rounded text-sm pr-3`}
+                    className={`bg-slate-400 text-black w-full focus:outline-none focus:border-none rounded text-sm pr-3`}
                     placeholder={placeholder}
                     name={itm?.field ? itm?.field : field}
                     value={state?.field}

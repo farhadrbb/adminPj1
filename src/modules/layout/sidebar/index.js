@@ -132,7 +132,7 @@ const Sidebar = ({ clickMenu, setClickMenu }) => {
                   }
                 >
                   <div>{list.icon}</div>
-                  <div className="pr-[8px] text-[16px] font-[500]">
+                  <div className="pr-[8px] text-[16px] font-[500] text-slate-700">
                     {list.title}
                   </div>
                 </NavLink>

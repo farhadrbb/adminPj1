@@ -1,11 +1,11 @@
 import InputCustom from '../../inputCustom';
 
 import DatePickerCustom from '../../datePicker';
-import {FilterIcon} from '../../../assest/icon';
+import { FilterIcon } from '../../../assest/icon';
 import BtnCustom from '../../btn';
 
 
-const FilterTable = ({setFilter, infoTable, handleClickFilter}) => {
+const FilterTable = ({ setFilter, infoTable, handleClickFilter }) => {
 
 
     const handleFilterInput = (itm) => {
@@ -15,7 +15,7 @@ const FilterTable = ({setFilter, infoTable, handleClickFilter}) => {
                 return <InputCustom
                     placeholder={"شماره درخواست/ نام متقاضی"}
                     itm={itm}
-                    setChange={setFilter}/>
+                    setChange={setFilter} />
             case "date":
                 return <div className='mx-2'>
                     <DatePickerCustom
@@ -37,7 +37,7 @@ const FilterTable = ({setFilter, infoTable, handleClickFilter}) => {
                         <DatePickerCustom
                             setChange={setFilter}
                             placeholder="تا تاریخ"
-                            itm={itm.filterField[1]}/>
+                            itm={itm.filterField[1]} />
                     </div>
                 </>
             default:
@@ -58,7 +58,7 @@ const FilterTable = ({setFilter, infoTable, handleClickFilter}) => {
                     })}
                 </div>
 
-                <BtnCustom clickFn={()=>handleClickFilter(true)} icon={<FilterIcon/>} title={"اعمال فیلتر"}/>
+                <BtnCustom clickFn={() => handleClickFilter(true)} icon={<FilterIcon />} title={"اعمال فیلتر"} className={'text-slate-100'}/>
 
             </div>
         </>

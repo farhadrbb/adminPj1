@@ -36,7 +36,7 @@ const StepThreeLogin = ({step,setstep,mobile}) => {
                 layout="vertical"
             >
                 <Form.Item
-                    label="کد سجام"
+                    // label="کد سجام"
                     name="otp"
                     rules={[
                         {
@@ -45,10 +45,10 @@ const StepThreeLogin = ({step,setstep,mobile}) => {
                         },
                     ]}
                 >
-                    <Input />
+                    <Input placeholder='کد سجام'/>
                 </Form.Item>
                 <Form.Item
-                    label="کد ملی"
+                    // label="کد ملی"
                     name="nationalCode"
                     rules={[
                         {
@@ -57,7 +57,7 @@ const StepThreeLogin = ({step,setstep,mobile}) => {
                         },
                     ]}
                 >
-                    <Input />
+                    <Input placeholder='کد ملی'/>
                 </Form.Item>
              
                 <Form.Item className="w-full">

@@ -24,9 +24,9 @@
   .input-date {
     @apply  w-full rounded !bg-slate-400;
     height: 32px !important;
-    &:focus{
+    /* "&:"{
       @apply outline-none border-none;
-    }
+    } */
   }
 
   .box-white {
@@ -69,7 +69,7 @@
     @apply w-[70px] xl:w-[120px] h-[30px] bg-black-100 border-0 rounded-t-sm;
   }
 
-  .li-style {
+  /* .li-style {
     padding: 10px;
     cursor: pointer;
   }
@@ -100,11 +100,11 @@
 
   .li-style:hover {
     @apply bg-cyan-50;
-  }
+  } */
 
-  .overall-div {
+  /* .overall-div {
     @apply flex flex-wrap gap-y-5 gap-x-5;
-  }
+  } */
 
   .disable-div {
     @apply flex items-center bg-black-300 h-[40px] pr-[10px] w-[288px] rounded-sm;
@@ -113,11 +113,8 @@
   .iconBd {
     @apply w-[40px] h-[40px] bg-[#6B6B6B] flex items-center justify-center rounded-sm;
   }
-  /* .css-b62m3t-container{
-    @apply bg-black-100
-} */
 
-  .css-qbdosj-Input {
+  /* .css-qbdosj-Input {
     @apply !h-[40px];
   }
   .css-qbdosj-Input {
@@ -129,13 +126,7 @@
   .css-1fdsijx-ValueContainer {
     @apply !h-[40px] !flex !items-center;
   }
-  /* .css-1jqq78o-placeholder{
-    @apply !mt-[5px]
 
-} */
-  /* .css-1xc3v61-indicatorContainer{
-    @apply bg-cyan-50 rounded-sm h-[40px]
-} */
   .css-1hb7zxy-IndicatorsContainer {
     @apply bg-cyan-50 rounded-sm h-[40px];
   }
@@ -144,11 +135,9 @@
   }
   .css-1dimb5e-singleValue {
     @apply text-white  flex items-center justify-center  !important;
-  }
+  } */
 
-  /* .css-1fdsijx-ValueContainer{
-    @apply mt-[-3px]
-} */
+
   .css-166bipr-Input {
     @apply text-white flex items-center justify-center  !important;
   }
@@ -158,12 +147,12 @@
 }
 
 @layer components {
-  input[type="text"]:not(.date, .search, .inputPass, .counter, .dataInput),
+  input[type="text"]:not(.date, .search, .inputPass, .counter, .dataInput,.input-date),
   input[type="number"],
   textarea,
   .password,
   .counterContainer {
-    @apply outline-0 h-[40px] rounded-t-sm border-b-2 border-cyan-50 bg-slate-100 outline-none px-2;
+    @apply outline-0 h-[35px] rounded-[10px] shadow-lg !text-black  border-cyan-50 bg-slate-400 outline-none px-2 placeholder-black;
     resize: none;
   }
 
@@ -210,16 +199,16 @@
   }
 
   /***modal***/
-  .Modal {
+  /* .Modal {
     @apply absolute pt-5 pb-5 flex items-center top-0 right-0 left-0 bottom-0 overflow-auto;
   }
 
   .content {
     @apply bg-black-200 rounded-lg p-4 m-auto border-cyan-50 border-[3px];
     max-width: 1000px;
-  }
+  } */
 
-  .ReactModal__Body--open {
+  /* .ReactModal__Body--open {
     @apply fixed w-full h-full overflow-hidden;
   }
 
@@ -238,7 +227,7 @@
 
   .Overlay.ReactModal__Overlay--before-close {
     @apply opacity-0;
-  }
+  } */
 
   /*****/
   .border-red {
@@ -297,6 +286,7 @@
     animation: gradient 15s ease infinite;
     height: 100vh;
   }
+ 
 
   @keyframes gradient {
     0% {
@@ -310,4 +300,10 @@
     }
   }
   
+}
+
+.ant-form-item-row{
+  display: flex !important;
+  justify-content: center !important;
+  align-items: center !important;
 }

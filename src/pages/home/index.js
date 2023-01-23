@@ -85,7 +85,7 @@ const Home = () => {
     }
 
     return (
-        <div className='w-full'>
+        <div className='w-full '>
             <Table
                 infoTable={infoTable}
                 url="FindAll"

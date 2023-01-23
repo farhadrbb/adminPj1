@@ -28,7 +28,7 @@ const DatePickerCustom = ({ setChangeDate, placeholder,itm,setChange }) => {
 
     return (
         <>
-            <div className="flex rounded relative">
+            <div className="flex rounded relative mt-2">
                 <div className='absolute bottom-0 w-full h-[2px] bg-cyan-50'></div>
                 <DatePicker
                     plugins={[

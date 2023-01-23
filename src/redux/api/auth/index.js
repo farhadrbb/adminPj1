@@ -8,20 +8,23 @@ export const authApi = createApi({
 
         sendotp: builder.mutation({
             query: (info) => ({
-                url: `SendOtp?mobile=${info.mobile}&captcha=${info.captcha}`,
+                url: `SendOtp`,
                 method: "POST",
+                params:info
             }),
         }),
         sendotpCode: builder.mutation({
-            query: (infoOtp) => ({
-                url: `checkotpbyMobile?otp=${infoOtp.otp}&mobile=${infoOtp.mobile}&nationalCode=${infoOtp.nationalCode}`,
+            query: (info) => ({
+                url: `checkotpbyMobile`,
                 method: "POST",
+                params:info
             }),
         }),
-        sejamCode: builder.mutation({
+        sejamCode: builder.query({
             query: (infoSejam) => ({
-                url: `CheckotpbyNationalCode?otp=${infoSejam.otp}&nationalCode=${infoSejam.nationalCode}`,
-                method: "POST",
+                url: `CheckotpbyNationalCode`,
+                method: "get",
+                params:infoSejam
             }),
         }),
 
@@ -34,5 +37,5 @@ export const authApi = createApi({
 export const {
  useSendotpMutation,
  useSendotpCodeMutation,
- useSejamCodeMutation
+ useLazySejamCodeQuery
 } = authApi;

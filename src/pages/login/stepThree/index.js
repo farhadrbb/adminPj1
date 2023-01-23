@@ -1,13 +1,16 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input } from "antd";
-import { useSejamCodeMutation, useSendotpCodeMutation, useSendotpMutation } from '../../../redux/api/auth';
+import { useLazySejamCodeQuery, useSendotpCodeMutation, useSendotpMutation } from '../../../redux/api/auth';
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 
 
 const StepThreeLogin = ({step,setstep,mobile}) => {
 
-    const [sejamCode,resultSejamCode] = useSejamCodeMutation()
-
+    const [sejamCode,resultSejamCode] = useLazySejamCodeQuery()
+    
+    const navigate = useNavigate()
     const onFinish = (values) => {
         console.log("Success:", values);
         sejamCode(values)
@@ -15,6 +18,11 @@ const StepThreeLogin = ({step,setstep,mobile}) => {
     const onFinishFailed = (errorInfo) => {
         console.log("Failed:", errorInfo);
     };
+
+    useEffect(() => {
+        if(resultSejamCode.isSuccess)
+        navigate("/")
+    }, [resultSejamCode]);
     
     return (
         <>

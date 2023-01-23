@@ -21,7 +21,7 @@ const Login = () => {
 
 
 
-  const [step, setstep] = useState(2);
+  const [step, setstep] = useState(1);
   const [otpCode, setotpCode] = useState("2");
   const [mobile, setmobile] = useState("0015451771");
 
@@ -30,17 +30,23 @@ const Login = () => {
 
   return (
     <div className="grid place-items-center h-screen">
-      <div className="flex justify-center items-center md:w-[768px] w-[80%] lg:w-[1024px] h-[650px] rounded-md ">
-        <div className="flex justify-center items-center flex-col md:w-[50%] w-full h-full rounded-[20px] bg-slate-200 p-3 relative">
-          <div className="text-2xl absolute top-5 left-2 text-slate-500  rounded-lg w-[40px] h-[40px] flex justify-center items-center cursor-pointer" onClick={()=> step > 1 && setstep(step-1)}><ArrowLeftIcon/></div>
+      <div className="flex justify-center items-center md:w-[768px] w-[80%] lg:w-[1024px] h-[650px] rounded-md">
+        <div className="flex justify-center items-center flex-col md:w-[70%] w-full h-full lg:rounded-r-[20px] lg:rounded-none rounded-[20px] bg-slate-200 p-3 relative">
+          {step > 1 && (
+            <div
+              className="text-2xl absolute top-5 left-2 text-slate-500  rounded-lg w-[40px] h-[40px] flex justify-center items-center cursor-pointer"
+              onClick={() => step > 1 && setstep(step - 1)}>
+              <ArrowLeftIcon />
+            </div>
+          )}
           {/* <img src={logo} alt="logo" className={"mb-8 mt-2"} /> */}
 
-          <div className="flex flex-col items-center w-full">
+          <div className="flex flex-col items-center w-[75%] md:w-[80%]">
             <h1 className="font-[700] text-2xl mb-11 text-slate-500">احراز هویت غیر حضوری</h1>
             <RouteLogin step={step}>
-              <StepOneLogin setstep={setstep} step={step} setmobile={setmobile}/>
-              <StepTwoLogin setstep={setstep} step={step} mobile={mobile}/>
-              <StepThreeLogin setstep={setstep} step={step}/>
+              <StepOneLogin setstep={setstep} step={step} setmobile={setmobile} />
+              <StepTwoLogin setstep={setstep} step={step} mobile={mobile} />
+              <StepThreeLogin setstep={setstep} step={step} />
             </RouteLogin>
           </div>
         </div>
@@ -48,7 +54,7 @@ const Login = () => {
         <img
           src={image}
           alt="forest image"
-          className="w-[50%] h-full rounded-l-lg overflow-hidden hidden lg:block"
+          className="w-[70%] h-full rounded-l-[20px] overflow-hidden hidden lg:block"
         />
       </div>
     </div>

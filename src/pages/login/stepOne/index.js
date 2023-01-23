@@ -11,16 +11,16 @@ const StepOneLogin = ({ setstep, step, setmobile }) => {
 
     const [setOtp, resultOtp] = useSendotpMutation()
     const [getCaptcha, resultCaptcha] = useLazyGetCaptchaApiQuery()
+    
 
     useEffect(() => {
         getCaptcha("getcaptcha")
     }, [getCaptcha]);
 
-    console.log("resultOtp", resultOtp);
 
     const onFinish = (values) => {
         setmobile(values.mobile)
-        setOtp({ ...values })
+        setOtp(values)
     };
     const onFinishFailed = (errorInfo) => {
         console.log("Failed:", errorInfo);
@@ -29,7 +29,6 @@ const StepOneLogin = ({ setstep, step, setmobile }) => {
     useEffect(() => {
         if (resultOtp.isSuccess) {
             setstep(2)
-
         }
     }, [resultOtp]);
 
@@ -72,11 +71,11 @@ const StepOneLogin = ({ setstep, step, setmobile }) => {
                             ]}
                         >
 
-                            <Input placeholder="شماره موبایل" />
+                            <Input placeholder="شماره موبایل" className='inputCustom border-0 !border-b border-cyan-50  '/>
                         </Form.Item>
 
-                        <Form.Item className="w-full">
-                            <div className='flex justify-center items-center rounded-md w-[250px] h-[100px] overflow-hidden'>
+                        <Form.Item className="w-full mb-2">
+                            <div className='flex justify-center items-center rounded-md w-full h-[100px] overflow-hidden'>
                                 <img src={`data:image/png;base64,${resultCaptcha.data?.data?.captchBase64Data}`} className="w-full h-full" />
 
                                 {/* <Image
@@ -101,7 +100,7 @@ const StepOneLogin = ({ setstep, step, setmobile }) => {
                             ]}
                         >
 
-                            <Input placeholder="کد امنیتی" />
+                            <Input placeholder="کد امنیتی" className='inputCustom border border-cyan-50'/>
                         </Form.Item>
 
                         <Form.Item className="w-full mt-20">

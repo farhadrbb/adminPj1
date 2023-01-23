@@ -9,7 +9,7 @@ const BodyTable = ({ infoTable, data }) => {
             <tbody >
                 {data?.list.map((itm, ind) => (
 
-                    <tr className={`${ind === data.length - 1 ? '' : 'border-b'}`} key={ind}>
+                    <tr className={`${ind === data.length - 1 ? '' : 'border-b text-slate-600'}`} key={ind}>
                         {infoTable.map((td, indTd) => (
                             <td className={`text-sm font-[400] h-[70px] ${indTd === 0 ? "w-[50px]" : 'w-[100px]'}`} key={indTd} >
                                 <div className='flex justify-center '>

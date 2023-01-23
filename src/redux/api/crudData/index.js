@@ -9,7 +9,7 @@ export const crudDataApi = createApi({
             query: (infoApi) => {
                 return {
                     url: `${infoApi.url}`,
-                    // params: infoApi.filter,
+                    params: infoApi.filter,
                 };
             },
         }),

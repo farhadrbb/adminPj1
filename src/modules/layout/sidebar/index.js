@@ -99,7 +99,7 @@ const Sidebar = ({ clickMenu, setClickMenu }) => {
           ? "min-w-[250px] max-w-[250px] visible opacity-100"
           : "min-w-0 max-w-0 xl:min-w-[250px] xl:max-w-[250px] invisible opacity-0 xl:visible xl:opacity-100"
           }`}
-        style={{ borderRadius:"25px 0 0 25px" }}
+        style={{ borderRadius:"20px 0 0 20px" }}
       >
         <div
           className="absolute top-[20px] left-4 text-[20px] xl:hidden cursor-pointer"

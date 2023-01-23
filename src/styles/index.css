@@ -1,4 +1,3 @@
-
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -22,7 +21,7 @@
     @apply m-0  text-white bg-slate-300;
   }
   .input-date {
-    @apply  w-full rounded !bg-slate-400;
+    @apply w-full rounded !bg-slate-300 text-black placeholder-gray-500;
     height: 32px !important;
     /* "&:"{
       @apply outline-none border-none;
@@ -34,7 +33,7 @@
   }
 
   .icon-input {
-    @apply  min-w-[32px] flex justify-center rounded items-center absolute top-0 left-0;
+    @apply min-w-[32px] flex justify-center rounded items-center absolute top-0 left-0;
   }
 
   .container {
@@ -137,23 +136,26 @@
     @apply text-white  flex items-center justify-center  !important;
   } */
 
-
-  .css-166bipr-Input {
+  /* .css-166bipr-Input {
     @apply text-white flex items-center justify-center  !important;
   }
   .css-1jqq78o-placeholder {
     @apply text-white flex  justify-center items-center !important;
-  }
+  } */
 }
 
 @layer components {
-  input[type="text"]:not(.date, .search, .inputPass, .counter, .dataInput,.input-date),
+  /* input[type="text"]:not(.date, .search, .inputPass, .counter, .dataInput,.input-date),
   input[type="number"],
   textarea,
   .password,
   .counterContainer {
     @apply outline-0 h-[35px] rounded-[10px] shadow-lg !text-black  border-cyan-50 bg-slate-400 outline-none px-2 placeholder-black;
     resize: none;
+  } */
+
+  .inputCustom {
+    @apply outline-0 h-[32px] rounded !text-black  border-cyan-50 !bg-slate-300 outline-none pr-3  placeholder-gray-500 text-sm focus:outline-none focus:border focus:border-cyan-50 ;
   }
 
   input[type="checkbox"] {
@@ -174,7 +176,7 @@
   }
 
   .btn-cyan-around {
-    @apply rounded-sm text-sm border border-cyan-50 px-1 w-[109px] text-cyan-50 text-sm;
+    @apply rounded-sm text-sm border border-cyan-50 px-1 w-[109px] text-cyan-50;
   }
 
   .btn-cyan:hover,
@@ -186,50 +188,18 @@
     @apply outline-none text-sm;
   }
 
-  input:-webkit-autofill,
+  /* input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
   input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
-    -webkit-text-fill-color: white;
   }
 
   .activeMenu {
     @apply border-r-4 border-cyan-50 bg-slate-500 transition-all bg-opacity-10;
   }
 
-  /***modal***/
-  /* .Modal {
-    @apply absolute pt-5 pb-5 flex items-center top-0 right-0 left-0 bottom-0 overflow-auto;
-  }
-
-  .content {
-    @apply bg-black-200 rounded-lg p-4 m-auto border-cyan-50 border-[3px];
-    max-width: 1000px;
-  } */
-
-  /* .ReactModal__Body--open {
-    @apply fixed w-full h-full overflow-hidden;
-  }
-
-  .Overlay {
-    @apply opacity-0 fixed top-0 left-0 right-0 bottom-0 bg-black bg-opacity-50 z-10 w-screen h-screen;
-    transition: opacity 300ms ease-in-out;
-  }
-
-  .Overlay.ReactModal__Overlay--before-close {
-    @apply opacity-0;
-  }
-
-  .Overlay.ReactModal__Overlay--after-open {
-    @apply opacity-100;
-  }
-
-  .Overlay.ReactModal__Overlay--before-close {
-    @apply opacity-0;
-  } */
-
-  /*****/
+ 
   .border-red {
     border-color: #ad2102 !important;
   }
@@ -239,54 +209,25 @@
   }
 
   /* Chrome, Safari, Edge, Opera */
-  input::-webkit-outer-spin-button,
+  /* input::-webkit-outer-spin-button,
   input::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
-  }
+  } */
 
   /* Firefox */
-  input[type="number"] {
+  /* input[type="number"] {
     -moz-appearance: textfield;
-  }
+  } */
 
   /***text editor***/
-  .textEditor .rsw-editor {
-    @apply h-[150px] border-cyan-50;
-  }
-  .textEditor .rsw-toolbar {
-    @apply bg-cyan-50 border-cyan border-cyan-50;
-  }
-  .textEditor .rsw-separator {
-    @apply border-cyan;
-  }
-  .textEditor .rsw-dd {
-    @apply bg-black-100;
-  }
-  .textEditor .rsw-dd,
-  .textEditor .rsw-dd option {
-    @apply text-cyan rounded px-1;
-  }
-  .textEditor .rsw-ce ul {
-    list-style: disc;
-    padding-right: 15px;
-  }
-  .textEditor a {
-    @apply text-cyan-50 cursor-pointer hover:text-cyan;
-  }
-  .textEditor h1 {
-    @apply text-xl;
-  }
-  .textEditor h2 {
-    @apply text-lg;
-  }
-  .gradient-login{
+
+  .gradient-login {
     background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
     background-size: 400% 400%;
     animation: gradient 15s ease infinite;
     height: 100vh;
   }
- 
 
   @keyframes gradient {
     0% {
@@ -299,10 +240,9 @@
       background-position: 0% 50%;
     }
   }
-  
 }
 
-.ant-form-item-row{
+.ant-form-item-row {
   display: flex !important;
   justify-content: center !important;
   align-items: center !important;

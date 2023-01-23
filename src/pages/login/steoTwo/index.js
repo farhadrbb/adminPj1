@@ -8,7 +8,7 @@ import { useEffect } from 'react';
 
 const StepTwoLogin = ({ step, setstep, mobile }) => {
 
-    const [sendotpCode, resultSendOtpCode] = useSendotpCodeMutation()
+    const [sendotpCode,resultSendOtpCode ] = useSendotpCodeMutation()
     const [getCaptcha, resultCaptcha] = useLazyGetCaptchaApiQuery()
 
     useEffect(() => {
@@ -18,11 +18,16 @@ const StepTwoLogin = ({ step, setstep, mobile }) => {
     const onFinish = (values) => {
         console.log("Success:", values);
         sendotpCode({ ...values, mobile })
-        setstep(3)
     };
     const onFinishFailed = (errorInfo) => {
         console.log("Failed:", errorInfo);
     };
+
+    useEffect(() => {
+        if (resultSendOtpCode.isSuccess) {
+            setstep(3)
+        }
+    }, [resultSendOtpCode]);
 
     return (
         <>
@@ -57,6 +62,7 @@ const StepTwoLogin = ({ step, setstep, mobile }) => {
                 </Form.Item>
                 <Form.Item
                     // label="کد ملی"
+                    className='mb-10'
                     name="nationalCode"
                     rules={[
                         {
@@ -68,8 +74,8 @@ const StepTwoLogin = ({ step, setstep, mobile }) => {
                     <Input placeholder='کد ملی' />
                 </Form.Item>
 
-                <Form.Item className="w-full">
-                    <div className='flex justify-center items-center rounded-md w-[250px] h-[100px] overflow-hidden'>
+                <Form.Item className="w-full mb-2">
+                    <div className='flex justify-center items-center rounded-md w-ful h-[100px] overflow-hidden'>
                         <img src={`data:image/png;base64,${resultCaptcha.data?.data?.captchBase64Data}`} className="w-full h-full" />
 
                         {/* <Image

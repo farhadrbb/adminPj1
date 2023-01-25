@@ -102,7 +102,6 @@ const StepOneLogin = ({ setstep, step, setmobile }) => {
                             <Input placeholder="کد امنیتی"
                                 className="h-[40px] rounded-[10px]"
                                 prefix={<UserOutlined className="site-form-item-icon" />}
-
                             />
                         </Form.Item>
 
@@ -111,8 +110,16 @@ const StepOneLogin = ({ setstep, step, setmobile }) => {
                                 type="primary bg-cyan-50"
                                 htmlType="submit"
                                 className="w-full"
+                                disabled={resultOtp.isLoading}
                             >
-                                ورود
+                                {resultOtp.isLoading && (
+                                    <LoadingOutlined/>
+                                )}
+                            
+                                {!resultOtp.isLoading && (
+                                   " ورود"
+                                )}
+                                
                             </Button>
                         </Form.Item>
                     </div>

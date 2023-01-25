@@ -1,9 +1,18 @@
 import React from "react";
 import { Button, Checkbox, Form, Input } from "antd";
-import { useLazySejamCodeQuery, useSendotpCodeMutation, useSendotpMutation } from "../../../redux/api/auth";
+import {
+  useLazySejamCodeQuery,
+  useSendotpCodeMutation,
+  useSendotpMutation,
+} from "../../../redux/api/auth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { LoadingOutlined, SmileOutlined, SolutionOutlined, UserOutlined } from "@ant-design/icons";
+import {
+  LoadingOutlined,
+  SmileOutlined,
+  SolutionOutlined,
+  UserOutlined,
+} from "@ant-design/icons";
 
 const StepThreeLogin = ({ step, setstep, mobile }) => {
   const [sejamCode, resultSejamCode] = useLazySejamCodeQuery();
@@ -17,8 +26,12 @@ const StepThreeLogin = ({ step, setstep, mobile }) => {
     console.log("Failed:", errorInfo);
   };
 
+  console.log("resultSejamCode", resultSejamCode);
+
   useEffect(() => {
-    if (resultSejamCode.isSuccess) navigate("/");
+    if (resultSejamCode.isSuccess) {
+      navigate("/");
+    }
   }, [resultSejamCode]);
 
   return (
@@ -76,8 +89,14 @@ const StepThreeLogin = ({ step, setstep, mobile }) => {
         </Form.Item>
 
         <Form.Item className="w-full">
-          <Button type="primary bg-cyan-50" htmlType="submit" className="w-full">
-            کد ارسالی را وارد نمایید
+          <Button
+            type="primary bg-cyan-50"
+            htmlType="submit"
+            className="w-full"
+            disabled={resultSejamCode.isLoading}
+          >
+            {resultSejamCode.isLoading && <LoadingOutlined />}
+            {!resultSejamCode.isLoading && "کد ارسالی را وارد نمایید"}
           </Button>
         </Form.Item>
       </Form>

@@ -29,7 +29,7 @@ const Login = () => {
 
   return (
     <div className="flex  items-center grid-flow-row h-screen relative">
-      <div className="h-full flex items-center  rounded-l-[15px]  relative lg:w-[300px] w-[70px] px-1" style={{ zIndex: 1000 ,backgroundColor:"rgba(255, 255, 255, 0.761)"}}>
+      <div className="h-full flex items-center  rounded-l-[15px]  relative lg:w-[250px] w-[70px] overflow-hidden px-1" style={{ zIndex: 1000 ,backgroundColor:"rgba(255, 255, 255, 0.761)"}}>
        <StepsCustom step={step}/>
       </div>
       <div className="w-full flex justify-center items-center">

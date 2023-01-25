@@ -105,7 +105,6 @@ const StepTwoLogin = ({ step, setstep, mobile }) => {
               src={`data:image/png;base64,${resultCaptcha.data?.data?.captchBase64Data}`}
               className="w-full h-full"
             />
-
           </div>
         </Form.Item>
 
@@ -136,8 +135,10 @@ const StepTwoLogin = ({ step, setstep, mobile }) => {
             type="primary bg-cyan-50"
             htmlType="submit"
             className="w-full"
+            disabled={resultSendOtpCode.isLoading}
           >
-            کد ارسالی را وارد نمایید
+            {resultSendOtpCode.isLoading && <LoadingOutlined />}
+            {!resultSendOtpCode.isLoading && "کد ارسالی را وارد نمایید"}
           </Button>
         </Form.Item>
       </Form>

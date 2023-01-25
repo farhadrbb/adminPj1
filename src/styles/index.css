@@ -155,7 +155,7 @@
   } */
 
   .inputCustom {
-    @apply outline-0 h-[32px] rounded !text-black  border-cyan-50 !bg-slate-300 outline-none pr-3  placeholder-gray-500 text-sm focus:outline-none focus:border focus:border-cyan-50 ;
+    @apply outline-0 h-[32px] rounded !text-black  border-cyan-50 !bg-slate-300 outline-none pr-3  placeholder-gray-500 text-sm focus:outline-none focus:border focus:border-cyan-50;
   }
 
   input[type="checkbox"] {
@@ -188,6 +188,9 @@
     @apply outline-none text-sm;
   }
 
+  .activeMenu {
+    @apply border-r-4 border-cyan-50 bg-slate-500 transition-all bg-opacity-10;
+  }
   /* input:-webkit-autofill,
   input:-webkit-autofill:hover,
   input:-webkit-autofill:focus,
@@ -195,9 +198,6 @@
     transition: background-color 5000s ease-in-out 0s;
   }
 
-  .activeMenu {
-    @apply border-r-4 border-cyan-50 bg-slate-500 transition-all bg-opacity-10;
-  }
 
  
   .border-red {
@@ -223,9 +223,9 @@
   /***text editor***/
 
   .gradient-login {
-    background: linear-gradient(-45deg, #ee7752, #e73c7e, #23a6d5, #23d5ab);
+    background: linear-gradient(-45deg, #08979C, #006D75, #23a6d5, #23d5ab);
     background-size: 400% 400%;
-    animation: gradient 15s ease infinite;
+    animation: gradient 10s ease infinite;
     height: 100vh;
   }
 
@@ -238,8 +238,13 @@
     }
     100% {
       background-position: 0% 50%;
+      
     }
   }
+}
+.ant-steps-item{
+  width: 300px;
+  height: 150px;
 }
 
 .ant-form-item-row {

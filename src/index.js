@@ -7,12 +7,15 @@ import "./styles/index.css";
 import App from "./App";
 import { store } from "./redux/store";
 import { Provider } from "react-redux";
+import { ConfigProvider } from 'antd';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
   <React.StrictMode>
-     <Provider store={store}>
-      <App />
+    <Provider store={store}>
+      <ConfigProvider direction="rtl">
+        <App />
+      </ConfigProvider>
     </Provider>
   </React.StrictMode>
 );

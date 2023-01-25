@@ -8,7 +8,7 @@ const Header = ({ setClickMenu }) => {
     const ChangingTitle = () => {
         switch (location.pathname) {
 
-            case "/admins":
+            case "/home":
                 return "ادمین ها"
             case "/createAdmin":
                 return "لیست ادمین ها / ایجاد"

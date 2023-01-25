@@ -7,7 +7,7 @@ import FilterTable from "./filter";
 import HeadTable from "./head";
 import PaginateCustom from "./paginate";
 
-const Table = ({ infoTable, url, noFilter, filterParam }) => {
+const Table = ({ infoTable, url, noFilter, filterParam,actionBtn }) => {
     const [getDataShipping, resultDataShipping] = useLazyGetDataQuery();
     const [forcePage, setForcePage] = useState(0);
     const [filterChange, setfilterChange] = useState({});
@@ -62,6 +62,7 @@ const Table = ({ infoTable, url, noFilter, filterParam }) => {
                         handleDeleteFilter={handleDeleteFilter}
                         refresh={refresh}
                         resultData={resultDataShipping}
+                        actionBtn={actionBtn}
                     />
                 )}
                 <table className="w-full">

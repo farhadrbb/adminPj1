@@ -3,6 +3,8 @@ import React, { useEffect } from 'react';
 import { Button, Checkbox, Form, Image, Input } from "antd";
 import { useSendotpMutation } from '../../../redux/api/auth';
 import { useLazyGetCaptchaApiQuery } from '../../../redux/api/getCaptcha';
+import { LoadingOutlined, SmileOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
+import Timer from '../../../component/timer';
 
 
 
@@ -11,7 +13,7 @@ const StepOneLogin = ({ setstep, step, setmobile }) => {
 
     const [setOtp, resultOtp] = useSendotpMutation()
     const [getCaptcha, resultCaptcha] = useLazyGetCaptchaApiQuery()
-    
+
 
     useEffect(() => {
         getCaptcha("getcaptcha")
@@ -71,18 +73,15 @@ const StepOneLogin = ({ setstep, step, setmobile }) => {
                             ]}
                         >
 
-                            <Input placeholder="شماره موبایل" className='inputCustom border-0 !border-b border-cyan-50  '/>
+                            <Input placeholder="شماره موبایل"
+                                prefix={<UserOutlined className="site-form-item-icon " />}
+                                className="h-[40px] rounded-[10px]"
+                            />
                         </Form.Item>
 
                         <Form.Item className="w-full mb-2">
                             <div className='flex justify-center items-center rounded-md w-full h-[100px] overflow-hidden'>
                                 <img src={`data:image/png;base64,${resultCaptcha.data?.data?.captchBase64Data}`} className="w-full h-full" />
-
-                                {/* <Image
-                                    width={250}
-                                    height={100}
-                                    src=""
-                                /> */}
                             </div>
                         </Form.Item>
                         <Form.Item
@@ -100,7 +99,11 @@ const StepOneLogin = ({ setstep, step, setmobile }) => {
                             ]}
                         >
 
-                            <Input placeholder="کد امنیتی" className='inputCustom border border-cyan-50'/>
+                            <Input placeholder="کد امنیتی"
+                                className="h-[40px] rounded-[10px]"
+                                prefix={<UserOutlined className="site-form-item-icon" />}
+
+                            />
                         </Form.Item>
 
                         <Form.Item className="w-full mt-20">

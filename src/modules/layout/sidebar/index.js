@@ -167,50 +167,50 @@ const lists = [
     route: "/home",
     slug: "admins",
   },
-  {
-    title: "کاربران",
-    icon: <UsersIcon />,
-    route: "/person",
-    slug: "users",
-  },
-  {
-    title: "ایونت ها",
-    icon: <EventsIcon />,
-    route: "/events",
-    slug: "events",
-  },
-  {
-    title: "محتوا",
-    icon: <ContentIcon />,
-    route: "/content",
-    slug: "content",
-  },
-  {
-    title: "دسته بندی",
-    icon: <DastebandiIcon />,
-    route: "/categories",
-    slug: "categories",
-  },
-  {
-    title: "کامنت ها",
-    icon: <CommenIcon />,
-    route: "/forbidenwords",
-    slug: "comments",
-    child: [
-      {
-        title: "کلمات ممنوعه",
-        icon: <ChildSettingIcon />,
-        iconClick: <ChildSettingGreenIcon />,
-        route: "/forbidenwords",
-      },
-      {
-        title: "کامنت ها",
-        icon: <ChildSettingIcon />,
-        iconClick: <ChildSettingGreenIcon />,
-        route: "/allcoments",
-      },
-    ],
-  },
+  // {
+  //   title: "کاربران",
+  //   icon: <UsersIcon />,
+  //   route: "/person",
+  //   slug: "users",
+  // },
+  // {
+  //   title: "ایونت ها",
+  //   icon: <EventsIcon />,
+  //   route: "/events",
+  //   slug: "events",
+  // },
+  // {
+  //   title: "محتوا",
+  //   icon: <ContentIcon />,
+  //   route: "/content",
+  //   slug: "content",
+  // },
+  // {
+  //   title: "دسته بندی",
+  //   icon: <DastebandiIcon />,
+  //   route: "/categories",
+  //   slug: "categories",
+  // },
+  // {
+  //   title: "کامنت ها",
+  //   icon: <CommenIcon />,
+  //   route: "/forbidenwords",
+  //   slug: "comments",
+  //   child: [
+  //     {
+  //       title: "کلمات ممنوعه",
+  //       icon: <ChildSettingIcon />,
+  //       iconClick: <ChildSettingGreenIcon />,
+  //       route: "/forbidenwords",
+  //     },
+  //     {
+  //       title: "کامنت ها",
+  //       icon: <ChildSettingIcon />,
+  //       iconClick: <ChildSettingGreenIcon />,
+  //       route: "/allcoments",
+  //     },
+  //   ],
+  // },
   {
     title: "نقش ها",
     icon: <RolesIcon />,
@@ -272,10 +272,10 @@ const lists = [
       },
     ],
   },
-  {
-    title: "تراکنش ها",
-    icon: <TransactionsIcon />,
-    route: "/transactions",
-    slug: "finance",
-  },
+  // {
+  //   title: "تراکنش ها",
+  //   icon: <TransactionsIcon />,
+  //   route: "/transactions",
+  //   slug: "finance",
+  // },
 ];

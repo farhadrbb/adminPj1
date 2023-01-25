@@ -3,13 +3,13 @@ import {baseQuery} from "../../baseUrl";
 
 export const crudDataApi = createApi({
     reducerPath: "crudDataApi",
-    baseQuery:  fetchBaseQuery({ baseUrl: 'http://193.151.139.79:8083/api/Offer/' }),
+    baseQuery:  fetchBaseQuery({ baseUrl: 'http://193.151.139.79:8082/api/v1/' }),
     endpoints: (builder) => ({
         getData: builder.query({
             query: (infoApi) => {
                 return {
                     url: `${infoApi.url}`,
-                    params: infoApi.filter,
+                    // params: infoApi.filter,
                 };
             },
         }),

@@ -36,7 +36,7 @@ const InputCustom = ({ width, height, field, setChange, placeholder, clickIcon, 
                 <div className='absolute bottom-0 w-full h-[2px] bg-cyan-50'></div>
 
                 <input
-                    className={`w-full  inputCustom`}
+                    className={`w-full  inputCustom focus:border-0 focus:!border-b `}
                     placeholder={placeholder}
                     name={field}
                     value={state[field] ? state[field] : ''}

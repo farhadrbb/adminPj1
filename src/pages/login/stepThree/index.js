@@ -65,7 +65,7 @@ const StepThreeLogin = ({ step, setstep, mobile }) => {
         >
           <Input
             placeholder="کد سجام"
-            className="h-[40px] rounded-[10px]"
+            className="h-[45px] rounded-[10px]"
             prefix={<UserOutlined className="site-form-item-icon" />}
             // className='inputCustom border border-cyan-50'
           />
@@ -84,7 +84,7 @@ const StepThreeLogin = ({ step, setstep, mobile }) => {
             placeholder="کد ملی"
             prefix={<UserOutlined className="site-form-item-icon" />}
             // className='inputCustom border border-cyan-50'
-            className="h-[40px] rounded-[10px]"
+            className="h-[45px] rounded-[10px]"
           />
         </Form.Item>
 

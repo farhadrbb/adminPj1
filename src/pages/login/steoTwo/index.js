@@ -70,7 +70,7 @@ const StepTwoLogin = ({ step, setstep, mobile }) => {
         >
           <Input
             placeholder="کد ارسالی"
-            className="h-[40px] rounded-[10px]"
+            className="h-[45px] rounded-[10px]"
             prefix={<UserOutlined className="site-form-item-icon" />}
           />
         </Form.Item>
@@ -94,7 +94,7 @@ const StepTwoLogin = ({ step, setstep, mobile }) => {
         >
           <Input
             placeholder="کد ملی"
-            className="h-[40px] rounded-[10px]"
+            className="h-[45px] rounded-[10px]"
             prefix={<UserOutlined className="site-form-item-icon" />}
           />
         </Form.Item>
@@ -125,7 +125,7 @@ const StepTwoLogin = ({ step, setstep, mobile }) => {
           <Input
             placeholder="کد امنیتی"
             // className='inputCustom border border-cyan-50'
-            className="h-[40px] rounded-[10px]"
+            className="h-[45px] rounded-[10px]"
             prefix={<UserOutlined className="site-form-item-icon" />}
           />
         </Form.Item>

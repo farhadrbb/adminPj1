@@ -223,7 +223,7 @@
   /***text editor***/
 
   .gradient-login {
-    background: linear-gradient(-45deg, #08979C, #006D75, #23a6d5, #23d5ab);
+    background: linear-gradient(-45deg, #08979c, #006d75, #23a6d5, #23d5ab);
     background-size: 400% 400%;
     animation: gradient 10s ease infinite;
     height: 100vh;
@@ -238,11 +238,10 @@
     }
     100% {
       background-position: 0% 50%;
-      
     }
   }
 }
-.ant-steps-item{
+.ant-steps-item {
   width: 300px;
   height: 150px;
 }
@@ -252,3 +251,15 @@
   justify-content: center !important;
   align-items: center !important;
 }
+/* .ant-upload {
+  width: 100% !important;
+}
+.ant-upload-select {
+  width: 100% !important;
+  height: 100% !important;
+}
+.ant-upload-wrapper {
+  width: 100% !important;
+  height: 100% !important;
+} */
+

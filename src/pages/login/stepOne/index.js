@@ -75,7 +75,7 @@ const StepOneLogin = ({ setstep, step, setmobile }) => {
 
                             <Input placeholder="شماره موبایل"
                                 prefix={<UserOutlined className="site-form-item-icon " />}
-                                className="h-[40px] rounded-[10px]"
+                                className="h-[45px] rounded-[10px]"
                             />
                         </Form.Item>
 
@@ -100,7 +100,7 @@ const StepOneLogin = ({ setstep, step, setmobile }) => {
                         >
 
                             <Input placeholder="کد امنیتی"
-                                className="h-[40px] rounded-[10px]"
+                                className="h-[45px] rounded-[10px]"
                                 prefix={<UserOutlined className="site-form-item-icon" />}
                             />
                         </Form.Item>

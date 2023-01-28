@@ -3,7 +3,7 @@ import React, { useEffect } from 'react';
 import { Button, Checkbox, Form, Image, Input } from "antd";
 import { useSendotpMutation } from '../../../redux/api/auth';
 import { useLazyGetCaptchaApiQuery } from '../../../redux/api/getCaptcha';
-import { LoadingOutlined, SmileOutlined, SolutionOutlined, UserOutlined } from '@ant-design/icons';
+import { LoadingOutlined, SmileOutlined, SolutionOutlined, UserOutlined,PhoneOutlined,LockOutlined  } from '@ant-design/icons';
 import Timer from '../../../component/timer';
 
 
@@ -59,7 +59,7 @@ const StepOneLogin = ({ setstep, step, setmobile }) => {
                     <div className='col-span-12'>
                         <Form.Item
                             // label="شماره موبایل"
-                            className='mb-10'
+                            className='mb-5'
                             name="mobile"
                             rules={[
                                 {
@@ -74,7 +74,7 @@ const StepOneLogin = ({ setstep, step, setmobile }) => {
                         >
 
                             <Input placeholder="شماره موبایل"
-                                prefix={<UserOutlined className="site-form-item-icon " />}
+                                prefix={<PhoneOutlined className="site-form-item-icon !text-[25px] " />}
                                 className="h-[45px] rounded-[10px]"
                             />
                         </Form.Item>
@@ -101,11 +101,11 @@ const StepOneLogin = ({ setstep, step, setmobile }) => {
 
                             <Input placeholder="کد امنیتی"
                                 className="h-[45px] rounded-[10px]"
-                                prefix={<UserOutlined className="site-form-item-icon" />}
+                                prefix={<LockOutlined className="site-form-item-icon !text-[25px]" />}
                             />
                         </Form.Item>
 
-                        <Form.Item className="w-full mt-20">
+                        <Form.Item className="w-full mt-14">
                             <Button
                                 type="primary bg-cyan-50"
                                 htmlType="submit"

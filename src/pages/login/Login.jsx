@@ -14,6 +14,7 @@ import {
 
 import StepsCustom from "../../component/steps";
 import UploadPage from "../uploadPage";
+import logo from "../../assest/logo.png"
 
 const Login = () => {
   const [step, setstep] = useState(1);
@@ -22,17 +23,17 @@ const Login = () => {
   return (
     <div className="flex  items-center grid-flow-row h-screen relative">
       <div
-        className="h-full flex items-center  rounded-l-[15px] relative lg:w-[650px] w-[70px] overflow-hidden px-1 bg-slate-300"
+        className="h-full flex items-center  rounded-l-[15px] relative lg:w-[330px] w-[60px] lg:min-w-[330px] overflow-hidden px-1  bg-slate-100 "
         style={{ zIndex: 1000 }}
       >
         <StepsCustom step={step} />
       </div>
       <div className="w-full flex flex-col justify-center items-center">
-        <div className="flex justify-center text-lg mb-2">
+        <div className="flex justify-center text-sm sm:text-lg mb-2">
           سامانه افتتاح حساب غیرحضوری کارگزاری نگاه نوین
         </div>
-        <div className="flex justify-center items-center  w-[98%] xl:w-[1000px] h-[650px] rounded-md">
-          <div className="flex justify-center items-center flex-col md:w-[75%] w-[95%] h-full  rounded-[20px] bg-slate-200 p-3 relative">
+        <div className="flex justify-center items-center  w-[98%] 2xl:w-[950px] h-[660px] rounded-md">
+          <div className={`flex  items-center flex-col md:w-[85%] w-[95%] h-full  rounded-[20px] bg-white p-3 relative ${step === 3 ? "pt-10" : "justify-center"}`}>
             {step > 1 && (
               <div
                 className="text-2xl absolute top-5 left-2 text-slate-500  rounded-lg w-[40px] h-[40px] flex justify-center items-center cursor-pointer"
@@ -44,20 +45,25 @@ const Login = () => {
             {/* <img src={logo} alt="logo" className={"mb-8 mt-2"} /> */}
 
             <div className="flex flex-col items-center w-[85%]">
-              <h1 className="font-[700] text-xl mb-11 text-slate-700">
+              <div className="mb-3">
+                <img src={logo}/>
+              </div>
+              <h1 className="font-[700] text-lg mb-5 text-slate-700">
                 احراز هویت غیر حضوری
               </h1>
-              <h6 className="text-sm text-slate-700 mb-2">
-               {step === 1 ? " لطفا شماره موبایل ثبت شده در سجام را برای دریافت کد تایید وارد کنید":''}
-              </h6>
+              {/* <h6 className="text-sm text-slate-700 mb-2">
+                {step === 1
+                  ? " لطفا شماره موبایل ثبت شده در سجام را برای دریافت کد تایید وارد کنید"
+                  : ""}
+              </h6> */}
               <RouteLogin step={step}>
-                <UploadPage/>
                 <StepOneLogin
                   setstep={setstep}
                   step={step}
                   setmobile={setmobile}
                 />
                 <StepTwoLogin setstep={setstep} step={step} mobile={mobile} />
+                <UploadPage />
                 <StepThreeLogin setstep={setstep} step={step} />
               </RouteLogin>
             </div>
@@ -71,16 +77,18 @@ const Login = () => {
         </div>
       </div>
       <div
-        className="h-full  rounded-r-[15px] text-xs flex flex-col items-center  relative lg:w-[600px] hidden lg:flex overflow-hidden px-1 bg-slate-300"
+        className="h-full  rounded-r-[15px] text-xs  flex-col items-center   relative lg:min-w-[250px] w-[250px] hidden lg:flex overflow-hidden px-2  bg-slate-100"
         style={{ zIndex: 1000 }}
       >
-        <div className="w-[100px] h-[100px] bg-red-100 mt-20"></div>
+        <div className="w-[100px] h-[100px] bg-cyan-50 mt-20 grid place-content-center rounded-full">
+          <UserOutlined className="text-[40px]" />
+        </div>
         {/* <StepsCustom step={step}/> */}
-        <ul className="text-black mt-5 pr-2">
+        <ul className="text-black mt-5 pr-1">
           <li className="mt-4 flex">
             <div className="text-xl ml-2 ">
               {" "}
-              <SafetyOutlined className="text-blue-500"/>
+              <SafetyOutlined className="text-cyan-50" />
             </div>
             <div>
               {" "}
@@ -92,7 +100,7 @@ const Login = () => {
           <li className="mt-4 flex">
             <div className="text-xl ml-2">
               {" "}
-              <SafetyOutlined className="text-blue-500"/>
+              <SafetyOutlined className="text-cyan-50" />
             </div>
             لطفا پیش از ورود هرگونه اطلاعات، آدرس موجود در بخش مرورگر وب خود را
             با آدرس فوق مقایسه نمایید و درصورت مشاهده هر نوع مغایرت احتمالی، از
@@ -101,7 +109,7 @@ const Login = () => {
           <li className="mt-4 flex">
             <div className="text-xl ml-2">
               {" "}
-              <SafetyOutlined className="text-blue-500"/>
+              <SafetyOutlined className="text-cyan-50" />
             </div>
             برای حفاظت از اطلاعات حساب کاربری خود، حتی المقدور از صفحه کلید
             مجازی استفاده نمایید.
@@ -109,14 +117,14 @@ const Login = () => {
           <li className="mt-4 flex">
             <div className="text-xl ml-2">
               {" "}
-              <SafetyOutlined className="text-blue-500"/>
+              <SafetyOutlined className="text-cyan-50" />
             </div>
             هرگز اطلاعات حساب کاربری (نام کاربری و رمز عبور) خود را در اختیار
             دیگران قرار ندهید. پس از اتمام کار با سامانه، حتما بر روی دکمه خروج
             از سامانه کلیک کنید
           </li>
         </ul>
-        <div className="mt-10 text-gray-600">
+        <div className="mt-10 text-gray-600 text-center">
           سامانه افتتاح حساب غیرحضوری کارگزاری نگاه نوین
         </div>
         <div className="mt-5 p-3 pr-4 text-black text-sm text-center">

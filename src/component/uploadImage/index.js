@@ -18,7 +18,7 @@ const beforeUpload = (file) => {
   }
   return isJpgOrPng && isLt2M;
 };
-const UploadImage = () => {
+const UploadImage = ({image,setimage}) => {
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
 
@@ -32,7 +32,7 @@ const UploadImage = () => {
       // Get this url from response in real world.
       getBase64(info.file.originFileObj, (url) => {
         setLoading(false);
-        setImageUrl(url);
+        setimage(url);
       });
     }
   };
@@ -43,8 +43,9 @@ const UploadImage = () => {
         style={{
           marginTop: 8,
         }}
+        className="text-xs"
       >
-        Upload
+        بارگذاری عکس
       </div>
     </div>
   );
@@ -52,15 +53,15 @@ const UploadImage = () => {
     <Upload
       name="avatar"
       listType="picture-card"
-      className="avatar-uploader bg-slate-200 rounded-[10px]"
+      className="avatar-uploader bg-slate-100 shadow-md rounded-[10px]"
       showUploadList={false}
       action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
       beforeUpload={beforeUpload}
       onChange={handleChange}
     >
-      {imageUrl ? (
+      {image ? (
         <img
-          src={imageUrl}
+          src={image}
           alt="avatar"
           style={{
             width: '100%',

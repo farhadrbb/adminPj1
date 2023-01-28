@@ -12,6 +12,8 @@ import {
   SmileOutlined,
   SolutionOutlined,
   UserOutlined,
+  FileProtectOutlined ,
+  LockOutlined
 } from "@ant-design/icons";
 import Timer from "../../../component/timer";
 
@@ -71,10 +73,10 @@ const StepTwoLogin = ({ step, setstep, mobile }) => {
           <Input
             placeholder="کد ارسالی"
             className="h-[45px] rounded-[10px]"
-            prefix={<UserOutlined className="site-form-item-icon" />}
+            prefix={<FileProtectOutlined className="site-form-item-icon !text-[25px]" />}
           />
         </Form.Item>
-        <div className="w-full justify-center flex mb-10 mt-1">
+        <div className="w-full justify-center flex mb-5 mt-1">
           <Timer
             initialSeconds={10}
             handleClickAgain={() => setOtp({ mobile })}
@@ -83,7 +85,7 @@ const StepTwoLogin = ({ step, setstep, mobile }) => {
 
         <Form.Item
           // label="کد ملی"
-          className="mb-10"
+          className="mb-5"
           name="nationalCode"
           rules={[
             {
@@ -95,7 +97,7 @@ const StepTwoLogin = ({ step, setstep, mobile }) => {
           <Input
             placeholder="کد ملی"
             className="h-[45px] rounded-[10px]"
-            prefix={<UserOutlined className="site-form-item-icon" />}
+            prefix={<UserOutlined className="site-form-item-icon !text-[25px]" />}
           />
         </Form.Item>
 
@@ -126,11 +128,11 @@ const StepTwoLogin = ({ step, setstep, mobile }) => {
             placeholder="کد امنیتی"
             // className='inputCustom border border-cyan-50'
             className="h-[45px] rounded-[10px]"
-            prefix={<UserOutlined className="site-form-item-icon" />}
+            prefix={<LockOutlined className="site-form-item-icon !text-[25px]" />}
           />
         </Form.Item>
 
-        <Form.Item className="w-full mt-20">
+        <Form.Item className="w-full mt-10">
           <Button
             type="primary bg-cyan-50"
             htmlType="submit"

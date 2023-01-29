@@ -72,8 +72,8 @@ const StepTwoLogin = ({ step, setstep, mobile }) => {
         >
           <Input
             placeholder="کد ارسالی"
-            className="h-[45px] rounded-[10px]"
-            prefix={<FileProtectOutlined className="site-form-item-icon !text-[25px]" />}
+            className="h-[45px] rounded-[10px] "
+            prefix={<FileProtectOutlined className="site-form-item-icon !text-[20px] text-cyan-50" />}
           />
         </Form.Item>
         <div className="w-full justify-center flex mb-5 mt-1">
@@ -97,7 +97,7 @@ const StepTwoLogin = ({ step, setstep, mobile }) => {
           <Input
             placeholder="کد ملی"
             className="h-[45px] rounded-[10px]"
-            prefix={<UserOutlined className="site-form-item-icon !text-[25px]" />}
+            prefix={<UserOutlined className="site-form-item-icon !text-[20px] text-cyan-50" />}
           />
         </Form.Item>
 
@@ -128,7 +128,7 @@ const StepTwoLogin = ({ step, setstep, mobile }) => {
             placeholder="کد امنیتی"
             // className='inputCustom border border-cyan-50'
             className="h-[45px] rounded-[10px]"
-            prefix={<LockOutlined className="site-form-item-icon !text-[25px]" />}
+            prefix={<LockOutlined className="site-form-item-icon !text-[20px] text-cyan-50" />}
           />
         </Form.Item>
 

@@ -57,7 +57,7 @@ const Header = ({ setClickMenu }) => {
     }
     return (
         <>
-            <div className=" min-h-[50px] max-h-[50px] bg-slate-200 shadow-2xl text-[14px] w-[97%] flex items-center px-3  mx-auto "
+            <div className=" min-h-[50px] max-h-[50px] bg-slate-100 shadow-2xl text-[14px] w-[97%] flex items-center px-3  mx-auto "
                 style={{ boxShadow: '0 0 10px lightgray',borderRadius:10 }}
             >
                 <div className=" xl:hidden text-[20px] text-slate-500 cursor-pointer" onClick={() => setClickMenu(true)}><OpenmenuIcon /></div>

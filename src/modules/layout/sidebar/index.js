@@ -95,7 +95,7 @@ const Sidebar = ({ clickMenu, setClickMenu }) => {
   return (
     <>
       <div
-        className={`h-full bg-slate-200  flex flex-col text-white justify-between transition-all absolute xl:static top-0 right-0 z-[20] ${clickMenu
+        className={`h-full bg-slate-100  flex flex-col text-white justify-between transition-all absolute xl:static top-0 right-0 z-[20] ${clickMenu
           ? "min-w-[250px] max-w-[250px] visible opacity-100"
           : "min-w-0 max-w-0 xl:min-w-[250px] xl:max-w-[250px] invisible opacity-0 xl:visible xl:opacity-100"
           }`}

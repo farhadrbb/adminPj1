@@ -53,7 +53,7 @@ const Table = ({ infoTable, url, noFilter, filterParam,actionBtn }) => {
 
     return (
         <>
-            <div className="w-full border rounded-[10px] flex flex-col overflow-x-auto bg-slate-200">
+            <div className="w-full border rounded-[10px] flex flex-col overflow-x-auto bg-slate-100">
                 {!noFilter && (
                     <FilterTable
                         infoTable={infoTable}

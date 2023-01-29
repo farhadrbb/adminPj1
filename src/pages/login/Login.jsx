@@ -14,7 +14,7 @@ import {
 
 import StepsCustom from "../../component/steps";
 import UploadPage from "../uploadPage";
-import logo from "../../assest/logo.png"
+import logo from "../../assest/logo.png";
 
 const Login = () => {
   const [step, setstep] = useState(1);
@@ -23,7 +23,7 @@ const Login = () => {
   return (
     <div className="flex  items-center grid-flow-row h-screen relative">
       <div
-        className="h-full flex items-center  rounded-l-[15px] relative lg:w-[330px] w-[60px] lg:min-w-[330px] overflow-hidden px-1  bg-slate-100 "
+        className="h-full flex items-center  rounded-l-[15px] relative lg:w-[320px] w-[55px] lg:min-w-[320px] overflow-hidden px-1  bg-slate-100 "
         style={{ zIndex: 1000 }}
       >
         <StepsCustom step={step} />
@@ -32,8 +32,12 @@ const Login = () => {
         <div className="flex justify-center text-sm sm:text-lg mb-2">
           سامانه افتتاح حساب غیرحضوری کارگزاری نگاه نوین
         </div>
-        <div className="flex justify-center items-center  w-[98%] 2xl:w-[950px] h-[660px] rounded-md">
-          <div className={`flex  items-center flex-col md:w-[85%] w-[95%] h-full  rounded-[20px] bg-white p-3 relative ${step === 3 ? "pt-10" : "justify-center"}`}>
+        <div className="flex justify-center items-center  w-[98%] 2xl:w-[930px] h-[660px] rounded-md">
+          <div
+            className={`flex  items-center flex-col md:w-[85%] w-[95%] h-full  rounded-[20px] bg-white p-3 relative ${
+              step === 3 ? "pt-10" : "justify-center"
+            }`}
+          >
             {step > 1 && (
               <div
                 className="text-2xl absolute top-5 left-2 text-slate-500  rounded-lg w-[40px] h-[40px] flex justify-center items-center cursor-pointer"
@@ -46,7 +50,7 @@ const Login = () => {
 
             <div className="flex flex-col items-center w-[85%]">
               <div className="mb-3">
-                <img src={logo}/>
+                <img src={logo} />
               </div>
               <h1 className="font-[700] text-lg mb-5 text-slate-700">
                 احراز هویت غیر حضوری
@@ -77,7 +81,7 @@ const Login = () => {
         </div>
       </div>
       <div
-        className="h-full  rounded-r-[15px] text-xs  flex-col items-center   relative lg:min-w-[250px] w-[250px] hidden lg:flex overflow-hidden px-2  bg-slate-100"
+        className="h-full  rounded-r-[15px] text-xs  flex-col items-center   relative lg:min-w-[300px] w-[300px] hidden lg:flex overflow-hidden px-2  bg-slate-100"
         style={{ zIndex: 1000 }}
       >
         <div className="w-[100px] h-[100px] bg-cyan-50 mt-20 grid place-content-center rounded-full">
@@ -86,42 +90,48 @@ const Login = () => {
         {/* <StepsCustom step={step}/> */}
         <ul className="text-black mt-5 pr-1">
           <li className="mt-4 flex">
-            <div className="text-xl ml-2 ">
+            <div className="text-xl ml-2">
               {" "}
-              <SafetyOutlined className="text-cyan-50" />
+              <SafetyOutlined className="text-red-50" />
             </div>
-            <div>
+            <div className="text-center">
               {" "}
               سایت کارگزاری نگاه نوین با استفاده از پروتکل امن SSL به مشتریان
               خود ارائه خدمت نموده و با آدرس https://usereg.nnovin.ir شروع می
-              شود. F
+              شود.
             </div>
           </li>
           <li className="mt-4 flex">
             <div className="text-xl ml-2">
               {" "}
-              <SafetyOutlined className="text-cyan-50" />
+              <SafetyOutlined className="text-red-50" />
             </div>
-            لطفا پیش از ورود هرگونه اطلاعات، آدرس موجود در بخش مرورگر وب خود را
-            با آدرس فوق مقایسه نمایید و درصورت مشاهده هر نوع مغایرت احتمالی، از
-            ادامه کار منصرف شده و موضوع را با ما در میان بگذارید.
+            <div className="text-center">
+              لطفا پیش از ورود هرگونه اطلاعات، آدرس موجود در بخش مرورگر وب خود
+              را با آدرس فوق مقایسه نمایید و درصورت مشاهده هر نوع مغایرت
+              احتمالی، از ادامه کار منصرف شده و موضوع را با ما در میان بگذارید.
+            </div>
           </li>
           <li className="mt-4 flex">
             <div className="text-xl ml-2">
               {" "}
-              <SafetyOutlined className="text-cyan-50" />
+              <SafetyOutlined className="text-red-50" />
             </div>
-            برای حفاظت از اطلاعات حساب کاربری خود، حتی المقدور از صفحه کلید
-            مجازی استفاده نمایید.
+            <div className="text-center text-xs">
+              برای حفاظت از اطلاعات حساب کاربری خود، حتی المقدور از صفحه کلید
+              مجازی استفاده نمایید.
+            </div>
           </li>
           <li className="mt-4 flex">
             <div className="text-xl ml-2">
               {" "}
-              <SafetyOutlined className="text-cyan-50" />
+              <SafetyOutlined className="text-red-50" />
             </div>
-            هرگز اطلاعات حساب کاربری (نام کاربری و رمز عبور) خود را در اختیار
-            دیگران قرار ندهید. پس از اتمام کار با سامانه، حتما بر روی دکمه خروج
-            از سامانه کلیک کنید
+            <div className="text-center">
+              هرگز اطلاعات حساب کاربری (نام کاربری و رمز عبور) خود را در اختیار
+              دیگران قرار ندهید. پس از اتمام کار با سامانه، حتما بر روی دکمه
+              خروج از سامانه کلیک کنید
+            </div>
           </li>
         </ul>
         <div className="mt-10 text-gray-600 text-center">

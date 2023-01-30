@@ -12,7 +12,7 @@ import {
   SafetyOutlined,
 } from "@ant-design/icons";
 
-import StepsCustom from "../../component/steps";
+import StepsCustom from "./steps";
 import UploadPage from "../uploadPage";
 import logo from "../../assest/logo.png";
 
@@ -22,12 +22,7 @@ const Login = () => {
 
   return (
     <div className="flex  items-center grid-flow-row h-screen relative lg:p-3 p-1">
-      <div
-        className="h-full flex items-center  lg:rounded-[20px] rounded-[10px]  shadow-lg relative lg:w-[320px] w-[55px] lg:min-w-[320px] xl:w-[350px]  xl:min-w-[350px] overflow-hidden px-1  bg-slate-100 "
-        style={{ zIndex: 1000 }}
-      >
-        <StepsCustom step={step} />
-      </div>
+      <StepsCustom step={step} />
       <div className="w-full flex flex-col justify-center items-center">
         <div className="flex justify-center text-sm sm:text-lg mb-2">
           سامانه افتتاح حساب غیرحضوری کارگزاری نگاه نوین

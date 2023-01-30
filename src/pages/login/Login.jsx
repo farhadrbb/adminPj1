@@ -21,9 +21,9 @@ const Login = () => {
   const [mobile, setmobile] = useState("0015451771");
 
   return (
-    <div className="flex  items-center grid-flow-row h-screen relative">
+    <div className="flex  items-center grid-flow-row h-screen relative lg:p-3 p-1">
       <div
-        className="h-full flex items-center  rounded-l-[15px] relative lg:w-[320px] w-[55px] lg:min-w-[320px] overflow-hidden px-1  bg-slate-100 "
+        className="h-full flex items-center  lg:rounded-[20px] rounded-[10px]  shadow-lg relative lg:w-[320px] w-[55px] lg:min-w-[320px] xl:w-[350px]  xl:min-w-[350px] overflow-hidden px-1  bg-slate-100 "
         style={{ zIndex: 1000 }}
       >
         <StepsCustom step={step} />
@@ -32,9 +32,9 @@ const Login = () => {
         <div className="flex justify-center text-sm sm:text-lg mb-2">
           سامانه افتتاح حساب غیرحضوری کارگزاری نگاه نوین
         </div>
-        <div className="flex justify-center items-center  w-[98%] 2xl:w-[930px] h-[660px] rounded-md">
+        <div className="flex justify-center items-center  w-[98%] 2xl:w-[850px] h-[660px] rounded-md">
           <div
-            className={`flex  items-center flex-col md:w-[85%] w-[95%] h-full  rounded-[20px] bg-white p-3 relative ${
+            className={`flex  items-center flex-col md:w-[85%] w-[95%] h-full  rounded-[20px] bg-slate-100 p-3 relative ${
               step === 3 ? "pt-10" : "justify-center"
             }`}
           >
@@ -48,7 +48,7 @@ const Login = () => {
             )}
             {/* <img src={logo} alt="logo" className={"mb-8 mt-2"} /> */}
 
-            <div className="flex flex-col items-center w-[85%]">
+            <div className="flex flex-col items-center w-[90%]">
               <div className="mb-3">
                 <img src={logo} />
               </div>
@@ -81,7 +81,7 @@ const Login = () => {
         </div>
       </div>
       <div
-        className="h-full  rounded-r-[15px] text-xs  flex-col items-center   relative lg:min-w-[300px] w-[300px] hidden lg:flex overflow-hidden px-2  bg-slate-100"
+        className="h-full  rounded-[15px] text-xs  flex-col items-center   relative lg:min-w-[300px] w-[300px] xl:min-w-[320px] xl:w-[300px] hidden lg:flex overflow-hidden px-2  bg-slate-100"
         style={{ zIndex: 1000 }}
       >
         <div className="w-[100px] h-[100px] bg-cyan-50 mt-20 grid place-content-center rounded-full">

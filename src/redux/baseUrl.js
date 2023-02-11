@@ -1,17 +1,18 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
 
 const baseUtils = fetchBaseQuery({
-  baseUrl: "http://193.151.139.79:8082/api/v1/",
+  baseUrl: "https://apietebari.dnovinbr.ir/api/",
 
   prepareHeaders: (headers, { getState }) => {
     const token = localStorage.getItem("auth");
 
     // If we have a token set in state, let's assume that we should be passing it.
     // if (token) {
-      headers.set(
-        "authorization",
-        `Bearer eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIn0.IBn5-LQkE4jjzgr1PUZzxHrPq4cbCEVsFCA2dRC95N5cwkPpNL4q-w.F8n0dv9K_g10nZCfCZb0ng.LKFwx7L3AEKWxPKJpC3Jc1F6pxUKEY1NqFsnR2Z6olyTe2iEjE-BkjCkUq6UV5vUCp9B85kIh2RYjSHa4hSs3TEuYrEz-moZIrSB1_OblyiQ7iBrR6bS4xZsOiVDIl4Q2hTueKip1DsirCRUD5UbuqXXH12pZkOOp4M8zSHv4EXwU7WWI77SGp3nLbFo_LPvkAtlG0d7V0oPkBpiomX_4YhJbR6wmsy-_jBPjmbuqymchDixqfI--_sZaYOaA49TKB7wHTncEkVFcEZCozC0dNrtl7o77HawjWzfTjuxkaMCeoTds_6mzorR-v3-bROiQiTzaoI63UMxt2cQ-qIWDnxDvcX6ROmmRRt8ypDYUDE91bC2nVpi2QCxJhzcv5c2qC7XcIzrYdY-ZVF771sYMPvzPzfY-sGLtsEmffFj-ga9Pp0vupcwd8hAQ52TSDlvKJ2RKAY2wz0CtyC1bC_TikK2qxIODXsWXS6TEUF73dxNso-w0dDks8m34Hpw_fGr7-Dy3WNV4pGQRDW21kJjJprmjQEXN3osYiCNLiLeJ95HJ5oafJHvZ4nYxS5jMLs6xYluzwAA5GnQNFbDWUk0enrZ_Rts0myaA3SEd6melWlF74oX2YbqKcdYN4SAuxu1edLS7Lyyui95zVzMlXF1PAFYqMphGHbvhUlGQCO6eAhDFdXDpBZEfc54YH33dA5pIbhX-9UihubV2iEg4RipUQyWZQtCnCr_7iuOQTbeHmXJyF5mnfANao35PfhNEKbxawhfd-vCMQVVM1Tw_EGR4XmeRoveBBgrHyxybl88_AzV6Pu-bhN1cVCe-pB3_f1q0V6U0l1F5z-JL3NXq2DPWqK-Krznyl6aHAhkx7txO00c_1jD-rbRYry12A_ziUq4TDn7qXEZOQ4MqOAAi_aFJ9IaVAzsDQQv6LmEBv6E982wN82Env0nqpbWPyRTJDh-Lsv-bJceBx04nq-s-Vj8Kg.Dj80MD1Ps7oi09SbtVvX_g`
-      );
+    headers.set(
+      "Authorization",
+      `Bearer eyJhbGciOiJBMTI4S1ciLCJlbmMiOiJBMTI4Q0JDLUhTMjU2IiwidHlwIjoiSldUIn0.GfQGcQUO67mvFGfU__fdzAX2V8eofMQV818iInqKlHWHje6-rYD4zw.wzYvnNUYsHGRnd5EKdbeRQ.32lupPAPzMFzbqN_smmoLRIiDdjMzSciebSxKmk_c1AcyzIwAaWIIdUt5KOHS0N3GmIsIBh9WQnGahxmCqkX9Cir6lxLZylVoXGIZ7aiAW3dxqAPd6mEdOrJhfO3wV_5CBYHZ_i4-AFV2Obr-379vDKcGklVr6eKq4blDSDwsChYElDRSEohWEMwkBfGT9Pi6oMjBsuQ_5ruwZecd_laOHFITwzE_-aWIA10BgWdjk-H4K9m32fcMteFYSY8gjqKQdOepSVDSvdngJkGC8yE3acKH8r8wooaKPT0jtMBgl5udtvRdiPaedQRrnPxsQXSRZA5DPyTXIknYj-8sm1pbZ-V0OlBtZHVMKRgc_UAhprqPGb5tvT1h_VAlgRkj_rhBvMkjjdgPuGLlQ1mwTv7-iKJQOECEmac-gfTvk7u8JKdNFUq6ub-CETPdXe_V2XvuvzpD_CxFf9BeyQdAF1SWtYi5pt0iGT_XINKZdQyYXo85S30hSj8W3JkmJw3FiL38YkXmLYzVEvJwuIf5mnShhFSwy3fPm3SNKQ5e_e51eo2ca9hrmz1aP80B-hKQLeEdwxG-9XfTgkZJjQe-P6Xr6YiQvxHGxmclfXkkSzOuCThFBgdllYH4KiYXp3tfV3-AixGX4tENa4g6ZWDSRSzv84gnyoBoj_eDP-NlliF7tCi5NIEgA_dhl7m5OP3orkIm_tfzJhUuk8vUz2fg1w8yoGa_ZmmC1rGTxePm1oOvy2MVMQIkn56wvrk_njGVcrSjGEmiUODv2Q3khz_IXrqv_21OdCFyNdXZMQQN69yzhxeyocIap85dG16o1NJDMaE4wogMm4OXzsN1rW7-KuQg3FPHPArOGfZed7kU62v_TFu-_HqQ9yQ57mqxRxg_vrTWI-cGiobfxvTBmQmyDEZOiUjVM65tvgLbrCGXDe4jc8a7sDZC_cyOA_vsGBCtkItkaMjrHKY5yDFdBzpFdUtz-32LDsNaIBdX-2LZtGr3AT-gHO7dNlsFfk1sGrwB02NLyhsOZpbhJL9oNvHVzLqO4L6qereSZrgXRqR0kFiHyE.4JfGDErkG-Xeyvt7wOehNg`
+    );
+
     // }
 
     return headers;
@@ -21,8 +22,8 @@ const baseUtils = fetchBaseQuery({
 export const baseQuery = async (args, api, extraOptions) => {
   let result = await baseUtils(args, api, extraOptions);
 
-//   if (result.error && result.error.status === 401) {
-//     window.location.href = "/login";
-//   }
+  //   if (result.error && result.error.status === 401) {
+  //     window.location.href = "/login";
+  //   }
   return result;
 };

@@ -1,40 +1,58 @@
-import { PlusOutlined } from '@ant-design/icons';
-import { message, Upload } from 'antd';
-import { useState } from 'react';
-import { LoadingOutlined} from '@ant-design/icons';
+import { PlusOutlined } from "@ant-design/icons";
+import { message, Upload } from "antd";
+import { useEffect, useState } from "react";
+import { LoadingOutlined } from "@ant-design/icons";
+import { useGetCustomerFileMutation } from "../../redux/api/auth";
 const getBase64 = (img, callback) => {
   const reader = new FileReader();
-  reader.addEventListener('load', () => callback(reader.result));
+  reader.addEventListener("load", () => callback(reader.result));
   reader.readAsDataURL(img);
 };
-const beforeUpload = (file) => {
-  const isJpgOrPng = file.type === 'image/jpeg' || file.type === 'image/png';
-  if (!isJpgOrPng) {
-    message.error('You can only upload JPG/PNG file!');
-  }
-  const isLt2M = file.size / 1024 / 1024 < 2;
-  if (!isLt2M) {
-    message.error('Image must smaller than 2MB!');
-  }
-  return isJpgOrPng && isLt2M;
-};
-const UploadImage = ({image,setimage}) => {
+const 
+UploadImage = ({ image, setimage }) => {
+  const [uploadFile, resultUploadFile] = useGetCustomerFileMutation();
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
+  const formData = new FormData();
+  const beforeUpload = (file) => {
+    console.log("isLt2M", file);
+    formData.append("file", file);
+    formData.append("fileType", "CustomerProperty");
+    formData.append("EtbRequestId_fk", "12345");
+    formData.append("isDeleted", true);
+
+    uploadFile(formData);
+    const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
+    if (!isJpgOrPng) {
+      message.error("You can only upload JPG/PNG file!");
+    }
+    const isLt2M = file.size / 1024 / 1024 < 0.5;
+    if (!isLt2M) {
+      message.error("Image must smaller than 2MB!");
+    }
+    return isJpgOrPng && isLt2M;
+  };
+  useEffect(() => {
+    console.log("reaultttttt", resultUploadFile);
+  }, [resultUploadFile]);
 
   const handleChange = (info) => {
-      console.log("info",info);
-    if (info.file.status === 'uploading') {
+    console.log("info", info);
+    if (info.file.status === "uploading") {
       setLoading(true);
       return;
-    }
-    if (info.file.status === 'done') {
-      // Get this url from response in real world.
+    } else {
+      info["file"]["status"] = "done";
       getBase64(info.file.originFileObj, (url) => {
         setLoading(false);
-        setimage(url);
+        setImageUrl(url);
+        setimage(info.file.originFileObj);
       });
     }
+    // if (info.file.status === 'done') {
+    // Get this url from response in real world.
+
+    // }
   };
   const uploadButton = (
     <div>
@@ -43,9 +61,8 @@ const UploadImage = ({image,setimage}) => {
         style={{
           marginTop: 8,
         }}
-        className="text-xs"
       >
-        بارگذاری عکس
+        Upload
       </div>
     </div>
   );
@@ -53,18 +70,18 @@ const UploadImage = ({image,setimage}) => {
     <Upload
       name="avatar"
       listType="picture-card"
-      className="avatar-uploader bg-slate-100 shadow-md rounded-[10px]"
+      className="avatar-uploader bg-slate-200 rounded-[10px]"
       showUploadList={false}
-      action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
+      // action="https://www.mocky.io/v2/5cc8019d300000980a055e76"
       beforeUpload={beforeUpload}
       onChange={handleChange}
     >
-      {image ? (
+      {imageUrl ? (
         <img
-          src={image}
+          src={imageUrl}
           alt="avatar"
           style={{
-            width: '100%',
+            width: "100%",
           }}
         />
       ) : (
@@ -73,4 +90,4 @@ const UploadImage = ({image,setimage}) => {
     </Upload>
   );
 };
-export default UploadImage
+export default UploadImage;

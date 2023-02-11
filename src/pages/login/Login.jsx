@@ -15,10 +15,17 @@ import {
 import StepsCustom from "./steps";
 import UploadPage from "../uploadPage";
 import logo from "../../assest/logo.png";
+import { useGetUserProfileMutation, useLazySejamCodeQuery } from "../../redux/api/auth";
 
 const Login = () => {
   const [step, setstep] = useState(1);
-  const [mobile, setmobile] = useState("0015451771");
+  const [mobile, setmobile] = useState("");
+  const [nationalCode, setnationalCode] = useState("");
+
+  const [getUser,resultGetUserProfile] = useGetUserProfileMutation()
+
+
+  console.log("resultGetUserProfile",resultGetUserProfile);
 
   return (
     <div className="flex  items-center grid-flow-row h-screen relative lg:p-3 p-1">
@@ -28,7 +35,7 @@ const Login = () => {
           سامانه افتتاح حساب غیرحضوری کارگزاری نگاه نوین
         </div>
         <div className="flex justify-center items-center  w-[98%] 2xl:w-[850px] h-[660px] rounded-md">
-          <div
+          <divresultSejamCode
             className={`flex  items-center flex-col md:w-[85%] w-[95%] h-full  rounded-[20px] bg-slate-100 p-3 relative ${
               step === 3 ? "pt-10" : "justify-center"
             }`}
@@ -43,7 +50,7 @@ const Login = () => {
             )}
             {/* <img src={logo} alt="logo" className={"mb-8 mt-2"} /> */}
 
-            <div className="flex flex-col items-center w-[90%]">
+            <div className="flex flex-col items-center w-[90%] h-full">
               <div className="mb-3">
                 <img src={logo} />
               </div>
@@ -56,17 +63,17 @@ const Login = () => {
                   : ""}
               </h6> */}
               <RouteLogin step={step}>
+                <UploadPage resultGetUserProfile={resultGetUserProfile}/>
                 <StepOneLogin
                   setstep={setstep}
                   step={step}
                   setmobile={setmobile}
                 />
-                <StepTwoLogin setstep={setstep} step={step} mobile={mobile} />
-                <UploadPage />
-                <StepThreeLogin setstep={setstep} step={step} />
+                <StepTwoLogin setstep={setstep} step={step} mobile={mobile} setnationalCode={setnationalCode}/>
+                <StepThreeLogin setstep={setstep} step={step} getUser={getUser} resultGetUserProfile={resultGetUserProfile} nationalCode={nationalCode}/>
               </RouteLogin>
             </div>
-          </div>
+          </divresultSejamCode>
 
           {/* <img
             src={image}

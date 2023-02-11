@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button, Checkbox, Form, Image, Input } from "antd";
 import {
   useSendotpCodeMutation,
@@ -12,30 +12,50 @@ import {
   SmileOutlined,
   SolutionOutlined,
   UserOutlined,
-  FileProtectOutlined ,
+  FileProtectOutlined,
   LockOutlined
 } from "@ant-design/icons";
 import Timer from "../../../component/timer";
+import {useSelector} from "react-redux";
 
-const StepTwoLogin = ({ step, setstep, mobile }) => {
+const StepTwoLogin = ({ step, setstep, mobile,setnationalCode }) => {
+  const data=useSelector((state)=>state.authSlice)
   const [sendotpCode, resultSendOtpCode] = useSendotpCodeMutation();
   const [getCaptcha, resultCaptcha] = useLazyGetCaptchaApiQuery();
   const [setOtp, resultOtp] = useSendotpMutation();
+  const [infoStateGetUser, setinfoStateGetUser] = useState();
 
   useEffect(() => {
     getCaptcha("getcaptcha");
   }, [getCaptcha]);
+  useEffect(() => {
+    console.log("dataa",data)
+  }, [data]);
+
 
   const onFinish = (values) => {
-    console.log("Success:", values);
-    sendotpCode({ ...values, mobile });
+    let body = {
+      otpKey:`string`,
+      // otp: 12345,
+      // nationalCode: `${values?.nationalCode}`,
+      // mobile: `${mobile}`,
+    }
+
+    setnationalCode(values.nationalCode)
+
+ 
+    delete values["captcha"]
+    setinfoStateGetUser({ ...values, mobile,...body})
+    sendotpCode({ ...values, mobile,...body,otp:Number(values.otp) });
   };
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 
+
   useEffect(() => {
     if (resultSendOtpCode.isSuccess) {
+  
       setstep(3);
     }
   }, [resultSendOtpCode]);

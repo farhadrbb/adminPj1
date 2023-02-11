@@ -8,34 +8,48 @@ import {
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import {
-  LoadingOutlined,
+  LoadingOutlined, LockOutlined,
   SmileOutlined,
   SolutionOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import {useLazyGetCaptchaApiQuery} from "../../../redux/api/getCaptcha";
+import { useSelector } from "react-redux";
 
-const StepThreeLogin = ({ step, setstep, mobile }) => {
-  const [sejamCode, resultSejamCode] = useLazySejamCodeQuery();
+const StepThreeLogin = ({ step, setstep, mobile,getUser,nationalCode,resultGetUserProfile }) => {
+  const [getCaptcha, resultCaptcha] = useLazyGetCaptchaApiQuery()
+  const data = useSelector((state)=>state.authSlice)
+  // const [sejamCode,resultSejamCode ] = useLazySejamCodeQuery();
+  useEffect(() => {
+    console.log("dataaaaaaa",data);
+  }, [data]);
+
 
   const navigate = useNavigate();
   const onFinish = (values) => {
     console.log("Success:", values);
-    sejamCode(values);
+    getUser({...values,mobile,nationalCode});
   };
+
+
   const onFinishFailed = (errorInfo) => {
     console.log("Failed:", errorInfo);
   };
 
-  console.log("resultSejamCode", resultSejamCode);
+  // console.log("resultSejamCode", resultSejamCode);
 
   useEffect(() => {
-    if (resultSejamCode.isSuccess) {
-      navigate("/");
+    if (resultGetUserProfile.isSuccess) {
+      setstep(4)
     }
-  }, [resultSejamCode]);
+  }, [resultGetUserProfile]);
+  useEffect(() => {
+    getCaptcha("getcaptcha")
+  }, [getCaptcha]);
 
   return (
     <>
+      <h3 style={{color:"black"}}>در این مرحله کافیست فقط مدارک خودتان را بارگذاری کنید و قرارداد ها را تایید کنید.بعد از تایید ثبت نام شما توسط کارگزاری پیامک حاوی نام کاربری و کلمه عبور برای شما ارسال خواهد شد.</h3>
       <Form
         name="basic"
         labelCol={{
@@ -70,21 +84,29 @@ const StepThreeLogin = ({ step, setstep, mobile }) => {
             // className='inputCustom border border-cyan-50'
           />
         </Form.Item>
+        <Form.Item className="w-full mb-2">
+          <div className='flex justify-center items-center rounded-md w-full h-[100px] overflow-hidden'>
+            <img src={`data:image/png;base64,${resultCaptcha.data?.data?.captchBase64Data}`} className="w-full h-full" />
+          </div>
+        </Form.Item>
         <Form.Item
-          // label="کد ملی"
-          name="nationalCode"
-          rules={[
-            {
-              required: true,
-              message: "Please input your username!",
-            },
-          ]}
+            // label="شماره موبایل"
+            name="captcha"
+            rules={[
+              {
+                required: true,
+                message: "متن داخل عکس را وارد کنید",
+              },
+              // {
+              //     pattern: ^(\+98|0)?9\d{9}$,
+              //     message: "شماره موبایل اشتباه است",
+              // },
+            ]}
         >
-          <Input
-            placeholder="کد ملی"
-            prefix={<UserOutlined className="site-form-item-icon !text-[20px] text-cyan-50" />}
-            // className='inputCustom border border-cyan-50'
-            className="h-[45px] rounded-[10px] "
+
+          <Input placeholder="کد امنیتی"
+                 className="h-[45px] rounded-[10px] shadow-md "
+                 prefix={<LockOutlined className="site-form-item-icon !text-[20px] text-cyan-50" />}
           />
         </Form.Item>
 
@@ -93,10 +115,10 @@ const StepThreeLogin = ({ step, setstep, mobile }) => {
             type="primary bg-cyan-50"
             htmlType="submit"
             className="w-full"
-            disabled={resultSejamCode.isLoading}
+            disabled={resultGetUserProfile.isLoading}
           >
-            {resultSejamCode.isLoading && <LoadingOutlined />}
-            {!resultSejamCode.isLoading && "کد ارسالی را وارد نمایید"}
+            {resultGetUserProfile.isLoading && <LoadingOutlined />}
+            {!resultGetUserProfile.isLoading && "کد ارسالی را وارد نمایید"}
           </Button>
         </Form.Item>
       </Form>

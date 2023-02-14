@@ -14,8 +14,8 @@ import UplaodWithLoading from "./UploadImageWithLoading";
 import { useGetCustomerFileMutation } from "../../redux/api/auth";
 import { json } from "react-router-dom";
 
-const UploadPage = ({resultGetUserProfile}) => {
-  const [form]=Form.useForm()
+const UploadPage = ({ resultGetUserProfile }) => {
+  const [form] = Form.useForm();
   const [image1, setimage1] = useState();
   const [image2, setimage2] = useState();
   const [image3, setimage3] = useState();
@@ -23,7 +23,7 @@ const UploadPage = ({resultGetUserProfile}) => {
   const [uploadFile, resultUploadFile] = useGetCustomerFileMutation();
   const [userResult, setuseResult] = useState();
 
-  console.log("resultGetUserProfile",resultGetUserProfile);
+  console.log("resultGetUserProfile", resultGetUserProfile);
 
   useEffect(() => {
     if (image1) {
@@ -90,18 +90,13 @@ const UploadPage = ({resultGetUserProfile}) => {
             layout="vertical"
           >
             <Row>
-              <Col span={12}>
+              <Col span={12} style={{ padding: "0 5px" }}>
                 <Form.Item
                   // label="کد سجام"
                   name="firstName"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your username!",
-                    },
-                  ]}
                 >
                   <Input
+                    disabled
                     placeholder="نام"
                     className="h-[45px] rounded-[10px]"
                     prefix={
@@ -111,18 +106,13 @@ const UploadPage = ({resultGetUserProfile}) => {
                   />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col span={12} style={{ padding: "0 5px" }}>
                 <Form.Item
                   // label="کد سجام"
                   name="lastName"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your username!",
-                    },
-                  ]}
                 >
                   <Input
+                    disabled
                     placeholder="نام خانوادگی"
                     className="h-[45px] rounded-[10px]"
                     prefix={
@@ -132,18 +122,13 @@ const UploadPage = ({resultGetUserProfile}) => {
                   />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col span={12} style={{ padding: "0 5px" }}>
                 <Form.Item
                   // label="کد سجام"
                   name="nationalCode"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your username!",
-                    },
-                  ]}
                 >
                   <Input
+                    disabled
                     placeholder="کد ملی"
                     className="h-[45px] rounded-[10px]"
                     prefix={
@@ -153,19 +138,14 @@ const UploadPage = ({resultGetUserProfile}) => {
                   />
                 </Form.Item>
               </Col>
-              <Col span={12}>
+              <Col span={12} style={{ padding: "0 5px" }}>
                 <Form.Item
                   // label="کد سجام"
                   name="mobile"
-                  rules={[
-                    {
-                      required: true,
-                      message: "Please input your username!",
-                    },
-                  ]}
                 >
                   <Input
                     placeholder="موبایل"
+                    disabled
                     className="h-[45px] rounded-[10px]"
                     prefix={
                       <UserOutlined className="site-form-item-icon !text-[20px] text-cyan-50" />
@@ -185,7 +165,7 @@ const UploadPage = ({resultGetUserProfile}) => {
             {/*    </div>*/}
             {/*  </div>*/}
             {/*</div>*/}
-            <div className="col-span-12 xl:col-span-6 flex justify-center ">
+            <div className="col-span-12 xl:col-span-6 flex justify-center mb-5">
               <div className="flex items-center justify-center w-full">
                 <UploadImage
                   uploadFile={uploadFile}
@@ -197,7 +177,7 @@ const UploadPage = ({resultGetUserProfile}) => {
                 </div>
               </div>
             </div>
-            <div className=" col-span-12 xl:col-span-6 flex justify-center">
+            <div className=" col-span-12 xl:col-span-6 flex justify-center mb-5">
               <div className="flex items-center justify-center w-full">
                 <UploadImage setimage={setimage2} image={image2} />
                 <div className="my-1 text-xs text-black pr-2 w-[100%]">
@@ -205,7 +185,7 @@ const UploadPage = ({resultGetUserProfile}) => {
                 </div>
               </div>
             </div>
-            <div className=" col-span-12 xl:col-span-6 flex justify-center">
+            <div className=" col-span-12 xl:col-span-6 flex justify-center mb-5">
               <div className="flex items-center justify-center w-full">
                 <UploadImage setimage={setimage3} image={image3} />
                 <div className="my-1 text-xs text-black pr-2 w-[100%]">
@@ -231,7 +211,7 @@ const UploadPage = ({resultGetUserProfile}) => {
           <BtnCustom
             title={"ثبت اطلاعات"}
             className="bg-cyan-50 w-[50%]"
-            icon={<LoadingOutlined />}
+            // icon={<LoadingOutlined />}
           />
         </div>
       </div>

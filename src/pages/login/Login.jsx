@@ -15,28 +15,27 @@ import {
 import StepsCustom from "./steps";
 import UploadPage from "../uploadPage";
 import logo from "../../assest/logo.png";
-import { useGetUserProfileMutation, useLazySejamCodeQuery } from "../../redux/api/auth";
+import {
+  useGetUserProfileMutation,
+  useLazySejamCodeQuery,
+} from "../../redux/api/auth";
 
 const Login = () => {
   const [step, setstep] = useState(1);
   const [mobile, setmobile] = useState("");
   const [nationalCode, setnationalCode] = useState("");
 
-  const [getUser,resultGetUserProfile] = useGetUserProfileMutation()
+  const [getUser, resultGetUserProfile] = useGetUserProfileMutation();
 
-
-  console.log("resultGetUserProfile",resultGetUserProfile);
+  console.log("resultGetUserProfile", resultGetUserProfile);
 
   return (
     <div className="flex  items-center grid-flow-row h-screen relative lg:p-3 p-1">
       <StepsCustom step={step} />
-      <div className="w-full flex flex-col justify-center items-center">
-        <div className="flex justify-center text-sm sm:text-lg mb-2">
-          سامانه افتتاح حساب غیرحضوری کارگزاری نگاه نوین
-        </div>
-        <div className="flex justify-center items-center  w-[98%] 2xl:w-[850px] h-[660px] rounded-md">
+      <div className="w-full flex p-[20px] py-[10px] flex-col justify-center items-center">
+        <div className="flex justify-center items-center  w-[100%]  rounded-md">
           <divresultSejamCode
-            className={`flex  items-center flex-col md:w-[85%] w-[95%] h-full  rounded-[20px] bg-slate-100 p-3 relative ${
+            className={`flex  items-center flex-col md:w-[100%] w-[100%] h-full  rounded-[20px] bg-slate-100 p-3 relative ${
               step === 3 ? "pt-10" : "justify-center"
             }`}
           >
@@ -50,7 +49,10 @@ const Login = () => {
             )}
             {/* <img src={logo} alt="logo" className={"mb-8 mt-2"} /> */}
 
-            <div className="flex flex-col items-center w-[90%] h-full">
+            <div className="flex flex-col justify-center items-center w-[90%] h-full">
+              <div className="flex text-black justify-center text-sm sm:text-lg mb-2">
+                سامانه افتتاح حساب غیرحضوری کارگزاری نگاه نوین
+              </div>
               <div className="mb-3">
                 <img src={logo} />
               </div>
@@ -63,14 +65,25 @@ const Login = () => {
                   : ""}
               </h6> */}
               <RouteLogin step={step}>
-                <UploadPage resultGetUserProfile={resultGetUserProfile}/>
                 <StepOneLogin
                   setstep={setstep}
                   step={step}
                   setmobile={setmobile}
                 />
-                <StepTwoLogin setstep={setstep} step={step} mobile={mobile} setnationalCode={setnationalCode}/>
-                <StepThreeLogin setstep={setstep} step={step} getUser={getUser} resultGetUserProfile={resultGetUserProfile} nationalCode={nationalCode}/>
+                <StepTwoLogin
+                  setstep={setstep}
+                  step={step}
+                  mobile={mobile}
+                  setnationalCode={setnationalCode}
+                />
+                <StepThreeLogin
+                  setstep={setstep}
+                  step={step}
+                  getUser={getUser}
+                  resultGetUserProfile={resultGetUserProfile}
+                  nationalCode={nationalCode}
+                />
+                <UploadPage resultGetUserProfile={resultGetUserProfile} />
               </RouteLogin>
             </div>
           </divresultSejamCode>
@@ -83,8 +96,8 @@ const Login = () => {
         </div>
       </div>
       <div
-        className="h-full  rounded-[15px] text-xs  flex-col items-center   relative lg:min-w-[300px] w-[300px] xl:min-w-[320px] xl:w-[300px] hidden lg:flex overflow-hidden px-2  bg-slate-100"
-        style={{ zIndex: 1000 }}
+        className="  rounded-[15px] text-xs  flex-col items-center   relative lg:min-w-[300px] w-[300px] xl:min-w-[320px] xl:w-[300px] hidden lg:flex overflow-hidden px-2  bg-slate-100"
+        style={{ zIndex: 1000, overflow: "auto", height: "100%" }}
       >
         <div className="w-[100px] h-[100px] bg-cyan-50 mt-20 grid place-content-center rounded-full">
           <UserOutlined className="text-[40px]" />

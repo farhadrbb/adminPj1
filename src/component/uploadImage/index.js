@@ -8,11 +8,11 @@ const getBase64 = (img, callback) => {
   reader.addEventListener("load", () => callback(reader.result));
   reader.readAsDataURL(img);
 };
-const 
-UploadImage = ({ image, setimage }) => {
+const UploadImage = ({ image, setimage }) => {
   const [uploadFile, resultUploadFile] = useGetCustomerFileMutation();
   const [loading, setLoading] = useState(false);
   const [imageUrl, setImageUrl] = useState();
+  const [state, setState] = useState(false);
   const formData = new FormData();
   const beforeUpload = (file) => {
     console.log("isLt2M", file);
@@ -23,17 +23,21 @@ UploadImage = ({ image, setimage }) => {
 
     uploadFile(formData);
     const isJpgOrPng = file.type === "image/jpeg" || file.type === "image/png";
-    if (!isJpgOrPng) {
-      message.error("You can only upload JPG/PNG file!");
-    }
-    const isLt2M = file.size / 1024 / 1024 < 0.5;
-    if (!isLt2M) {
-      message.error("Image must smaller than 2MB!");
-    }
-    return isJpgOrPng && isLt2M;
+    // if (!isJpgOrPng) {
+    //   message.error("You can only upload JPG/PNG file!");
+    // }
+    // const isLt2M = file.size / 1024 / 1024 < 0.5;
+    // if (!isLt2M) {
+    //   message.error("Image must smaller than 2MB!");
+    // }
+    // return isJpgOrPng && isLt2M;
+    return true;
   };
   useEffect(() => {
     console.log("reaultttttt", resultUploadFile);
+    if (!resultUploadFile?.isLoading) {
+      setState(true);
+    }
   }, [resultUploadFile]);
 
   const handleChange = (info) => {
@@ -44,9 +48,11 @@ UploadImage = ({ image, setimage }) => {
     } else {
       info["file"]["status"] = "done";
       getBase64(info.file.originFileObj, (url) => {
-        setLoading(false);
-        setImageUrl(url);
-        setimage(info.file.originFileObj);
+        if (state) {
+          setLoading(false);
+          setImageUrl(url);
+          setimage(info.file.originFileObj);
+        }
       });
     }
     // if (info.file.status === 'done') {

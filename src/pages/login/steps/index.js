@@ -13,8 +13,8 @@ const StepsCustom = ({ step }) => {
   return (
     <>
       <div
-        className="h-full flex items-center  lg:rounded-[20px] rounded-[10px]  shadow-lg relative lg:w-[320px] w-[55px] lg:min-w-[320px] xl:w-[350px]  xl:min-w-[350px] overflow-hidden px-1  bg-slate-100 "
-        style={{ zIndex: 1000 }}
+        className=" flex items-center  lg:rounded-[20px] rounded-[10px]  shadow-lg relative lg:w-[320px] w-[55px] lg:min-w-[320px] xl:w-[350px]  xl:min-w-[350px] overflow-hidden px-1  bg-slate-100 "
+        style={{ zIndex: 1000, overflow: "auto", height: "100%" }}
       >
         <Steps
           direction="vertical"

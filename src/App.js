@@ -11,9 +11,10 @@ function App() {
     <>
       <BrowserRouter>
         <Routes>
-          <Route path="/login" element={<div className=" bg-gradient-to-r from-cyan-50 to-cyan-600"><Login /></div>} />
-          <Route path="/uploadPage" element={<UploadPage />} />
-          <Route path="*" element={<Layout><BasePage/></Layout>} />
+          {/* <Route path="/login" element={<div className=" bg-gradient-to-r from-cyan-50 to-cyan-600"><Login /></div>} /> */}
+          {/* <Route path="/uploadPage" element={<UploadPage />} /> */}
+          {/* <Route path="*" element={<Layout><BasePage/></Layout>} /> */}
+          <Route path="*" element={<div className='w-full h-full'><BasePage/></div>} />
         </Routes>
       </BrowserRouter>
       {/* <Toast /> */ }

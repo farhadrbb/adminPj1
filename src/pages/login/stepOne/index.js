@@ -27,7 +27,7 @@ const StepOneLogin = ({ setstep, step, setmobile }) => {
 
   useEffect(() => {
     getCaptcha("getcaptcha");
-  }, [getCaptcha]);
+  }, []);
 
   const onFinish = (values) => {
     console.log("value", values);

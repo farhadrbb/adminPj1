@@ -1,6 +1,7 @@
 import { useRoutes, Navigate } from "react-router-dom";
 
 import Home from "./pages/home";
+import Store from "./pages/store";
 
 
 const BasePage = () => {
@@ -22,11 +23,45 @@ const BasePage = () => {
         // },
       ],
     },
+    {
+      path: "/store",
+      children: [
+        {
+          index: true,
+          element: <Store/>,
+        },
+        // {
+        //   path: "createAdmin",
+        //   element: <AdminActions />,
+        // },
+        // {
+        //   path: "updateAdmin/:id",
+        //   element: <AdminActions />,
+        // },
+      ],
+    },
+    {
+      path: "/head",
+      children: [
+        {
+          index: true,
+          element: <Store/>,
+        },
+        // {
+        //   path: "createAdmin",
+        //   element: <AdminActions />,
+        // },
+        // {
+        //   path: "updateAdmin/:id",
+        //   element: <AdminActions />,
+        // },
+      ],
+    },
 
  
     {
       path: "/",
-      element: <Navigate to="/home" replace={true} />,
+      element: <Navigate to="/store" replace={true} />,
     },
   ]);
   return element;

@@ -11,7 +11,9 @@ export const getCaptcha = createApi({
                     url: `${url}`,
                     // params: infoApi.filter,
                 };
-            },
+            },extraOptions :{
+                
+            }
         }),
 
        

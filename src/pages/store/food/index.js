@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ff from "../../../assest/image/top-view-table-full-delicious-food-composition_23-2149141353.avif"
+import {
+    MinusOutlined,
+    PlusOutlined
+} from '@ant-design/icons';
 
 let products = [
     {
@@ -41,22 +45,23 @@ let products = [
 ]
 
 const FoodInfo = () => {
+    const [counter, setcounter] = useState(0);
     return (
         <>
-            <div className="grid grid-cols-12 gap-2">
+            <div className="grid grid-cols-12 gap-3 px-1">
                 {products.map((itm, ind) => (
                     <div className="col-span-12 md:col-span-6 xl:col-span-3">
-                        <div className="w-full h-[320px] border border-black rounded-xl">
+                        <div className="w-full h-[320px] border shadow-lg rounded-xl">
                             <div className="w-full h-[150px]">
-                                <img src={ff} className="w-full h-full"/>
+                                <img src={ff} className="w-full h-full rounded-xl" />
                             </div>
                             <div className="w-full flex justify-between mt-5 px-2">
                                 <span className="font-bold text-base">
                                     {itm.title}
                                 </span>
-                             
+
                             </div>
-                            <div className="w-full flex justify-end mt-1 px-2">
+                            <div className="w-full flex justify-end mt-1 px-3">
                                 <span className="font-bold">
                                     {itm.price}
                                 </span>
@@ -66,9 +71,15 @@ const FoodInfo = () => {
                                     {"فلفل.کدو.بادمجان.زیتون.سس مخصوص"}
                                 </span>
                             </div>
-                            <div className="w-full flex justify-end mt-3 pl-3">
-                                <span className="font-bold">
-                                    +
+                            <div className="w-full flex justify-end mt-5 pl-5">
+                                <span className="font-bold text-base mx-1 cursor-pointer hover:text-red-400" onClick={() => setcounter(counter >= 0 ? counter - 1 : counter)}>
+                                    <MinusOutlined />
+                                </span>
+                                <span className="font-bold text-base mx-3">
+                                    {counter}
+                                </span>
+                                <span className="font-bold text-base mx-1 cursor-pointer hover:text-green-400" onClick={() => setcounter(counter + 1)}>
+                                    <PlusOutlined />
                                 </span>
                             </div>
                         </div>

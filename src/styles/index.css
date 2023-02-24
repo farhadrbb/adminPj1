@@ -10,6 +10,29 @@
     src: url("../assest/font/Vazirmatn-Medium.woff2") format("woff2");
   }
 
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  /* Track */
+  ::-webkit-scrollbar-track {
+    box-shadow: inset 0 0 2px lightgray;
+    border-radius: 5px;
+    
+  }
+
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: lightgray;
+    border-radius: 10px;
+    margin:'0 5px'
+  }
+
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: gray;
+  }
+
   body,
   html {
     @apply w-full h-full overflow-hidden;
@@ -273,7 +296,14 @@ input .input-phonenumber:focus-visible{
   /* color:#17b8be */
   /* height: 100% !important; */
 }
-.ant-upload{
+.ant-upload {
   margin: 0 !important;
 }
+/* .customTabs .ant-tabs-nav .ant-tabs-tab-active{
+  background-color: #08979C !important;
+} */
+
+/* .ant-tabs-tab-active .ant-tabs-tab-btn{
+  color: white !important;
+} */
 

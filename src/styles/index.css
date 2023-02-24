@@ -15,6 +15,7 @@
     @apply w-full h-full overflow-hidden;
     direction: rtl;
     font-family: "vazir";
+    
   }
 
   body {
@@ -67,6 +68,11 @@
   .date {
     @apply w-[70px] xl:w-[120px] h-[30px] bg-black-100 border-0 rounded-t-sm;
   }
+input .input-phonenumber:focus-visible{
+  border: 0 !important;
+  outline: 0 !important
+}
+
 
   /* .li-style {
     padding: 10px;

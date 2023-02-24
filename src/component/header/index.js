@@ -25,9 +25,9 @@ export const Header = () => {
     const [ModalOpen, setModalOpen] = useState(false);
 
     return (
-        <div>
-            <div className='mx-7'>
-                <div className='flex container justify-between items-center '>
+        <>
+            <div className='w-full px-5'>
+                <div className='flex px-3 justify-between items-center '>
                     <img src={resturant} alt='resturant' />
                     <BtnCustom title={'ورود/ ثبت نام'} icon={<UserOutlined />} clickFn={() => setIsModalOpen(true)} />
                 </div>
@@ -96,6 +96,6 @@ export const Header = () => {
                     </div>
                 </Carousel>
             </div>
-        </div>
+        </>
     )
 }

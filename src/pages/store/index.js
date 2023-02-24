@@ -9,6 +9,8 @@ import BuyBox from './buyBox';
 import Map from 'react-map-gl';
 import { MapContainer, TileLayer, Popup, Marker } from 'react-leaflet'
 import { Table } from 'antd';
+import { Header } from '../../component/header'
+import { Footer } from '../../component/footer'
 const position = [51.505, -0.09]
 
 
@@ -127,23 +129,24 @@ let itemsTabs = [
 const Store = () => {
     const [openBuyBox, setopenBuyBox] = useState(false);
     return (
-        <>
-            <div className="w-full h-full relative px-3">
-                <div className="absolute right-0 top-40 text-black w-[30px] h-[30px] rounded-lg shadow-xl text-xl bg-white flex justify-center items-center lg:hidden" onClick={() => setopenBuyBox(true)}>
-                    <div className="w-[20px] h-[20px] bg-red-500 flex justify-center items-center text-white absolute -left-3 -top-3 text-xs rounded-full">5</div>
-                    <ShoppingCartOutlined />
-                </div>
-                <div className={`absolute -top-11 left-0  h-full bg-gray-100 z-10 p-2 pt-10 transition-all ${!openBuyBox ? "invisible opacity-0 w-0" : "visible opacity-1 !w-full"}`}>
-                    <div className="absolute top-4 cursor-pointer left-2 text-black " onClick={() => setopenBuyBox(false)}><CloseOutlined /></div>
-                    <div className="bg-gray-200 rounded-[20px] p-5">
-                        <div className="mb-3 w-full flex justify-between">
-                            <div className="text-black">سبد خرید</div>
-                            <div className="text-red-500"><DeleteOutlined /></div>
-                        </div>
-                        <BuyBox />
+        <div className={`w-full h-full relative ${!openBuyBox ? "overflow-y-auto" : ''}`}>
+            <div className="sticky right-0 top-40 text-black w-[30px] h-[30px] rounded-lg shadow-xl text-xl bg-white flex justify-center items-center lg:hidden z-50" onClick={() => setopenBuyBox(true)}>
+                <div className="w-[20px] h-[20px] bg-red-500 flex justify-center items-center text-white absolute -left-3 -top-3 text-xs rounded-full">5</div>
+                <ShoppingCartOutlined />
+            </div>
+            <div className={`absolute top-0 left-0  h-full bg-gray-100 z-50 p-2 pt-10 transition-all ${!openBuyBox ? "-translate-x-[2000px]" : "translate-x-0 w-full"}`}>
+                <div className="absolute top-4 cursor-pointer left-2 text-black " onClick={() => setopenBuyBox(false)}><CloseOutlined /></div>
+                <div className="bg-gray-200 rounded-[20px] p-5">
+                    <div className="mb-3 w-full flex justify-between">
+                        <div className="text-black">سبد خرید</div>
+                        <div className="text-red-500"><DeleteOutlined /></div>
                     </div>
+                    <BuyBox />
                 </div>
-                <div className="grid grid-cols-12 gap-x-4 mx-auto w-[90%] mt-10">
+            </div>
+            <Header />
+            <div className="w-full h-full relative px-3">
+                <div className="grid grid-cols-12 gap-x-4 mx-auto w-[95%] mt-10">
                     <div className="col-span-12 lg:col-span-8 bg-gray-100 rounded-[20px] shadow-lg p-3">
                         <TabsCustom itemsTabs={itemsTabs} type={"card"} customTabs={"customTabs"} />
                         {/* <TabsCustom itemsTabs={itemsTabs} /> */}
@@ -157,7 +160,8 @@ const Store = () => {
                     </div>
                 </div>
             </div>
-        </>
+            <Footer />
+        </div>
     );
 }
 

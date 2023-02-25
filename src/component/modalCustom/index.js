@@ -18,7 +18,7 @@ const ModalCustom = ({ setIsModalOpen, isModalOpen, children ,title}) => {
     return (
         <>
 
-            <Modal open={isModalOpen} onOk={handleOk} footer={false} onCancel={handleCancel} title={title? title :''}>
+            <Modal open={isModalOpen} onOk={handleOk} footer={false} onCancel={handleCancel} className="!p-0" title={title? title :''}>
                 {children}
             </Modal>
         </>

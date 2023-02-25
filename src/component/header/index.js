@@ -41,44 +41,45 @@ export const Header = () => {
                     <BtnCustom title={"ادامه"} icon={<LeftOutlined className='text-white ' />} className=' w-[250px] h-[48px] ' leftIcon />
                 </div>
             </ModalCustom>
-            <div className='relative'>
-                <div className='absolute z-30 top-32 right-20'>
-                    <h1 className='font-bold text-[20px] mr-2 mb-2'>شعبه مورد نظر خود را انتخاب کنید</h1>
-                    <p className='mr-2 mb-2'>آدرس</p>
-                    <BtnCustom title='انتخاب کنید' icon={<DownOutlined />} leftIcon clickFn={() => setModalOpen(true)} />
-                    <ModalCustom isModalOpen={ModalOpen} setIsModalOpen={setModalOpen} title='لطفا شعبه مورد نظر خود را انتخاب کنید'>
-                        <div className='grid grid-cols-12 gap-y-2 mt-6 border-t pt-3'>
-                            <div className='col-span-6 items-center flex'>
-                                <EnvironmentOutlined />
-                                <p className='mb-1 mr-1'>زعفرانیه</p>
-                            </div>
-                            <div className='col-span-6 items-center flex'>
-                                <EnvironmentOutlined />
-                                <p className='mb-1 mr-1'>زعفرانیه</p>
-                            </div>
-                            <div className='col-span-6 items-center flex'>
-                                <EnvironmentOutlined />
-                                <p className='mb-1 mr-1'>زعفرانیه</p>
-                            </div>
-                            <div className='col-span-6 items-center flex'>
-                                <EnvironmentOutlined />
-                                <p className='mb-1 mr-1'>زعفرانیه</p>
-                            </div>
-                            <div className='col-span-6 items-center flex'>
-                                <EnvironmentOutlined />
-                                <p className='mb-1 mr-1'>زعفرانیه</p>
-                            </div>
-                            <div className='col-span-6 items-center flex'>
-                                <EnvironmentOutlined />
-                                <p className='mb-1 mr-1'>زعفرانیه</p>
-                            </div>
-                            <div className='col-span-6 items-center flex'>
-                                <EnvironmentOutlined />
-                                <p className='mb-1 mr-1'>زعفرانیه</p>
-                            </div>
-                        </div>
-                    </ModalCustom>
+            <div className='relative rounded-xl overflow-hidden'>
+                <div className="absolute top-0 left-0 right-0 bottom-0 bg-black-200 opacity-70 z-10"></div>
+                <div className='absolute z-30 top-32 left-[50%] -translate-x-[50%] flex justify-center flex-col items-center'>
+                    <h1 className='font-bold text-[30px] mr-2 mb-2 text-center'>شعبه نیاوران</h1>
+                    <p className='mr-2 mb-5 text-sm text-center'>آدرس: نیاوران, سه راه یاسر,خیابان باهنر</p>
+                    <BtnCustom title='شعبه' icon={<DownOutlined />} leftIcon clickFn={() => setModalOpen(true)} />
                 </div>
+                <ModalCustom isModalOpen={ModalOpen} setIsModalOpen={setModalOpen} title='لطفا شعبه مورد نظر خود را انتخاب کنید'>
+                    <div className='grid grid-cols-12 gap-y-2 mt-6 border-t pt-3'>
+                        <div className='col-span-6 items-center flex'>
+                            <EnvironmentOutlined />
+                            <p className='mb-1 mr-1'>زعفرانیه</p>
+                        </div>
+                        <div className='col-span-6 items-center flex'>
+                            <EnvironmentOutlined />
+                            <p className='mb-1 mr-1'>زعفرانیه</p>
+                        </div>
+                        <div className='col-span-6 items-center flex'>
+                            <EnvironmentOutlined />
+                            <p className='mb-1 mr-1'>زعفرانیه</p>
+                        </div>
+                        <div className='col-span-6 items-center flex'>
+                            <EnvironmentOutlined />
+                            <p className='mb-1 mr-1'>زعفرانیه</p>
+                        </div>
+                        <div className='col-span-6 items-center flex'>
+                            <EnvironmentOutlined />
+                            <p className='mb-1 mr-1'>زعفرانیه</p>
+                        </div>
+                        <div className='col-span-6 items-center flex'>
+                            <EnvironmentOutlined />
+                            <p className='mb-1 mr-1'>زعفرانیه</p>
+                        </div>
+                        <div className='col-span-6 items-center flex'>
+                            <EnvironmentOutlined />
+                            <p className='mb-1 mr-1'>زعفرانیه</p>
+                        </div>
+                    </div>
+                </ModalCustom>
                 <Carousel autoplay effect="fade" >
                     <div>
                         <h3 style={contentStyle}><img src="https://static.delino.com/Image/Subscriber/meykhosh/Sliders/a2xsu5dm.0xn.jpg" style={{ height: "370px", width: "100%" }} /></h3>

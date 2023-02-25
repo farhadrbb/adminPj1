@@ -7,7 +7,7 @@ import {
     MinusOutlined,
     PlusOutlined
 } from '@ant-design/icons';
-const BuyBox = () => {
+const BuyBox = ({mobile}) => {
     const [counter, setcounter] = useState(0);
     let data = [
         {
@@ -35,10 +35,11 @@ const BuyBox = () => {
             price: '۱۲۰/۰۰۰'
         },
     ]
+    
 
     return (
         <>
-            <div className=" px-2 text-black h-[450px] overflow-y-auto ">
+            <div className={`px-2 text-black h-[450px] overflow-y-auto ${mobile && "h-[320px]"}`}>
                 {data.map((itm, ind) => (
 
                     <div className={`w-full h-[80px] border-b flex flex-col justify-center border-gray-300  p-2 ${ind === 0 ? "border-t" : ''}`}>

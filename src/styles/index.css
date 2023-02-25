@@ -17,21 +17,21 @@
 
   /* Track */
   ::-webkit-scrollbar-track {
-    box-shadow: inset 0 0 2px lightgray;
+    box-shadow: inset 0 0 2px gray;
     border-radius: 5px;
     
   }
 
   /* Handle */
   ::-webkit-scrollbar-thumb {
-    background: lightgray;
+    background: gray;
     border-radius: 10px;
     margin:'0 5px'
   }
 
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
-    background: gray;
+    background: black;
   }
 
   body,
@@ -39,6 +39,7 @@
     @apply w-full h-full overflow-hidden;
     direction: rtl;
     font-family: "vazir";
+    overflow:hidden;
     
   }
 

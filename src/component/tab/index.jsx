@@ -9,6 +9,7 @@ export default function TabNav({tabs}) {
         setOpenTab(name);
         setOpenContent(content)
     };
+    
 
     return (
 

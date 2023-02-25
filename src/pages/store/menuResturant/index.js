@@ -1,6 +1,7 @@
 import React from 'react';
 import FoodInfo from '../food';
-import TabsCustom from '../tabs';
+// import TabsCustom from '../tabs';
+import { TabsCustom } from '../../../component/tabsCustom';
 
 
 
@@ -8,7 +9,7 @@ let itemsTabs = [
     {
         label: `پیتزا `,
         key: 1,
-        children: <div className="h-[500px] overflow-y-auto"><FoodInfo/></div>,
+        children: <div className="h-[600px] overflow-y-auto"><FoodInfo/></div>,
     },
     {
         label: `پیش غذا `,
@@ -51,7 +52,7 @@ const MenuResturant = () => {
     return (
         <>
             <div>
-                <TabsCustom itemsTabs={itemsTabs} center={true}/>
+                <TabsCustom data={itemsTabs} center={true} type={"border-b"}/>
             </div>
         </>
     );

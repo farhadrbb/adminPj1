@@ -111,7 +111,7 @@ let itemsTabs = [
                     </div>
                     <div className="lg:col-span-6 col-span-12">
                         {/* <SimpleMap /> */}
-                        <div className="w-[500px] h-[500px]"><MapDisplay /></div>
+                        <div className="w-[500px] h-[500px] "><MapDisplay /></div>
                     </div>
                 </div>
             </div>
@@ -119,58 +119,69 @@ let itemsTabs = [
     },
 ];
 const Store = () => {
-    const [openBuyBox, setopenBuyBox] = useState(false);
     const [ModalOpen, setModalOpen] = useState(false);
+    const [showProfile, setshowProfile] = useState(false);
+
 
     return (
-        <div
-            className={`w-full h-full relative overflow-x-hidden  ${!openBuyBox ? "overflow-y-auto" : "overflow-y-hidden"
-                }`}
-        >
-            <Header />
+        <>
             <div
-                className="sticky right-0 top-40 text-black w-[30px] h-[30px] rounded-lg shadow-xl text-xl bg-white flex justify-center items-center lg:hidden z-50"
-                onClick={() => setModalOpen(true)}
+                className={`w-full h-full relative overflow-x-hidden ${showProfile ? "overflow-y-hidden" : 'overflow-y-auto'}`}
             >
-                <div className="w-[20px] h-[20px] bg-red-500 flex justify-center items-center text-white absolute -left-3 -top-3 text-xs rounded-full">
-                    5
-                </div>
-                <ShoppingCartOutlined />
-            </div>
-            <ModalCustom isModalOpen={ModalOpen} setIsModalOpen={setModalOpen}>
-            
-                   
-                    <div className="bg-gray-100 w-full h-full  rounded-[20px]  p-5 mt-5">
-                        <div className="mb-3 w-full flex justify-between">
-                            <div className="text-black">سبد خرید</div>
-                            <div className="text-red-500">
-                                <DeleteOutlined />
-                            </div>
-                        </div>
-                        <BuyBox mobile/>
+                
+                <Header showProfile={showProfile} setshowProfile={setshowProfile} />
+                <div
+                    className="sticky right-0 top-40 text-black w-[30px] h-[30px] rounded-lg shadow-xl text-xl bg-white flex justify-center items-center lg:hidden z-50"
+                    onClick={() => setModalOpen(true)}
+                >
+                    <div className="w-[20px] h-[20px] bg-red-500 flex justify-center items-center text-white absolute -left-3 -top-3 text-xs rounded-full">
+                        5
                     </div>
+                    <ShoppingCartOutlined />
+                </div>
+                <div className="w-full h-[750px] relative px-3">
+                    <div className="grid grid-cols-12 gap-x-4 mx-auto w-[95%] mt-10">
+                        <div className="col-span-12 lg:col-span-8 bg-gray-100 rounded-[20px] shadow-lg p-3">
+                            <TabsCustom data={itemsTabs} />
+                            {/* <TabsCustom itemsTabs={itemsTabs} type={"card"} customTabs={"customTabs"} /> */}
+                        </div>
+                        <div className="col-span-4 bg-gray-100 p-5 rounded-[20px] shadow-lg text-black hidden lg:block">
+                            <div className="mb-3 w-full flex justify-between">
+                                <div>سبد خرید</div>
+                                <div className="text-red-500">
+                                    <DeleteOutlined />
+                                </div>
+                            </div>
+                            <BuyBox />
+                        </div>
+                    </div>
+                </div>
+                <Footer />
+            </div>
+
+
+
+
+
+
+            <ModalCustom isModalOpen={ModalOpen} setIsModalOpen={setModalOpen}>
+
+
+                <div className="bg-gray-100 w-full h-full  rounded-[20px]  p-5 mt-5">
+                    <div className="mb-3 w-full flex justify-between">
+                        <div className="text-black">سبد خرید</div>
+                        <div className="text-red-500">
+                            <DeleteOutlined />
+                        </div>
+                    </div>
+                    <BuyBox mobile />
+                </div>
             </ModalCustom>
 
 
-            <div className="w-full h-full relative px-3">
-                <div className="grid grid-cols-12 gap-x-4 mx-auto w-[95%] mt-10">
-                    <div className="col-span-12 lg:col-span-8 bg-gray-100 rounded-[20px] shadow-lg p-3">
-                        <TabsCustom data={itemsTabs} />
-                        {/* <TabsCustom itemsTabs={itemsTabs} type={"card"} customTabs={"customTabs"} /> */}
-                    </div>
-                    <div className="col-span-4 bg-gray-100 p-5 rounded-[20px] shadow-lg text-black hidden lg:block">
-                        <div className="mb-3 w-full flex justify-between">
-                            <div>سبد خرید</div>
-                            <div className="text-red-500">
-                                <DeleteOutlined />
-                            </div>
-                        </div>
-                        <BuyBox />
-                    </div>
-                </div>
-            </div>
-            <Footer />
-        </div>
+
+
+        </>
     );
 };
 

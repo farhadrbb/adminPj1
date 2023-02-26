@@ -5,12 +5,14 @@ import { crudDataApi } from "./api/crudData";
 import { getCaptcha } from "./api/getCaptcha";
 import { authApi } from "./api/auth";
 import authSlice from "./slices/authSlice";
+import buyBox from "./slices/buyBox";
 
 const reducer = combineReducers({
     [crudDataApi.reducerPath]: crudDataApi.reducer,
     [getCaptcha.reducerPath]: getCaptcha.reducer,
     [authApi.reducerPath]: authApi.reducer,
-    authSlice
+    authSlice,
+    buyBox
 });
 
 export const store = configureStore({

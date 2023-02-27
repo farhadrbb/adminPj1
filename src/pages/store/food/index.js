@@ -42,10 +42,10 @@ const FoodInfo = () => {
     }
     return (
         <>
-            <div className="grid grid-cols-12 gap-3 px-1">
+            <div className="grid grid-cols-12 gap-y-10 gap-x-4 px-2">
                 {buy.map((itm, ind) => (
-                    <div className="col-span-12 md:col-span-6 xl:col-span-3">
-                        <div className="w-full h-[320px] border shadow-lg rounded-xl">
+                    <div className="col-span-12 sm:col-span-6 lg:col-span-4  flex justify-center">
+                        <div className="w-[220px] h-[320px] border shadow-lg rounded-xl">
                             <div className="w-full h-[150px]">
                                 <img src={ff} className="w-full h-full rounded-xl" />
                             </div>

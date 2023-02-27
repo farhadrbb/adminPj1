@@ -103,7 +103,7 @@ export const Header = ({ setshowProfile, showProfile }) => {
                     </div>
                 </div>
             </div>
-            <div className='relative rounded-xl overflow-hidden'>
+            <div className='relative overflow-hidden'>
                 <div className="absolute top-0 left-0 right-0 bottom-0 bg-black-200 opacity-70 z-10"></div>
                 <div className='absolute z-30 top-32 left-[50%] -translate-x-[50%] flex justify-center flex-col items-center'>
                     <h1 className='font-bold text-[30px] mr-2 mb-2 text-center'>{selectShoab?.shoab}</h1>

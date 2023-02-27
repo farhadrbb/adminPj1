@@ -9,7 +9,7 @@ let itemsTabs = [
     {
         label: `پیتزا `,
         key: 1,
-        children: <div className="h-[600px] overflow-y-auto"><FoodInfo/></div>,
+        children: <div className="h-[600px] overflow-y-auto overflow-x-hidden"><FoodInfo/></div>,
     },
     {
         label: `پیش غذا `,

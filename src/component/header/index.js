@@ -1,7 +1,7 @@
 
 import React, { useState } from 'react'
 import resturant from '../../assest/image/resturant.png'
-import { PoweroffOutlined, UserOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, PoweroffOutlined, UserOutlined } from '@ant-design/icons';
 import { Modal, Button } from 'antd';
 // import type { SizeType } from 'antd/es/config-provider/SizeContext';
 import { LeftOutlined } from '@ant-design/icons';
@@ -14,6 +14,7 @@ import BtnCustom from '../btn';
 import ModalCustom from '../modalCustom';
 // import ModalCustom from './modal';
 import { Carousel } from 'antd';
+import { Profile } from './profile';
 const contentStyle = {
     height: '370px',
     // color: '#fff',
@@ -86,7 +87,10 @@ export const Header = ({ setshowProfile, showProfile }) => {
 
     return (
         <>
-            <div className={`absolute z-50 top-0 right-0 w-[200px] bg-red-300 h-full transition-all ${showProfile ? "translate-x-0" : 'translate-x-[500px]'}`}></div>
+            <div className={`absolute z-50 top-0 right-0 w-[250px]  bg-gray-100 h-full transition-all rounded-tl-[10px] rounded-bl-[10px] shadow-2xl ${showProfile ? "translate-x-0" : 'translate-x-[500px]'}`}>
+                <div className='absolute top-2 left-2 text-red-700' onClick={()=>setshowProfile(false)}><CloseCircleOutlined/></div>
+                <Profile/>
+            </div>
             {showProfile && (<div className={`absolute z-40 top-0 bottom-0 left-0 right-0 bg-black-200 opacity-50`} onClick={() => setshowProfile(false)}></div>)}
             {contextHolder}
 

@@ -128,7 +128,6 @@ const Store = () => {
             <div
                 className={`w-full h-full relative overflow-x-hidden ${showProfile ? "overflow-y-hidden" : 'overflow-y-auto'}`}
             >
-                
                 <Header showProfile={showProfile} setshowProfile={setshowProfile} />
                 <div
                     className="sticky right-0 top-40 text-black w-[30px] h-[30px] rounded-lg shadow-xl text-xl bg-white flex justify-center items-center lg:hidden z-50"
@@ -165,8 +164,6 @@ const Store = () => {
 
 
             <ModalCustom isModalOpen={ModalOpen} setIsModalOpen={setModalOpen}>
-
-
                 <div className="bg-gray-100 w-full h-full  rounded-[20px]  p-5 mt-5">
                     <div className="mb-3 w-full flex justify-between">
                         <div className="text-black">سبد خرید</div>

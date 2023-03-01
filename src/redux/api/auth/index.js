@@ -59,7 +59,7 @@ export const authApi = createApi({
         method: "POST",
         body: info,
         headers: {
-          "accept": "text/plain",
+          accept: "text/plain",
           "Content-Type": "application/json-patch+json",
         },
       }),
@@ -73,5 +73,6 @@ export const {
   useLazySejamCodeQuery,
   useValidateCustomerMutation,
   useGetCustomerFileMutation,
-  useGetUserProfileMutation
+  useGetUserProfileMutation,
 } = authApi;
+

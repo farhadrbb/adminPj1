@@ -14,9 +14,10 @@ import { Header } from "../../component/header";
 import { Footer } from "../../component/footer";
 import MapDisplay from "../../component/googleMap";
 import ModalCustom from "../../component/modalCustom";
+import { useLazyGetAllDataQuery, usePostAllDataMutation } from "../../redux/api/getAllData";
+import { useEffect } from "react";
 // import SimpleMap from "../../component/googleMap";
 // import SimpleMap from "../../component/googleMap";
-const position = [51.505, -0.09];
 
 const columns = [
     {
@@ -121,6 +122,19 @@ let itemsTabs = [
 const Store = () => {
     const [ModalOpen, setModalOpen] = useState(false);
     const [showProfile, setshowProfile] = useState(false);
+
+    const [getAll,resultget] = usePostAllDataMutation()
+    useEffect(()=>{ 
+        let goodsGroupBody = {
+            visible: true,
+            branchId: 0
+          }
+    
+          getAll({url:'GoodsGroup/getAll',goodsGroupBody})
+        //   goodsGroup({url:'GoodsGroup/getAll',body})
+    },[])
+
+    console.log("resultget",resultget);
 
 
     return (

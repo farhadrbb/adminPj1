@@ -16,6 +16,7 @@ import MapDisplay from "../../component/googleMap";
 import ModalCustom from "../../component/modalCustom";
 import { useLazyGetAllDataQuery, usePostAllDataMutation } from "../../redux/api/getAllData";
 import { useEffect } from "react";
+import { useSelector } from "react-redux";
 // import SimpleMap from "../../component/googleMap";
 // import SimpleMap from "../../component/googleMap";
 
@@ -89,52 +90,62 @@ const data = [
     },
 ];
 
-let itemsTabs = [
-    {
-        label: `منو`,
-        key: 1,
-        children: <MenuResturant />,
-    },
-    {
-        label: `اطلاعات`,
-        key: 2,
-        children: (
-            <div className="h-[600px] overflow-y-auto w-full">
-                <div className="grid grid-cols-12 gap-x-3">
-                    <div className="lg:col-span-6 col-span-12">
-                        <Table
-                            columns={columns}
-                            dataSource={data}
-                            size="small"
-                            pagination={false}
-                            className="shadow-xl"
-                        />
-                    </div>
-                    <div className="lg:col-span-6 col-span-12">
-                        {/* <SimpleMap /> */}
-                        <div className="w-[500px] h-[500px] "><MapDisplay /></div>
-                    </div>
-                </div>
-            </div>
-        ),
-    },
-];
+
 const Store = () => {
     const [ModalOpen, setModalOpen] = useState(false);
     const [showProfile, setshowProfile] = useState(false);
+    const [getdataGroup, resultgetDataGroup] = useLazyGetAllDataQuery()
+    const [getAllPost, resultgetAllPost] = usePostAllDataMutation()
+    const buy = useSelector(state => state.buyBox.value)
 
-    const [getAll,resultget] = usePostAllDataMutation()
-    useEffect(()=>{ 
-        let goodsGroupBody = {
-            visible: true,
-            branchId: 0
-          }
-    
-          getAll({url:'GoodsGroup/getAll',goodsGroupBody})
-        //   goodsGroup({url:'GoodsGroup/getAll',body})
-    },[])
 
-    console.log("resultget",resultget);
+    const [selectShoab, setSelectShoab] = useState();
+
+
+
+    let itemsTabs = [
+        {
+            label: `منو`,
+            key: 1,
+            children: <MenuResturant resultgetAllPost={resultgetAllPost}/>,
+        },
+        {
+            label: `اطلاعات`,
+            key: 2,
+            children: (
+                <div className="h-[600px] overflow-y-auto w-full">
+                    <div className="grid grid-cols-12 gap-x-3">
+                        <div className=" col-span-12">
+                            <Table
+                                columns={columns}
+                                dataSource={data}
+                                size="small"
+                                pagination={false}
+                                className="shadow-xl"
+                            />
+                        </div>
+                        {/* <div className="lg:col-span-6 col-span-12">
+                            <div className="w-[300px] h-[300px] "><MapDisplay /></div>
+                        </div> */}
+                    </div>
+                </div>
+            ),
+        },
+    ];
+
+    useEffect(() => {
+
+        if (selectShoab?.id) {
+            let body = {
+                visible: true,
+                branchId: selectShoab.id
+            }
+            getAllPost({ url: "GoodsGroup/getAll", body})
+        }
+    }, [selectShoab]);
+
+
+
 
 
     return (
@@ -142,17 +153,17 @@ const Store = () => {
             <div
                 className={`w-full h-full relative overflow-x-hidden ${showProfile ? "overflow-y-hidden" : 'overflow-y-auto'}`}
             >
-                <Header showProfile={showProfile} setshowProfile={setshowProfile} />
+                <Header showProfile={showProfile} setshowProfile={setshowProfile} setSelectShoab={setSelectShoab} selectShoab={selectShoab} />
                 <div
-                    className="sticky right-0 top-40 text-black w-[30px] h-[30px] rounded-lg shadow-xl text-xl bg-white flex justify-center items-center lg:hidden z-50"
+                    className="sticky right-0 top-40 text-black w-[30px] h-[30px] rounded-lg shadow-xl cursor-pointer text-xl bg-white flex justify-center items-center lg:hidden z-50"
                     onClick={() => setModalOpen(true)}
                 >
                     <div className="w-[20px] h-[20px] bg-red-500 flex justify-center items-center text-white absolute -left-3 -top-3 text-xs rounded-full">
-                        5
+                        {buy?.length}
                     </div>
                     <ShoppingCartOutlined />
                 </div>
-                <div className="w-full h-[750px] relative px-3">
+                <div className="w-full h-[500px] relative px-3">
                     <div className="grid grid-cols-12 gap-x-4 mx-auto w-[95%] mt-10">
                         <div className="col-span-12 lg:col-span-8 bg-gray-100 rounded-[20px] shadow-lg p-3">
                             <TabsCustom data={itemsTabs} />

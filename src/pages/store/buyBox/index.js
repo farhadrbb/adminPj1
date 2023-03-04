@@ -14,18 +14,22 @@ const BuyBox = ({ mobile }) => {
     const [isFill, setisFill] = useState(false);
     const buy = useSelector(state => state.buyBox.value)
     const dispatch = useDispatch()
+
+    const save = async (buy)=>{
+        await sessionStorage.setItem('buy',JSON.stringify(buy))
+   }
     const handleBuy = (itm, type) => {
-        let filter = buy.map((item, index) => {
-            if (item.key === itm.key) {
+        let filter = buy?.map((item, index) => {
+            if (item.id === itm.id) {
                 if (type === "plus") {
                     return {
                         ...item,
-                        count: item.count + 1
+                        count: item?.count ? item?.count + 1 : 1
                     }
                 } else {
                     return {
                         ...item,
-                        count: item.count != 0 ? item.count - 1 : 0
+                        count: item?.count != 0 ? item.count - 1 : 0
                     }
                 }
             } else {
@@ -33,15 +37,16 @@ const BuyBox = ({ mobile }) => {
             }
         })
 
-        dispatch(setBuy(filter))
+        save(filter)
 
+        dispatch(setBuy(filter))        
     }
-
+    
     const handleSumPrice = (itm) => {
         let sum = 0
         buy.map((item, index) => {
             if (item.count > 0) {
-                sum += item.count * item.price
+                sum += item.count * item.goodsPrice
             }
         })
         if (sum > 0) {
@@ -49,30 +54,39 @@ const BuyBox = ({ mobile }) => {
         } else {
             setisFill(false)
         }
-        setsum(sum.toFixed(3))
-
+        setsum(sum)
+        
     }
-
+    
     useEffect(() => {
         handleSumPrice()
     }, [buy]);
 
-
-
+    // console.log("buy",buy);
+    
+    const handleCount = (itm) => {
+        let count = buy.filter((item, ind) => itm.goodsName === item.goodsName)
+        if (count[0]?.count) {
+            return count[0]?.count
+        } else{
+            return 0
+        }
+    }
+    
     if (isFill) {
-
+        
         return (
             <>
 
-                <div className={`px-2 text-black h-[450px] overflow-y-auto ${mobile && "h-[320px]"}`}>
+                <div className={`px-2 text-black h-[300px] overflow-y-auto`}>
                     {buy.map((itm, ind) => (
                         <>
                             {itm.count > 0 && (
                                 <div className={`w-full h-[80px] border-b flex flex-col justify-center border-gray-300  p-2 ${ind === 0 ? "border-t" : ''}`}>
-                                    <div className="text-lg">{itm.title}</div>
+                                    <div className="text-lg">{itm.goodsName}</div>
                                     <div className="mt-2 text-xs flex justify-between">
                                         <div className="flex">
-                                            <span>{itm.price}</span>
+                                            <span>{itm.goodsPrice}</span>
                                             <span>تومان</span>
                                         </div>
                                         <div>
@@ -81,7 +95,7 @@ const BuyBox = ({ mobile }) => {
                                                     <MinusOutlined />
                                                 </span>
                                                 <span className="font-bold text-base mx-3">
-                                                    {itm.count}
+                                                {handleCount(itm)}
                                                 </span>
                                                 <span className="font-bold text-base mx-1 cursor-pointer hover:text-green-400" onClick={() => handleBuy(itm, "plus")}>
                                                     <PlusOutlined />

@@ -30,7 +30,7 @@ export const baseQuery = async (args, api, extraOptions) => {
   if (result.error && result.error.status === 401) {
     alert('دوباره لاگین کنید')
     sessionStorage.removeItem("auth")
-    
+    window.location.reload()
   }
   return result;
 };

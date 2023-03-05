@@ -72,6 +72,7 @@ const BuyBox = ({ mobile }) => {
             return 0
         }
     }
+
     
     if (isFill) {
         

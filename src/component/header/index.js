@@ -8,6 +8,7 @@ import { LeftOutlined } from '@ant-design/icons';
 import { DownOutlined } from '@ant-design/icons';
 import { EnvironmentOutlined, SearchOutlined } from '@ant-design/icons';
 import { message } from 'antd';
+import image from "../../assest/image/top-view-table-full-delicious-food-composition_23-2149141353.894cfe61f5e56e7f83a0.avif"
 
 
 import BtnCustom from '../btn';
@@ -18,9 +19,10 @@ import { Profile } from './profile';
 import { TabsCustom } from '../tabsCustom';
 import { useLazyGetAllDataQuery, usePostAllDataMutation } from '../../redux/api/getAllData';
 import Input from 'antd/es/input/Input';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import AddressList from './addressList';
 import Loading from '../loading';
+import { setSelectShoabFn } from '../../redux/slices/buyBox';
 const contentStyle = {
     height: '370px',
     // color: '#fff',
@@ -50,13 +52,14 @@ const contentStyle = {
 // ]
 export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSelectShoab }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const [ModalOpen, setModalOpen] = useState(true);
+    const [ModalOpen, setModalOpen] = useState(false);
     const [modalLocation, setModalLocation] = useState(false)
     const [intoRegister, setInfoRegister] = useState({});
     const [stateLogin, setstateLogin] = useState(false);
     const [regiLoginApi, resultRegiLoginApi] = usePostAllDataMutation()
     const [getData, resultData] = useLazyGetAllDataQuery()
     const [messageApi, contextHolder] = message.useMessage()
+    const dispatch = useDispatch()
 
 
 
@@ -93,10 +96,10 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
 
 
     useEffect(() => {
-        if (resultRegiLoginApi.isSuccess && resultRegiLoginApi.data?.errorCode != 403 && resultRegiLoginApi.data) {
+        if (resultRegiLoginApi.isSuccess && resultRegiLoginApi.originalArgs.url === "User/login") {
             messageApi.open({
                 type: 'success',
-                content: 'عملبات با موفقیت انجام شد',
+                content: 'شما لاگین شدید',
             });
             setstateLogin(true)
             setIsModalOpen(false)
@@ -110,6 +113,7 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
         }
         if (resultData.data?.data?.branches?.length > 0) {
             setSelectShoab(resultData.data?.data?.branches[0])
+            dispatch(setSelectShoabFn(resultData.data?.data?.branches[0]))
         }
     }, [resultRegiLoginApi, resultData]);
 
@@ -127,7 +131,7 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
 
                     <p className='font-bold mb-4' >لطفا اطلاعات خود را وارد کنید</p>
                     <input value={intoRegister.mobile} placeholder='شماره موبایل (۰۹)' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "mobile")} />
-                    <input value={intoRegister.password} placeholder='رمز عبور' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "password")} />
+                    <input value={intoRegister.password} typr="password" placeholder='رمز عبور' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "password")} />
 
                     <BtnCustom title={"ورود"} className=' w-[250px] h-[48px] ' leftIcon clickFn={() => handleSubmitLogin()} />
                 </div>,
@@ -153,23 +157,10 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
 
     const handleShoab = (itm) => {
         setSelectShoab(itm)
+        dispatch(setSelectShoabFn(itm))
         setModalOpen(false)
     }
-    const hanldeMobile = () => {
-        // if (!mobile || mobile.length < 11 || mobile.length > 11) {
-        //     messageApi.open({
-        //         type: 'error',
-        //         content: 'شماره موبایل اشتباه است',
-        //     });
-        //     return
-        // }
-        // messageApi.open({
-        //     type: 'success',
-        //     content: 'شما وارد شدید',
-        // });
-        // setIsModalOpen(false)
-        // setstateLogin(true)
-    }
+
 
     const handleExit = () => {
         setstateLogin(false)
@@ -179,6 +170,12 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
         });
         sessionStorage.removeItem("auth")
     }
+
+    useEffect(() => {
+        if (resultData.data?.data?.branches.length > 1) {
+            setModalOpen(true)
+        }
+    }, [resultData.data?.data?.branches]);
 
 
 
@@ -213,11 +210,19 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
             </div>
             <div className='relative overflow-hidden'>
                 <div className="absolute top-0 left-0 right-0 bottom-0 bg-black-200 opacity-70 z-10"></div>
-                <div className='absolute z-30 top-32 left-[50%] -translate-x-[50%] flex justify-center flex-col items-center'>
-                    <h1 className='font-bold text-[30px] mr-2 mb-2 text-center'>{selectShoab?.description}</h1>
-                    <p className='mr-2 mb-5 text-sm text-center'>{`${"آدرس:"}${selectShoab?.addressDetail}`}</p>
-                    <BtnCustom title='شعبه' icon={<DownOutlined />} leftIcon clickFn={() => setModalOpen(true)} />
-                </div>
+                {resultData.data?.data?.branches.length > 0 && (
+                    <div className='absolute z-30 top-32 left-[50%] -translate-x-[50%] flex justify-center flex-col items-center'>
+                        <h1 className='font-bold text-[30px] mr-2 mb-2 text-center'>{selectShoab?.description}</h1>
+                        <p className='mr-2 mb-5 text-sm text-center'>{`${"آدرس:"}${selectShoab?.addressDetail}`}</p>
+                        {resultData.data?.data?.branches.length > 1 && (
+                            <BtnCustom title='شعبه' icon={<DownOutlined />} leftIcon clickFn={() => setModalOpen(true)} />
+                        )}
+                    </div>
+                )}
+                {resultData.isLoading && (<div className=" absolute z-30 top-32 left-[50%] -translate-x-[50%]  flex-col  flex justify-center items-center text-gray-500 w-full">
+                    <Loading />
+                    <div className="text-xs mx-1">در حال بارگزاری...</div>
+                </div>)}
 
                 <Carousel autoplay effect="fade" >
                     <div>
@@ -237,7 +242,7 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
                 </Carousel>
             </div>
             <ModalCustom isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
-                <TabsCustom data={itemsTabs} login/>
+                <TabsCustom data={itemsTabs} login />
             </ModalCustom>
             <ModalCustom isModalOpen={modalLocation} setIsModalOpen={setModalLocation}>
                 <div className="flex flex-col mt-5">
@@ -247,6 +252,7 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
                     </div>
                 </div>
             </ModalCustom>
+      
             <ModalCustom isModalOpen={ModalOpen} setIsModalOpen={setModalOpen} title='لطفا شعبه مورد نظر خود را انتخاب کنید'>
                 <div className='grid grid-cols-12 gap-y-2 mt-6 border-t pt-3'>
                     {resultData.data?.data?.branches?.map((itm, ind) => {

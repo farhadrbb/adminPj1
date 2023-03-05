@@ -11,7 +11,6 @@ export const TabsCustom = ({ data, type, center, menu, childMenu }) => {
   const clickTab = (ind, itm) => {
     setState(ind);
     if (menu) {
-
       dispatch(setSelectGroupMenu(itm))
     }
   };

@@ -3,7 +3,10 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     value: [],
-    selectMenu: 0
+    selectMenu: 0,
+    selectShoab:{},
+    selectAddress:{}
+
 }
 
 const buyBox = createSlice({
@@ -21,12 +24,23 @@ const buyBox = createSlice({
             }, []);
             state.value = result
         },
+
         setSelectGroupMenu: (state, action) => {
             state.selectMenu = action.payload
         },
+        deleteBuy: (state, action) => {
+            state.value = action.payload
+        },
+        setSelectShoabFn: (state, action) => {
+            state.selectShoab = action.payload
+        },
+        setSelectAddress: (state, action) => {
+            state.selectAddress = action.payload
+        },
+
 
     }
 })
 
-export const { setBuy, setSelectGroupMenu } = buyBox.actions;
+export const { setBuy, setSelectGroupMenu,setSelectAddress,setSelectShoabFn,deleteBuy } = buyBox.actions;
 export default buyBox.reducer;

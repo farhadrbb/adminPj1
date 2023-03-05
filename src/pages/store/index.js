@@ -16,7 +16,9 @@ import MapDisplay from "../../component/googleMap";
 import ModalCustom from "../../component/modalCustom";
 import { useLazyGetAllDataQuery, usePostAllDataMutation } from "../../redux/api/getAllData";
 import { useEffect } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteBuy, setBuy } from "../../redux/slices/buyBox";
+import BtnCustom from "../../component/btn";
 // import SimpleMap from "../../component/googleMap";
 // import SimpleMap from "../../component/googleMap";
 
@@ -97,9 +99,12 @@ const Store = () => {
     const [getdataGroup, resultgetDataGroup] = useLazyGetAllDataQuery()
     const [getAllPost, resultgetAllPost] = usePostAllDataMutation()
     const buy = useSelector(state => state.buyBox.value)
+    const dispatch = useDispatch()
 
 
     const [selectShoab, setSelectShoab] = useState();
+
+    const [cartModal, setcartModal] = useState(false);
 
 
 
@@ -107,7 +112,7 @@ const Store = () => {
         {
             label: `منو`,
             key: 1,
-            children: <MenuResturant resultgetAllPost={resultgetAllPost}/>,
+            children: <MenuResturant resultgetAllPost={resultgetAllPost} />,
         },
         {
             label: `اطلاعات`,
@@ -140,9 +145,18 @@ const Store = () => {
                 visible: true,
                 branchId: selectShoab.id
             }
-            getAllPost({ url: "GoodsGroup/getAll", body})
+            getAllPost({ url: "GoodsGroup/getAll", body })
         }
     }, [selectShoab]);
+
+    const handleDeleteBuy = () => {
+        sessionStorage.removeItem('buy')
+        dispatch(deleteBuy([]))
+        setcartModal(false)
+    }
+
+
+
 
 
 
@@ -169,10 +183,11 @@ const Store = () => {
                             <TabsCustom data={itemsTabs} />
                             {/* <TabsCustom itemsTabs={itemsTabs} type={"card"} customTabs={"customTabs"} /> */}
                         </div>
-                        <div className="col-span-4 bg-gray-100 p-5 rounded-[20px] shadow-lg text-black hidden lg:block">
+                        <div className="col-span-4 bg-gray-100 p-5 rounded-[20px] shadow-lg text-black hidden lg:block relative overflow-hidden">
+                            {/* <img className='absolute top-[30%] -left-[100px] bg-white' src="/img/images.png"/> */}
                             <div className="mb-3 w-full flex justify-between">
                                 <div>سبد خرید</div>
-                                <div className="text-red-500">
+                                <div className="text-red-500 cursor-pointer" onClick={() => setcartModal(true)}>
                                     <DeleteOutlined />
                                 </div>
                             </div>
@@ -199,6 +214,18 @@ const Store = () => {
                     <BuyBox mobile />
                 </div>
             </ModalCustom>
+
+
+
+                <ModalCustom isModalOpen={cartModal} setIsModalOpen={setcartModal}>
+                    <div className="flex flex-col mt-5">
+                        <div className>آیا از حذف  سبد خرید مطمئن هستید؟</div>
+                        <div className="flex justify-end mt-3">
+                            <BtnCustom title="تایید" clickFn={() => handleDeleteBuy()} />
+                            <BtnCustom title="انصراف" className="bg-red-600" clickFn={() => setcartModal(false)} />
+                        </div>
+                    </div>
+                </ModalCustom>
 
 
 

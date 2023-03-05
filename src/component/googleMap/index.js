@@ -52,7 +52,7 @@ Leaflet.Icon.Default.mergeOptions({
 // }
 
 
-const MapDisplay = ({setposition,position}) => {
+const MapDisplay = ({setposition,position,conut}) => {
     // const [state, setstate] = useState(
     //     {
     //         lat: 35.705413908738436,
@@ -64,7 +64,6 @@ const MapDisplay = ({setposition,position}) => {
 
     let loc = [position.lat,position.lng]
 
-    console.log("loc",loc);
     return (
         <MapContainer center={loc} zoom={position.zoom} style={{ height: '100%' }}>
             <TileLayer

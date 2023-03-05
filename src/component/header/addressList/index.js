@@ -1,9 +1,13 @@
 import { ArrowLeftOutlined, DeleteOutlined, EditOutlined, LeftOutlined, PlusOutlined, SearchOutlined } from '@ant-design/icons';
+import { message } from 'antd';
 import Input from 'antd/es/input/Input';
 import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useLazyGetAllDataQuery, usePostAllDataMutation } from '../../../redux/api/getAllData';
+import { setSelectAddress } from '../../../redux/slices/buyBox';
 import BtnCustom from '../../btn';
 import MapDisplay from '../../googleMap';
+import Loading from '../../loading';
 
 
 
@@ -12,7 +16,14 @@ const AddressList = ({ mobile }) => {
     const [getLocation, resultLocation] = useLazyGetAllDataQuery()
     const [PostLocation, resultPostLocation] = usePostAllDataMutation()
     const [addressText, setaddressText] = useState('');
-    const [ClickAddressState, setClickAddressState] = useState(null);
+    const [distance, setdistance] = useState(0);
+    const dispatch = useDispatch()
+    const shoab = useSelector(state => state.buyBox.selectShoab)
+    const address = useSelector(state => state.buyBox.selectAddress)
+    const [messageApi, contextHolder] = message.useMessage()
+
+
+
 
     const [position, setposition] = useState({
         lat: 35.705413908738436,
@@ -21,7 +32,13 @@ const AddressList = ({ mobile }) => {
     });
 
     const handleSubmitAddress = () => {
-
+        if (!addressText || addressText.length < 10) {
+            messageApi.open({
+                type: 'error',
+                content: 'لطفا آدرس خود را وارد کنید',
+            });
+            return
+        }
         let body = {
             title: "string",
             lat: position.lat,
@@ -29,6 +46,10 @@ const AddressList = ({ mobile }) => {
             details: addressText
         }
         PostLocation({ url: 'Address/Add', body })
+        messageApi.open({
+            type: 'success',
+            content: 'آدرس با موفقیت ثبت شد',
+        });
     }
 
 
@@ -36,15 +57,15 @@ const AddressList = ({ mobile }) => {
 
     useEffect(() => {
         getLocation('Address/GetAll')
-    }, [resultPostLocation.data]);
+        setstep(1)
+    }, [resultPostLocation.data?.data]);
+
+
 
 
     const handleClickAddress = (itm) => {
-        setClickAddressState(itm)
+        dispatch(setSelectAddress(itm))
     }
-
-
-
 
     var rad = function (x) {
         return x * Math.PI / 180;
@@ -61,23 +82,77 @@ const AddressList = ({ mobile }) => {
             Math.sin(dLong / 2) * Math.sin(dLong / 2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         var d = R * c;
-        console.log("d",(d/1000).toFixed(2));
+        setdistance(d.toFixed())
         return d; // returns the distance in meter
     };
 
+
+
     useEffect(() => {
-        getDistance({
-            lat: 35.7313908738436,
-            lng: 51.387143908068545,
-            zoom: 12,
-        },{
-            lat: 35.765413908738436,
-            lng: 51.317143908068545,
-            zoom: 12,
-        })
+        getDistance({ lat: shoab.lat, lng: shoab.lon }, { lat: address.lat, lng: address.lon })
+    }, [shoab, address]);
+
+    useEffect(() => {
+        if (distance && distance > shoab.coverage) {
+            messageApi.open({
+                type: 'error',
+                content: 'آدرس انتخابی در محدوده سرویس نمی باشد',
+            });
+        } else if (distance && distance < shoab.coverage) {
+            messageApi.open({
+                type: 'success',
+                content: 'آدرس انتخابی در محدوده سرویس می باشد',
+            });
+        }
+
+    }, [distance]);
+
+    console.log("distance", distance);
+
+    useEffect(() => {
+        return () => {
+            setdistance(null)
+        }
     }, []);
+
+
+
+    useEffect(() => {
+        if (resultLocation.data?.data?.addresses) {
+            dispatch(setSelectAddress(resultLocation.data?.data?.addresses[0]))
+        }
+    }, [resultLocation.data?.data?.addresses]);
+
+
+
+    useEffect(() => {
+        if (step === 2) {
+            setposition({
+                lat: 35.705413908738436,
+                lng: 51.387143908068545,
+                zoom: 12,
+            })
+        }
+    }, [step]);
+
+
+    // let itemsTabs = [
+    //     {
+    //         label: `لیست آدرس های موجود`,
+    //         key: 1,
+    //         children:'',
+    //     },
+    //     {
+    //         label: `آدرس جدید`,
+    //         key: 2,
+    //         children: '',
+    //     },
+    // ];
+
+
     return (
         <>
+            {contextHolder}
             <div className={`flex items-center ${step === 2 ? "justify-between" : 'justify-center'}`}>
                 <div className="font-bold text-base">انتخاب آدرس</div>
                 {step === 2 && (
@@ -86,13 +161,12 @@ const AddressList = ({ mobile }) => {
             </div>
             {step === 1 && (
                 <>
-                    <div className="text-cyan-50 flex justify-end items-center cursor-pointer" onClick={() => setstep(2)}>آدرس جدید <PlusOutlined className="mx-1 mt-1" /></div>
-                    <Input placeholder="جستجوی محله" className="mt-3" prefix={<SearchOutlined />} />
+                    <div className="text-cyan-50 flex justify-end items-center cursor-pointer mb-2" onClick={() => setstep(2)}>آدرس جدید <PlusOutlined className="mx-1 mt-1" /></div>
 
                     <div className={`text-black h-[300px] overflow-y-auto p-1`}>
                         {resultLocation.data?.data?.addresses?.map((itm, ind) => (
 
-                            <div className={`w-full py-4 border flex  justify-between rounded-xl cursor-pointer mt-5 shadow border-gray-300 px-2 ${ClickAddressState?.id === itm?.id ? "bg-cyan-50 text-white" : ''}`} onClick={() => handleClickAddress(itm)}>
+                            <div className={`w-full py-4 border flex  justify-between rounded-xl cursor-pointer mt-5 shadow border-gray-300 px-2 ${address?.id === itm?.id ? "bg-cyan-50 text-white" : ''}`} onClick={() => handleClickAddress(itm)}>
                                 <div className="text-xs font-bold">
                                     {itm.details}
                                 </div>
@@ -107,6 +181,12 @@ const AddressList = ({ mobile }) => {
                                 </div>
                             </div>
                         ))}
+                        {resultLocation.isLoading &&
+                            (<div className="flex justify-center items-center text-gray-500 w-full">
+                                <Loading />
+                                <div className="text-xs mx-1">در حال بارگزاری...</div>
+                            </div>
+                            )}
 
                     </div>
                 </>

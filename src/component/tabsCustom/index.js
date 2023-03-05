@@ -32,7 +32,7 @@ export const TabsCustom = ({ data, type, center, menu, childMenu }) => {
   return (
     <>
       <div className="w-full h-full flex flex-col ">
-        <div className={`w-full mb-2 overflow-x-auto sticky top-0  pb-2 ${center ? "flex md:justify-center" : ''} ${menu ? 'bg-gray-100' :''}`}>
+        <div className={`w-full  overflow-x-auto sticky top-0  pb-2 ${center ? "flex md:justify-center" : ''} ${menu ? 'bg-gray-100' :''}`}>
           <ul className="flex border-b border-gray-100 text-sm font-medium ">
             {data?.map((itm, ind) => (
               <li

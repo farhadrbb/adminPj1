@@ -15,6 +15,17 @@ export const getAllAData = createApi({
         };
       },
     }),
+    getLinkPay: builder.query({
+      query: (infoApi) => {
+        return {
+          url: `${infoApi}`,
+          // params: infoApi.filter,
+        };
+      },
+      
+    
+    }),
+
 
     postAllData: builder.mutation({
       query: (infoApi) => ({
@@ -22,10 +33,10 @@ export const getAllAData = createApi({
         method: "POST",
         // params: infoApi.filter || undefined,
         body: infoApi.body || undefined,
-      
+
       }),
     }),
   }),
 });
 
-export const { useLazyGetAllDataQuery, usePostAllDataMutation } = getAllAData;
+export const { useLazyGetAllDataQuery, usePostAllDataMutation, useLazyGetLinkPayQuery } = getAllAData;

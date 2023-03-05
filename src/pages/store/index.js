@@ -96,7 +96,7 @@ const data = [
 const Store = () => {
     const [ModalOpen, setModalOpen] = useState(false);
     const [showProfile, setshowProfile] = useState(false);
-    const [getdataGroup, resultgetDataGroup] = useLazyGetAllDataQuery()
+    // const [getdataGroup, resultgetDataGroup] = useLazyGetAllDataQuery()
     const [getAllPost, resultgetAllPost] = usePostAllDataMutation()
     const buy = useSelector(state => state.buyBox.value)
     const dispatch = useDispatch()
@@ -139,7 +139,6 @@ const Store = () => {
     ];
 
     useEffect(() => {
-
         if (selectShoab?.id) {
             let body = {
                 visible: true,
@@ -177,7 +176,13 @@ const Store = () => {
                     </div>
                     <ShoppingCartOutlined />
                 </div>
-                <div className="w-full h-[500px] relative px-3">
+                <div className="absolute top-[50%] -right-[60px] w-[120px] h-[120px]">
+                    <img src="/img/pngwing.com.png" className="w-full h-full opacity-70"/>
+                </div>
+                <div className="absolute top-[70%] -left-[125px] w-[250px] h-[250px]">
+                    <img src="/img/pngwing.com (3).png" className="w-full h-full opacity-70"/>
+                </div>
+                <div className="w-full h-[500px] relative xl:px-10">
                     <div className="grid grid-cols-12 gap-x-4 mx-auto w-[95%] mt-10">
                         <div className="col-span-12 lg:col-span-8 bg-gray-100 rounded-[20px] shadow-lg p-3">
                             <TabsCustom data={itemsTabs} />
@@ -207,7 +212,7 @@ const Store = () => {
                 <div className="bg-gray-100 w-full h-full  rounded-[20px]  p-5 mt-5">
                     <div className="mb-3 w-full flex justify-between">
                         <div className="text-black">سبد خرید</div>
-                        <div className="text-red-500">
+                        <div className="text-red-500" onClick={() => setcartModal(true)}>
                             <DeleteOutlined />
                         </div>
                     </div>

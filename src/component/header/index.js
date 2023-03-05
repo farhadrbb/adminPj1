@@ -127,14 +127,17 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
             label: `ورود`,
             key: 1,
             children:
-                <div className='flex flex-col justify-center items-center'>
+                <div className='flex flex-col '>
 
-                    <p className='font-bold mb-4' >لطفا اطلاعات خود را وارد کنید</p>
-                    <input value={intoRegister.mobile} placeholder='شماره موبایل (۰۹)' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "mobile")} />
-                    <input value={intoRegister.password} typr="password" placeholder='رمز عبور' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "password")} />
+                    <p className='font-bold mb-10 w-full flex justify-center ' >لطفا اطلاعات خود را وارد کنید</p>
+                    <div className='flex flex-col justify-center items-center h-full'>
 
-                    <BtnCustom title={"ورود"} className=' w-[250px] h-[48px] ' leftIcon clickFn={() => handleSubmitLogin()} />
-                </div>,
+                        <input value={intoRegister.mobile} placeholder='شماره موبایل (۰۹)' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "mobile")} />
+                        <input value={intoRegister.password} typr="password" placeholder='رمز عبور' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "password")} />
+
+                        <BtnCustom title={"ورود"} className=' w-[250px] h-[48px] mt-5' leftIcon clickFn={() => handleSubmitLogin()} />
+                    </div>,
+                </div>
         },
         {
             label: `ثبت نام`,
@@ -188,7 +191,7 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
             {showProfile && (<div className={`absolute z-40 top-0 bottom-0 left-0 right-0 bg-black-200 opacity-50`} onClick={() => setshowProfile(false)}></div>)}
             {contextHolder}
 
-            <div className='w-full px-5 h-[80px]'>
+            <div className='w-full lg:px-10 h-[80px]'>
                 <div className='flex px-3 justify-between items-center h-full'>
                     <img src={resturant} alt='resturant' className="w-[70px] h-[70px]" />
                     <div className="flex">
@@ -209,15 +212,19 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
                 </div>
             </div>
             <div className='relative overflow-hidden'>
-                <div className="absolute top-0 left-0 right-0 bottom-0 bg-black-200 opacity-70 z-10"></div>
+                <div className="absolute top-0 left-0 right-0 bottom-0 bg-black-200 opacity-30 z-10"></div>
                 {resultData.data?.data?.branches.length > 0 && (
-                    <div className='absolute z-30 top-32 left-[50%] -translate-x-[50%] flex justify-center flex-col items-center'>
-                        <h1 className='font-bold text-[30px] mr-2 mb-2 text-center'>{selectShoab?.description}</h1>
-                        <p className='mr-2 mb-5 text-sm text-center'>{`${"آدرس:"}${selectShoab?.addressDetail}`}</p>
-                        {resultData.data?.data?.branches.length > 1 && (
-                            <BtnCustom title='شعبه' icon={<DownOutlined />} leftIcon clickFn={() => setModalOpen(true)} />
-                        )}
-                    </div>
+                    <>
+                        <div className='absolute z-40 top-20 left-[50%] -translate-x-[50%] flex justify-center flex-col items-center w-[320px] h-[200px]'>
+                            <h1 className='font-bold text-[30px] mr-2 mb-2 text-center'>{selectShoab?.description}</h1>
+                            <p className='mr-2 mb-5 text-sm text-center'>{`${"آدرس:"}${selectShoab?.addressDetail}`}</p>
+                            {resultData.data?.data?.branches.length > 1 && (
+                                <BtnCustom title='شعبه' icon={<DownOutlined />} leftIcon clickFn={() => setModalOpen(true)} />
+                            )}
+                        </div>
+                        <div className='absolute z-30 top-20 left-[50%] -translate-x-[50%] flex justify-center flex-col items-center py-3 px-10 bg-slate-500 opacity-50 rounded-[10px] w-[320px] h-[200px] border border-gray-400'>
+                        </div>
+                    </>
                 )}
                 {resultData.isLoading && (<div className=" absolute z-30 top-32 left-[50%] -translate-x-[50%]  flex-col  flex justify-center items-center text-gray-500 w-full">
                     <Loading />
@@ -252,7 +259,7 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
                     </div>
                 </div>
             </ModalCustom>
-      
+
             <ModalCustom isModalOpen={ModalOpen} setIsModalOpen={setModalOpen} title='لطفا شعبه مورد نظر خود را انتخاب کنید'>
                 <div className='grid grid-cols-12 gap-y-2 mt-6 border-t pt-3'>
                     {resultData.data?.data?.branches?.map((itm, ind) => {

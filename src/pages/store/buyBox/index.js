@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import BtnCustom from '../../../component/btn'
 import {
+    CreditCardOutlined,
     DeleteOutlined
 } from '@ant-design/icons';
 import {
@@ -9,15 +10,25 @@ import {
 } from '@ant-design/icons';
 import { setBuy } from '../../../redux/slices/buyBox';
 import { useDispatch, useSelector } from 'react-redux';
+import ModalCustom from '../../../component/modalCustom';
+import { Input } from 'antd';
+import { useLazyGetLinkPayQuery } from '../../../redux/api/getAllData';
+import { useNavigate } from 'react-router-dom';
 const BuyBox = ({ mobile }) => {
     const [sum, setsum] = useState(0);
     const [isFill, setisFill] = useState(false);
+    const [payModal, setPayModal] = useState(false)
+    const [inputSharzh, setinputSharzh] = useState()
+    const [getLinkPay, resultGetLinkPay] = useLazyGetLinkPayQuery()
+    const navigate = useNavigate()
+
     const buy = useSelector(state => state.buyBox.value)
+    const wallet = useSelector(state => state.buyBox.wallet)
     const dispatch = useDispatch()
 
-    const save = async (buy)=>{
-        await sessionStorage.setItem('buy',JSON.stringify(buy))
-   }
+    const save = async (buy) => {
+        await sessionStorage.setItem('buy', JSON.stringify(buy))
+    }
     const handleBuy = (itm, type) => {
         let filter = buy?.map((item, index) => {
             if (item.id === itm.id) {
@@ -39,9 +50,9 @@ const BuyBox = ({ mobile }) => {
 
         save(filter)
 
-        dispatch(setBuy(filter))        
+        dispatch(setBuy(filter))
     }
-    
+
     const handleSumPrice = (itm) => {
         let sum = 0
         buy.map((item, index) => {
@@ -55,27 +66,53 @@ const BuyBox = ({ mobile }) => {
             setisFill(false)
         }
         setsum(sum)
-        
+
     }
-    
+
     useEffect(() => {
         handleSumPrice()
     }, [buy]);
 
+
+    const handleAcceptBuy = () => {
+        setPayModal(true)
+        if (wallet <= sum) {
+            setinputSharzh(wallet)
+        }
+    }
     // console.log("buy",buy);
-    
+
     const handleCount = (itm) => {
         let count = buy.filter((item, ind) => itm.goodsName === item.goodsName)
         if (count[0]?.count) {
             return count[0]?.count
-        } else{
+        } else {
             return 0
         }
     }
 
-    
+    const handleCLickCallApiPay = (type) => {
+        if (type === "wallet") {
+            getLinkPay(`PayCash/Payment?Amount=${sum}`)
+        }
+        if (type === "sharj") {
+            getLinkPay(`PayCash/Payment?Amount=${inputSharzh}`)
+        }
+    }
+
+    console.log("resultGetLinkPay",resultGetLinkPay);
+
+    useEffect(()=>{
+        if(resultGetLinkPay.error?.data){
+            navigate(resultGetLinkPay.error?.data)
+        }
+    },[resultGetLinkPay])
+
+
+
+
     if (isFill) {
-        
+
         return (
             <>
 
@@ -96,7 +133,7 @@ const BuyBox = ({ mobile }) => {
                                                     <MinusOutlined />
                                                 </span>
                                                 <span className="font-bold text-base mx-3">
-                                                {handleCount(itm)}
+                                                    {handleCount(itm)}
                                                 </span>
                                                 <span className="font-bold text-base mx-1 cursor-pointer hover:text-green-400" onClick={() => handleBuy(itm, "plus")}>
                                                     <PlusOutlined />
@@ -118,15 +155,43 @@ const BuyBox = ({ mobile }) => {
                     <div className="text-base font-bold">{sum}</div>
                 </div>
                 <div className="w-full flex justify-center mt-5 text-cyan-50">کد تخفیف دارید؟</div>
-                <BtnCustom title={"خرید سفارش"} className={"mt-3"} />
+                <BtnCustom title={wallet >= sum ? "پرداخت از کیف پول" : "پرداخت آنلاین"} className={"mt-3"} clickFn={() => handleAcceptBuy()} />
+
+                <ModalCustom isModalOpen={payModal} setIsModalOpen={setPayModal}>
+                    <div className='text-base font-bold'>{wallet >= sum ? "پرداخت از کیف پول" : "شارژ کیف پول"}</div>
+                    {wallet < sum && (
+                        <div className='mt-5 flex flex-col'>
+                            <Input className='mx-2'
+                                type='number' v
+                                alue={inputSharzh}
+                                onChange={(e) => setinputSharzh(e.target.value)}
+                                prefix={<CreditCardOutlined />} />
+                        </div>
+                    )}
+                    {wallet >= sum && (
+                        <div className='mt-5 flex flex-col'>
+                            {"برای پرداخت از کیف پول مطمئن هستید؟"}
+                        </div>
+                    )}
+                    <div className='flex w-full justify-end mt-3'>
+                        <BtnCustom title={"تایید"} clickFn={() => handleCLickCallApiPay(wallet >= sum ? "wallet" : 'sharj')} />
+                        <BtnCustom title={"لغو"} className="bg-red-600" clickFn={() => setPayModal(false)} />
+                    </div>
+                </ModalCustom>
             </>
         );
     }
-    if(!isFill){
-        return(
-            <div className="flex justify-center w-full text-gray-400 text-lg mt-5">سبد خرید شما خالی است</div>
+    if (!isFill) {
+        return (
+            <div>
+                <div className="flex justify-center w-full text-gray-400 text-lg mt-5">سبد خرید شما خالی است</div>
+                <div><img src="" /></div>
+            </div>
         )
     }
+
+
+
 }
 
 export default BuyBox;

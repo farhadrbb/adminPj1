@@ -5,7 +5,8 @@ const initialState = {
     value: [],
     selectMenu: 0,
     selectShoab:{},
-    selectAddress:{}
+    selectAddress:{},
+    wallet:255000
 
 }
 
@@ -37,7 +38,10 @@ const buyBox = createSlice({
         setSelectAddress: (state, action) => {
             state.selectAddress = action.payload
         },
-
+        setWallet: (state, action) => {
+            state.wallet = action.payload
+        },
+        
 
     }
 })

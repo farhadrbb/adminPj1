@@ -21,7 +21,6 @@ const BuyBox = ({ mobile }) => {
     const [inputSharzh, setinputSharzh] = useState()
     const [getLinkPay, resultGetLinkPay] = useLazyGetLinkPayQuery()
     const navigate = useNavigate()
-
     const buy = useSelector(state => state.buyBox.value)
     const wallet = useSelector(state => state.buyBox.wallet)
     const dispatch = useDispatch()
@@ -100,13 +99,12 @@ const BuyBox = ({ mobile }) => {
         }
     }
 
-    console.log("resultGetLinkPay",resultGetLinkPay);
 
-    useEffect(()=>{
-        if(resultGetLinkPay.error?.data){
-            navigate(resultGetLinkPay.error?.data)
+    useEffect(() => {
+        if (resultGetLinkPay.error?.data) {
+            window.location.replace(resultGetLinkPay.error?.data)
         }
-    },[resultGetLinkPay])
+    }, [resultGetLinkPay])
 
 
 

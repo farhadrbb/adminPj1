@@ -18,8 +18,8 @@ const FoodInfo = () => {
     const select = useSelector(state => state.buyBox.selectMenu)
     const dispatch = useDispatch()
 
-    const save = async (buy)=>{
-         await sessionStorage.setItem('buy',JSON.stringify(buy))
+    const save = async (buy) => {
+        await sessionStorage.setItem('buy', JSON.stringify(buy))
     }
     const handleBuy = (itm, type) => {
         let filter = buy?.map((item, index) => {
@@ -61,8 +61,7 @@ const FoodInfo = () => {
     useEffect(() => {
         if (resultGetPostAllData.data?.data?.goods) {
             let local = JSON.parse(sessionStorage.getItem('buy')) ? JSON.parse(sessionStorage.getItem('buy')) : []
-            console.log("local",local);
-            dispatch(setBuy([...local,...resultGetPostAllData.data?.data?.goods]))
+            dispatch(setBuy([...local, ...resultGetPostAllData.data?.data?.goods]))
             setstateData(resultGetPostAllData.data?.data?.goods)
         }
     }, [resultGetPostAllData.data?.data]);
@@ -71,7 +70,7 @@ const FoodInfo = () => {
         let count = buy.filter((item, ind) => itm.goodsName === item.goodsName)
         if (count[0]?.count) {
             return count[0]?.count
-        }else {
+        } else {
             return 0
         }
     }

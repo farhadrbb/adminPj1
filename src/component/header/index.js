@@ -22,7 +22,7 @@ import Input from 'antd/es/input/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import AddressList from './addressList';
 import Loading from '../loading';
-import { setSelectShoabFn } from '../../redux/slices/buyBox';
+import { deleteBuy, setSelectShoabFn } from '../../redux/slices/buyBox';
 const contentStyle = {
     height: '370px',
     // color: '#fff',
@@ -50,16 +50,21 @@ const contentStyle = {
 //     },
 
 // ]
-export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSelectShoab }) => {
+export const Header = ({ setshowProfile, showProfile}) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [ModalOpen, setModalOpen] = useState(false);
     const [modalLocation, setModalLocation] = useState(false)
+    const [changeShoab, setChangeShoab] = useState(false)
     const [intoRegister, setInfoRegister] = useState({});
     const [stateLogin, setstateLogin] = useState(false);
     const [regiLoginApi, resultRegiLoginApi] = usePostAllDataMutation()
     const [getData, resultData] = useLazyGetAllDataQuery()
+    const [shoabState, setshoabState] = useState()
     const [messageApi, contextHolder] = message.useMessage()
     const dispatch = useDispatch()
+    const shoab = useSelector(state => state.buyBox.selectShoab)
+
+
 
 
 
@@ -112,7 +117,6 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
 
         }
         if (resultData.data?.data?.branches?.length > 0) {
-            setSelectShoab(resultData.data?.data?.branches[0])
             dispatch(setSelectShoabFn(resultData.data?.data?.branches[0]))
         }
     }, [resultRegiLoginApi, resultData]);
@@ -133,7 +137,7 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
                     <div className='flex flex-col justify-center items-center h-full'>
 
                         <input value={intoRegister.mobile} placeholder='شماره موبایل (۰۹)' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "mobile")} />
-                        <input value={intoRegister.password} typr="password" placeholder='رمز عبور' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "password")} />
+                        <input value={intoRegister.password} typث="password" placeholder='رمز عبور' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "password")} />
 
                         <BtnCustom title={"ورود"} className=' w-[250px] h-[48px] mt-5' leftIcon clickFn={() => handleSubmitLogin()} />
                     </div>,
@@ -159,9 +163,12 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
 
 
     const handleShoab = (itm) => {
-        setSelectShoab(itm)
-        dispatch(setSelectShoabFn(itm))
-        setModalOpen(false)
+        if(shoab.id === itm.id){
+            setModalOpen(false)
+            return
+        }
+        setChangeShoab(true)
+        setshoabState(itm)
     }
 
 
@@ -174,11 +181,21 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
         sessionStorage.removeItem("auth")
     }
 
+    const handleChangeShoab = async ()=>{
+        await sessionStorage.removeItem('buy')
+        dispatch(deleteBuy([]))
+        dispatch(setSelectShoabFn(shoabState))
+        setChangeShoab(false);
+        setModalOpen(false)
+    }
+
     useEffect(() => {
         if (resultData.data?.data?.branches.length > 1) {
             setModalOpen(true)
         }
     }, [resultData.data?.data?.branches]);
+
+
 
 
 
@@ -216,8 +233,8 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
                 {resultData.data?.data?.branches.length > 0 && (
                     <>
                         <div className='absolute z-40 top-20 left-[50%] -translate-x-[50%] flex justify-center flex-col items-center w-[320px] h-[200px]'>
-                            <h1 className='font-bold text-[30px] mr-2 mb-2 text-center'>{selectShoab?.description}</h1>
-                            <p className='mr-2 mb-5 text-sm text-center'>{`${"آدرس:"}${selectShoab?.addressDetail}`}</p>
+                            <h1 className='font-bold text-[30px] mr-2 mb-2 text-center'>{shoab?.description}</h1>
+                            <p className='mr-2 mb-5 text-sm text-center'>{`${"آدرس:"}${shoab?.addressDetail}`}</p>
                             {resultData.data?.data?.branches.length > 1 && (
                                 <BtnCustom title='شعبه' icon={<DownOutlined />} leftIcon clickFn={() => setModalOpen(true)} />
                             )}
@@ -251,6 +268,16 @@ export const Header = ({ setshowProfile, showProfile, mobile, selectShoab, setSe
             <ModalCustom isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
                 <TabsCustom data={itemsTabs} login />
             </ModalCustom>
+            <ModalCustom isModalOpen={changeShoab} setIsModalOpen={setChangeShoab}>
+                <div className="flex flex-col mt-5">
+                    <div className>با تغییر شعبه سبد خرید شما پاک خواهد شد آیا ادامه می دهید؟</div>
+                    <div className="flex justify-end mt-3">
+                        <BtnCustom title="تایید" clickFn={() => handleChangeShoab()} />
+                        <BtnCustom title="انصراف" className="bg-red-600" clickFn={() => {setChangeShoab(false);setModalOpen(false)}} />
+                    </div>
+                </div>
+            </ModalCustom>
+
             <ModalCustom isModalOpen={modalLocation} setIsModalOpen={setModalLocation}>
                 <div className="flex flex-col mt-5">
 

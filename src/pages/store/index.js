@@ -96,13 +96,13 @@ const data = [
 const Store = () => {
     const [ModalOpen, setModalOpen] = useState(false);
     const [showProfile, setshowProfile] = useState(false);
-    // const [getdataGroup, resultgetDataGroup] = useLazyGetAllDataQuery()
     const [getAllPost, resultgetAllPost] = usePostAllDataMutation()
     const buy = useSelector(state => state.buyBox.value)
+    const shoab = useSelector(state => state.buyBox.selectShoab)
     const dispatch = useDispatch()
 
 
-    const [selectShoab, setSelectShoab] = useState();
+
 
     const [cartModal, setcartModal] = useState(false);
 
@@ -139,14 +139,17 @@ const Store = () => {
     ];
 
     useEffect(() => {
-        if (selectShoab?.id) {
+        if (shoab?.id) {
             let body = {
                 visible: true,
-                branchId: selectShoab.id
+                branchId: shoab.id
             }
             getAllPost({ url: "GoodsGroup/getAll", body })
         }
-    }, [selectShoab]);
+    }, [shoab]);
+
+
+    
 
     const handleDeleteBuy = () => {
         sessionStorage.removeItem('buy')
@@ -166,7 +169,7 @@ const Store = () => {
             <div
                 className={`w-full h-full relative overflow-x-hidden ${showProfile ? "overflow-y-hidden" : 'overflow-y-auto'}`}
             >
-                <Header showProfile={showProfile} setshowProfile={setshowProfile} setSelectShoab={setSelectShoab} selectShoab={selectShoab} />
+                <Header showProfile={showProfile} setshowProfile={setshowProfile} />
                 <div
                     className="sticky right-0 top-40 text-black w-[30px] h-[30px] rounded-lg shadow-xl cursor-pointer text-xl bg-white flex justify-center items-center lg:hidden z-50"
                     onClick={() => setModalOpen(true)}

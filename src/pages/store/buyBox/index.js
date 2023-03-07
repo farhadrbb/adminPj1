@@ -73,13 +73,11 @@ const BuyBox = ({ mobile }) => {
     }, [buy]);
 
 
-    const handleAcceptBuy = () => {
+    const handleAcceptBuy = async () => {
         setPayModal(true)
-        if (wallet <= sum) {
-            setinputSharzh(wallet)
-        }
     }
-    // console.log("buy",buy);
+
+
 
     const handleCount = (itm) => {
         let count = buy.filter((item, ind) => itm.goodsName === item.goodsName)
@@ -106,6 +104,11 @@ const BuyBox = ({ mobile }) => {
         }
     }, [resultGetLinkPay])
 
+    useEffect(() => {
+        if (sum > wallet) {
+            setinputSharzh(sum - wallet)
+        }
+    }, [sum, wallet])
 
 
 
@@ -153,22 +156,30 @@ const BuyBox = ({ mobile }) => {
                     <div className="text-base font-bold">{sum}</div>
                 </div>
                 <div className="w-full flex justify-center mt-5 text-cyan-50">کد تخفیف دارید؟</div>
-                <BtnCustom title={wallet >= sum ? "پرداخت از کیف پول" : "پرداخت آنلاین"} className={"mt-3"} clickFn={() => handleAcceptBuy()} />
+                <BtnCustom title={wallet >= sum ? "ثبت سفارش" : "پرداخت آنلاین"} className={"mt-3"} clickFn={() => handleAcceptBuy()} />
 
                 <ModalCustom isModalOpen={payModal} setIsModalOpen={setPayModal}>
-                    <div className='text-base font-bold'>{wallet >= sum ? "پرداخت از کیف پول" : "شارژ کیف پول"}</div>
+                    <div className='text-base font-bold'>{wallet >= sum ? "ثبت سفارش" : "افزایش اعتبار و ثبت سفارش"}</div>
                     {wallet < sum && (
                         <div className='mt-5 flex flex-col'>
                             <Input className='mx-2'
                                 type='number' v
-                                alue={inputSharzh}
-                                onChange={(e) => setinputSharzh(e.target.value)}
+                                value={inputSharzh}
+                                // onChange={(e) => setinputSharzh(e.target.value)}
                                 prefix={<CreditCardOutlined />} />
+                            <span className='flex text-xs text-red-100'>
+                                <span>اعتبار شما :</span>
+                                <span>{wallet}</span>
+                            </span>
                         </div>
                     )}
                     {wallet >= sum && (
                         <div className='mt-5 flex flex-col'>
                             {"برای پرداخت از کیف پول مطمئن هستید؟"}
+                            <span className='flex text-xs text-red-100'>
+                                <span>اعتبار شما :</span>
+                                <span>{wallet}</span>
+                            </span>
                         </div>
                     )}
                     <div className='flex w-full justify-end mt-3'>

@@ -6,42 +6,25 @@ import Store from "./pages/store";
 
 const BasePage = () => {
   let element = useRoutes([
+    // {
+    //   path: "/home",
+    //   children: [
+    //     {
+    //       index: true,
+    //       element: <Home />,
+    //     },
+    //     // {
+    //     //   path: "createAdmin",
+    //     //   element: <AdminActions />,
+    //     // },
+    //     // {
+    //     //   path: "updateAdmin/:id",
+    //     //   element: <AdminActions />,
+    //     // },
+    //   ],
+    // },
     {
-      path: "/home",
-      children: [
-        {
-          index: true,
-          element: <Home />,
-        },
-        // {
-        //   path: "createAdmin",
-        //   element: <AdminActions />,
-        // },
-        // {
-        //   path: "updateAdmin/:id",
-        //   element: <AdminActions />,
-        // },
-      ],
-    },
-    {
-      path: "/store",
-      children: [
-        {
-          index: true,
-          element: <Store/>,
-        },
-        // {
-        //   path: "createAdmin",
-        //   element: <AdminActions />,
-        // },
-        // {
-        //   path: "updateAdmin/:id",
-        //   element: <AdminActions />,
-        // },
-      ],
-    },
-    {
-      path: "/head",
+      path: "*",
       children: [
         {
           index: true,
@@ -57,12 +40,29 @@ const BasePage = () => {
         // },
       ],
     },
+    // {
+    //   path: "/head",
+    //   children: [
+    //     {
+    //       index: true,
+    //       element: <Store/>,
+    //     },
+    //     // {
+    //     //   path: "createAdmin",
+    //     //   element: <AdminActions />,
+    //     // },
+    //     // {
+    //     //   path: "updateAdmin/:id",
+    //     //   element: <AdminActions />,
+    //     // },
+    //   ],
+    // },
 
  
-    {
-      path: "/",
-      element: <Navigate to="/store" replace={true} />,
-    },
+    // {
+    //   path: "*",
+    //   element: <Navigate to="/store" replace={true} />,
+    // },
   ]);
   return element;
 };

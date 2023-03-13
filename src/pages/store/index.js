@@ -101,6 +101,12 @@ const Store = () => {
     const shoab = useSelector(state => state.buyBox.selectShoab)
     const dispatch = useDispatch()
 
+    const [position, setposition] = useState({
+        lat: 35.705413908738436,
+        lng: 51.387143908068545,
+        zoom: 12,
+    });
+
 
 
 
@@ -121,13 +127,14 @@ const Store = () => {
                 <div className="h-[600px] overflow-y-auto w-full">
                     <div className="grid grid-cols-12 gap-x-3">
                         <div className=" col-span-12">
-                            <Table
+                            {/* <Table
                                 columns={columns}
                                 dataSource={data}
                                 size="small"
                                 pagination={false}
                                 className="shadow-xl"
-                            />
+                            /> */}
+                            <div className="h-[300px] mt-2 mb-2"><MapDisplay setposition={setposition} position={position} /></div>
                         </div>
                         {/* <div className="lg:col-span-6 col-span-12">
                             <div className="w-[300px] h-[300px] "><MapDisplay /></div>

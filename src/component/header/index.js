@@ -109,13 +109,13 @@ export const Header = ({ setshowProfile, showProfile}) => {
             setstateLogin(true)
             setIsModalOpen(false)
         }
-        if (resultRegiLoginApi.data?.errorCode === 403 || (!resultRegiLoginApi.data && resultRegiLoginApi.isSuccess)) {
-            messageApi.open({
-                type: 'error',
-                content: 'عملبات انجام نشد',
-            });
+        // if (resultRegiLoginApi.data?.errorCode === 403 || (!resultRegiLoginApi.data && resultRegiLoginApi.isSuccess)) {
+        //     messageApi.open({
+        //         type: 'error',
+        //         content: 'عملبات انجام نشد',
+        //     });
 
-        }
+        // }
         if (resultData.data?.data?.branches?.length > 0) {
             dispatch(setSelectShoabFn(resultData.data?.data?.branches[0]))
         }

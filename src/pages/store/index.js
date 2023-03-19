@@ -96,6 +96,7 @@ const data = [
 const Store = () => {
     const [ModalOpen, setModalOpen] = useState(false);
     const [showProfile, setshowProfile] = useState(false);
+    const [cartModal, setcartModal] = useState(false);
     const [getAllPost, resultgetAllPost] = usePostAllDataMutation()
     const buy = useSelector(state => state.buyBox.value)
     const shoab = useSelector(state => state.buyBox.selectShoab)
@@ -110,7 +111,33 @@ const Store = () => {
 
 
 
-    const [cartModal, setcartModal] = useState(false);
+
+
+
+
+
+
+    const handleDeleteBuy = () => {
+        sessionStorage.removeItem('buy')
+        dispatch(deleteBuy([]))
+        setcartModal(false)
+    }
+
+
+    useEffect(() => {
+        if (shoab?.id) {
+            let body = {
+                visible: true,
+                branchId: shoab.id
+            }
+            getAllPost({ url: "GoodsGroup/getAll", body })
+        }
+    }, [shoab]);
+
+
+
+
+
 
 
 
@@ -136,33 +163,16 @@ const Store = () => {
                             /> */}
                             <div className="h-[300px] mt-2 mb-2"><MapDisplay setposition={setposition} position={position} /></div>
                         </div>
-                        {/* <div className="lg:col-span-6 col-span-12">
-                            <div className="w-[300px] h-[300px] "><MapDisplay /></div>
-                        </div> */}
+                
                     </div>
                 </div>
             ),
         },
     ];
 
-    useEffect(() => {
-        if (shoab?.id) {
-            let body = {
-                visible: true,
-                branchId: shoab.id
-            }
-            getAllPost({ url: "GoodsGroup/getAll", body })
-        }
-    }, [shoab]);
 
 
-    
 
-    const handleDeleteBuy = () => {
-        sessionStorage.removeItem('buy')
-        dispatch(deleteBuy([]))
-        setcartModal(false)
-    }
 
 
 
@@ -187,10 +197,10 @@ const Store = () => {
                     <ShoppingCartOutlined />
                 </div>
                 <div className="absolute top-[50%] -right-[60px] w-[120px] h-[120px]">
-                    <img src="/img/pngwing.com.png" className="w-full h-full opacity-70"/>
+                    <img src="/img/pngwing.com.png" className="w-full h-full opacity-70" />
                 </div>
                 <div className="absolute top-[70%] -left-[125px] w-[250px] h-[250px]">
-                    <img src="/img/pngwing.com (3).png" className="w-full h-full opacity-70"/>
+                    <img src="/img/pngwing.com (3).png" className="w-full h-full opacity-70" />
                 </div>
                 <div className="w-full h-[500px] relative xl:px-10">
                     <div className="grid grid-cols-12 gap-x-4 mx-auto w-[95%] mt-10">
@@ -232,15 +242,15 @@ const Store = () => {
 
 
 
-                <ModalCustom isModalOpen={cartModal} setIsModalOpen={setcartModal}>
-                    <div className="flex flex-col mt-5">
-                        <div className>آیا از حذف  سبد خرید مطمئن هستید؟</div>
-                        <div className="flex justify-end mt-3">
-                            <BtnCustom title="تایید" clickFn={() => handleDeleteBuy()} />
-                            <BtnCustom title="انصراف" className="bg-red-600" clickFn={() => setcartModal(false)} />
-                        </div>
+            <ModalCustom isModalOpen={cartModal} setIsModalOpen={setcartModal}>
+                <div className="flex flex-col mt-5">
+                    <div className>آیا از حذف  سبد خرید مطمئن هستید؟</div>
+                    <div className="flex justify-end mt-3">
+                        <BtnCustom title="تایید" clickFn={() => handleDeleteBuy()} />
+                        <BtnCustom title="انصراف" className="bg-red-600" clickFn={() => setcartModal(false)} />
                     </div>
-                </ModalCustom>
+                </div>
+            </ModalCustom>
 
 
 

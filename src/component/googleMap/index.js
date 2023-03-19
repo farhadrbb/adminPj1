@@ -1,6 +1,6 @@
 import React, { Component, useMemo, useState } from 'react'
 import Leaflet from 'leaflet';
-import { MapContainer, TileLayer, Marker, Popup, CircleMarker, Tooltip, Circle } from 'react-leaflet'
+import { MapContainer, TileLayer, Marker, Popup, CircleMarker, Tooltip, Circle, Polygon, Rectangle } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css';
 import { MovingMarker } from './marker';
 
@@ -59,7 +59,27 @@ const MapDisplay = ({ setposition, position, shoab }) => {
     //         lng: 51.387143908068545,
     //         zoom: 12,function TooltipCircle() {
 
-    const center = [35.725413908738436,51.357143908068545]
+    const center = [35.725413908738436, 51.357143908068545]
+
+    const multiPolygon = [
+        [
+            [35.725413908738436, 51.357143908068545],
+            [35.735413908738436, 51.207143908068545],
+            [35.755413908738436, 51.367143908068545],
+        ],
+        // [
+        //     [51.51, -0.05],
+        //     [51.51, -0.07],
+        //     [51.53, -0.07],
+        // ],
+    ]
+
+    const rectangle = [
+        [35.775413908738436,51.377143908068545],
+        [35.715413908738436, 51.337143908068545],
+    ]
+
+
     function TooltipCircle() {
         const [clickedCount, setClickedCount] = useState(0)
         const eventHandlers = useMemo(
@@ -108,6 +128,11 @@ const MapDisplay = ({ setposition, position, shoab }) => {
             </CircleMarker> */}
 
             <TooltipCircle />
+
+            <Polygon pathOptions={{ color: 'green'}} positions={multiPolygon} >
+                <Tooltip sticky>sticky Tooltip for Polygon</Tooltip>
+            </Polygon>
+            <Rectangle bounds={rectangle} pathOptions={{ color: 'black' }}></Rectangle>
             <Marker position={{
                 lat: 35.725413908738436,
                 lng: 51.357143908068545,
@@ -117,6 +142,7 @@ const MapDisplay = ({ setposition, position, shoab }) => {
                     Son Konum
                 </Popup>
             </Marker>
+
         </MapContainer>
     )
 }

@@ -9,7 +9,6 @@ import { useEffect } from "react";
 
 export const Profile = () => {
   const wallet = useSelector(state => state.buyBox.wallet)
-
   const [payModal, setPayModal] = useState(false)
   const [inputSharzh, setinputSharzh] = useState()
   const [messageApi, contextHolder] = message.useMessage()

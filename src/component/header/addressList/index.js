@@ -31,6 +31,8 @@ const AddressList = ({ mobile }) => {
         zoom: 12,
     });
 
+    console.log("pos",position);
+
     const handleSubmitAddress = () => {
         if (!addressText || addressText.length < 10) {
             messageApi.open({

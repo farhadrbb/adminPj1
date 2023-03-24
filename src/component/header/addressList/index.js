@@ -31,6 +31,8 @@ const AddressList = ({ mobile }) => {
         zoom: 12,
     });
 
+    console.log("pos",position);
+
     const handleSubmitAddress = () => {
         if (!addressText || addressText.length < 10) {
             messageApi.open({
@@ -213,7 +215,7 @@ const AddressList = ({ mobile }) => {
                             </div> */}
 
                         </div>
-                        <div className="h-[300px] mt-2 mb-2"><MapDisplay setposition={setposition} position={position} /></div>
+                        <div className="h-[300px] mt-2 mb-2"><MapDisplay setposition={setposition} position={position} shoab={shoab}/></div>
                         <BtnCustom title="ثبت آدرس" clickFn={() => handleSubmitAddress()} />
                     </div>
                 </>

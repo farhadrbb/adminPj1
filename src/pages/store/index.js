@@ -98,12 +98,46 @@ const Store = () => {
     const [ModalOpen, setModalOpen] = useState(false);
     const [cartModal, setcartModal] = useState(false);
     const [showProfile, setshowProfile] = useState(false);
+    const [cartModal, setcartModal] = useState(false);
     const [getAllPost, resultgetAllPost] = usePostAllDataMutation()
     const [payStatus, resultPayStatus] = usePostDataPayMutation()
     const shoab = useSelector(state => state.buyBox.selectShoab)
     const count = useSelector(state => state.buyBox.count)
     const dispatch = useDispatch()
     const location = useLocation()
+
+
+    const [position, setposition] = useState({
+        lat: 35.705413908738436,
+        lng: 51.387143908068545,
+        zoom: 12,
+    });
+
+
+
+
+
+
+
+
+
+
+    const handleDeleteBuy = () => {
+        sessionStorage.removeItem('buy')
+        dispatch(deleteBuy([]))
+        setcartModal(false)
+    }
+
+
+    useEffect(() => {
+        if (shoab?.id) {
+            let body = {
+                visible: true,
+                branchId: shoab.id
+            }
+            getAllPost({ url: "GoodsGroup/getAll", body })
+        }
+    }, [shoab]);
 
 
 
@@ -125,17 +159,16 @@ const Store = () => {
                 <div className="h-[400px] overflow-y-auto w-full">
                     <div className="grid grid-cols-12 gap-x-3">
                         <div className=" col-span-12">
-                            <Table
+                            {/* <Table
                                 columns={columns}
                                 dataSource={data}
                                 size="small"
                                 pagination={false}
                                 className="shadow-xl"
-                            />
+                            /> */}
+                            <div className="h-[300px] mt-2 mb-2"><MapDisplay setposition={setposition} position={position} /></div>
                         </div>
-                        {/* <div className="lg:col-span-6 col-span-12">
-                            <div className="w-[300px] h-[300px] "><MapDisplay /></div>
-                        </div> */}
+                
                     </div>
                 </div>
             ),
@@ -160,6 +193,7 @@ const Store = () => {
         setcartModal(false)
         handleCallApi()
     }
+
 
     useEffect(() => {
         handleCallApi()

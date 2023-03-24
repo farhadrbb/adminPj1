@@ -8,35 +8,32 @@ import {
     MinusOutlined,
     PlusOutlined
 } from '@ant-design/icons';
-import { setBuy, setCount } from '../../../redux/slices/buyBox';
+import { setBuy, setCount, setSum } from '../../../redux/slices/buyBox';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalCustom from '../../../component/modalCustom';
 import { Input, message } from 'antd';
 import { useLazyGetLinkPayQuery, useLazyGetWalletQuery, useSendInvoiceMutation } from '../../../redux/api/getAllData';
 import { useNavigate } from 'react-router-dom';
-const BuyBox = ({ mobile }) => {
+const BuyBox = ({ mobile,setIsModalOpen,isModalOpen,setModalLocation,modalLocation }) => {
     const [sum, setsum] = useState(0);
     const [tax, settax] = useState(0);
-    const [countstate, setcountState] = useState(0);
     const [isFill, setisFill] = useState(false);
     const [payModal, setPayModal] = useState(false)
     const [inputSharzh, setinputSharzh] = useState()
     const [getLinkPay, resultGetLinkPay] = useLazyGetLinkPayQuery()
     const [postFactor, resultPostFactor] = useSendInvoiceMutation()
     const [getWallet, resultWallet] = useLazyGetWalletQuery()
-    const navigate = useNavigate()
     const buy = useSelector(state => state.buyBox.value)
     const shoab = useSelector(state => state.buyBox.selectShoab)
     const wallet = useSelector(state => state.buyBox.wallet)
     const login = useSelector(state => state.buyBox.login)
-    const count = useSelector(state => state.buyBox.count)
     const distance = useSelector(state => state.buyBox.distance)
     const dispatch = useDispatch()
     const [messageApi, contextHolder] = message.useMessage()
 
 
     const save = async (buy) => {
-        await sessionStorage.setItem('buy', JSON.stringify(buy))
+        await localStorage.setItem('buy', JSON.stringify(buy))
     }
     const handleBuy = (itm, type) => {
         let filter = buy?.map((item, index) => {
@@ -81,6 +78,7 @@ const BuyBox = ({ mobile }) => {
             setisFill(false)
         }
         setsum(sum + taxM)
+        dispatch(setSum(sum + taxM))
         dispatch(setCount(count))
         if (taxM > 0) {
             settax(taxM)
@@ -103,13 +101,15 @@ const BuyBox = ({ mobile }) => {
                 type: 'warning',
                 content: 'برای ثبت سفارش ابتدا لاگین کنید',
             });
+            setIsModalOpen(true)
             return
         }
         if (!distance) {
             messageApi.open({
-                type: 'warning',
+                type: 'error',
                 content: 'لوکیشن انتخابی در محدوده سرویس نمی باشد',
             });
+            setModalLocation(true)
             return
 
         }
@@ -227,14 +227,14 @@ const BuyBox = ({ mobile }) => {
                         </>
                     ))}
                 </div>
-                <div className="flex justify-between mb-1 mt-5 px-3 text-black">
+                <div className="flex justify-between mb-1 mt-5 text-xs px-3 text-black">
                     <div>مالیات کل</div>
                     <div className="flex">
                         <div >{tax}</div>
                         <div className=" mr-1">{"تومان"}</div>
                     </div>
                 </div>
-                <div className="flex justify-between px-3 text-black">
+                <div className="flex justify-between px-3 mt-3 text-black">
                     <div className="text-base font-bold">هزینه کل</div>
                     <div className="flex">
                         <div className="text-base font-bold">{sum}</div>

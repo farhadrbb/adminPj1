@@ -17,21 +17,17 @@ const AddressList = ({ mobile }) => {
     const [PostLocation, resultPostLocation] = usePostAllDataMutation()
     const [addressText, setaddressText] = useState('');
     const [distance, setdistance] = useState(0);
+    const [step, setstep] = useState(1)
     const dispatch = useDispatch()
     const shoab = useSelector(state => state.buyBox.selectShoab)
     const address = useSelector(state => state.buyBox.selectAddress)
     const [messageApi, contextHolder] = message.useMessage()
-
-
-
-
     const [position, setposition] = useState({
         lat: 35.705413908738436,
         lng: 51.387143908068545,
         zoom: 12,
     });
 
-    console.log("pos",position);
 
     const handleSubmitAddress = () => {
         if (!addressText || addressText.length < 10) {
@@ -53,26 +49,6 @@ const AddressList = ({ mobile }) => {
             content: 'آدرس با موفقیت ثبت شد',
         });
     }
-
-
-    const [step, setstep] = useState(1)
-
-    useEffect(() => {
-        getLocation('Address/GetAll')
-        setstep(1)
-    }, [resultPostLocation.data?.data]);
-    
-    
-    
-    
-    const handleClickAddress = (itm) => {
-        dispatch(setSelectAddress(itm))
-    }
-    
-    var rad = function (x) {
-        return x * Math.PI / 180;
-    };
-    
     
     
     var getDistance = function (p1, p2) {
@@ -87,9 +63,25 @@ const AddressList = ({ mobile }) => {
         setdistance(d.toFixed())
         return d; // returns the distance in meter
     };
+    const handleClickAddress = (itm) => {
+        dispatch(setSelectAddress(itm))
+    }
     
+    var rad = function (x) {
+        return x * Math.PI / 180;
+    };
+
+
+
+
+
+
+    useEffect(() => {
+        getLocation('Address/GetAll')
+        setstep(1)
+    }, [resultPostLocation.data?.data]);
     
-    
+
     useEffect(() => {
         if (address && shoab) {
             getDistance({ lat: shoab.lat, lng: shoab.lon }, { lat: address.lat, lng: address.lon })
@@ -112,11 +104,7 @@ const AddressList = ({ mobile }) => {
         }
     }, [distance]);
 
-    // console.log("shoab",shoab);
-    // console.log("address",address);
-    console.log("dis",distance);
-    
-    
+
     useEffect(() => {
         return () => {
             setdistance(null)
@@ -145,20 +133,6 @@ const AddressList = ({ mobile }) => {
         getLocation('Address/GetAll')
     }, [step]);
     
-    
-    // let itemsTabs = [
-    //     {
-    //         label: `لیست آدرس های موجود`,
-    //         key: 1,
-    //         children:'',
-    //     },
-    //     {
-    //         label: `آدرس جدید`,
-    //         key: 2,
-    //         children: '',
-    //     },
-    // ];
-
 
     return (
         <>
@@ -209,11 +183,6 @@ const AddressList = ({ mobile }) => {
                     <div className="h-[400px] mt-3 overflow-y-auto px-1">
                         <div>
                             <div><Input placeholder="آدرس خود را وارد کنید" value={addressText} onChange={(e) => setaddressText(e.target.value)} /></div>
-                            {/* <div className="w-full flex mt-2">
-                                <div className="w-[70px] ml-2"><Input placeholder="پلاک" type="number" /></div>
-                                <div className="w-[70px]"><Input placeholder="واحد" type="number" /></div>
-                            </div> */}
-
                         </div>
                         <div className="h-[300px] mt-2 mb-2"><MapDisplay setposition={setposition} position={position} shoab={shoab}/></div>
                         <BtnCustom title="ثبت آدرس" clickFn={() => handleSubmitAddress()} />

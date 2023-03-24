@@ -19,7 +19,7 @@ const FoodInfo = () => {
     const dispatch = useDispatch()
 
     const save = async (buy) => {
-        await sessionStorage.setItem('buy', JSON.stringify(buy))
+        await localStorage.setItem('buy', JSON.stringify(buy))
     }
     const handleBuy = (itm, type) => {
         let filter = buy?.map((item, index) => {
@@ -62,7 +62,7 @@ const FoodInfo = () => {
 
     useEffect(() => {
         if (resultGetPostAllData.data?.data?.goods) {
-            let local = JSON.parse(sessionStorage.getItem('buy')) ? JSON.parse(sessionStorage.getItem('buy')) : []
+            let local = JSON.parse(localStorage.getItem('buy')) ? JSON.parse(localStorage.getItem('buy')) : []
             dispatch(setBuy([...local, ...resultGetPostAllData.data?.data?.goods]))
             setstateData(resultGetPostAllData.data?.data?.goods)
         }
@@ -84,7 +84,7 @@ const FoodInfo = () => {
             <div className="grid grid-cols-12 gap-y-10 gap-x-4 px-2">
                 {stateData?.map((itm, ind) => (
                     <div className="col-span-12 sm:col-span-6 lg:col-span-4  flex justify-center">
-                        <div className="w-[220px] h-[320px] border shadow-lg rounded-sm">
+                        <div className="w-[220px] h-[320px] border shadow-xl rounded-sm">
                             <div className="w-full h-[150px]">
                                 <img src={ff} className="w-full h-full rounded-sm" />
                             </div>

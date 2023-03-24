@@ -4,7 +4,7 @@ const baseUtils = fetchBaseQuery({
   baseUrl: "http://hamiapi.atabaifekri.ir/api/",
 
   prepareHeaders: (headers, { getState }) => {
-    const token = sessionStorage.getItem("auth");
+    const token = localStorage.getItem("auth");
 
 
     if (token) {
@@ -29,7 +29,7 @@ export const baseQuery = async (args, api, extraOptions) => {
 
   if (result.error && result.error.status === 401) {
     alert('دوباره لاگین کنید')
-    sessionStorage.removeItem("auth")
+    localStorage.removeItem("auth")
     window.location.reload()
   }
   return result;

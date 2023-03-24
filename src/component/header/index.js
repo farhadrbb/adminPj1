@@ -1,7 +1,7 @@
 
 import React, { useEffect, useState } from 'react'
 import resturant from '../../assest/image/resturant.png'
-import { CloseCircleOutlined, MinusOutlined, PlusOutlined, PoweroffOutlined, UserOutlined } from '@ant-design/icons';
+import { CloseCircleOutlined, LoginOutlined, MinusOutlined, PlusOutlined, PoweroffOutlined, UserOutlined } from '@ant-design/icons';
 import { Modal, Button } from 'antd';
 // import type { SizeType } from 'antd/es/config-provider/SizeContext';
 import { LeftOutlined } from '@ant-design/icons';
@@ -24,40 +24,12 @@ import AddressList from './addressList';
 import Loading from '../loading';
 import { deleteBuy, setIsLogin, setName, setSelectShoabFn, setWallet } from '../../redux/slices/buyBox';
 import { useLazyAuthQuery } from '../../redux/api/auth';
-const contentStyle = {
-    height: '500px',
-    // color: '#fff',
-    // lineHeight: '728px',
-    // textAlign: 'center',
-    // background: '#364d79',
-};
+import SliderShow from './sliderShow';
 
-// let address = [
-//     {
-//         shoab: "زعفرانیه",
-//         address: 'زعفرانیه,نبش خیابان محمدی,پلاک۳'
-//     },
-//     {
-//         shoab: "نیاوران",
-//         address: 'نیاوران, سه راه یاسر,خیابان باهنر'
-//     },
-//     {
-//         shoab: "تهرانپارس",
-//         address: 'فلکه سوم تهرانپارس,خیابان ۱۹۶ شرقی ,کوچه محمدی'
-//     },
-//     {
-//         shoab: "تجریش",
-//         address: 'تجریش,نبش خیابان صالح,پلاک ۵'
-//     },
-
-// ]
-export const Header = ({ setshowProfile, showProfile }) => {
-    const [isModalOpen, setIsModalOpen] = useState(false);
+export const Header = ({ setshowProfile, showProfile, setIsModalOpen, isModalOpen, setModalLocation, modalLocation }) => {
     const [ModalOpen, setModalOpen] = useState(false);
-    const [modalLocation, setModalLocation] = useState(false)
     const [changeShoab, setChangeShoab] = useState(false)
     const [intoRegister, setInfoRegister] = useState({});
-    // const [stateLogin, setstateLogin] = useState(false);
     const [regiLoginApi, resultRegiLoginApi] = useLazyAuthQuery()
     const [getData, resultData] = useLazyGetAllDataQuery()
     const [getWallet, resultWallet] = useLazyGetWalletQuery()
@@ -77,9 +49,7 @@ export const Header = ({ setshowProfile, showProfile }) => {
         setInfoRegister(prev => ({ ...prev, [key]: value }))
     }
 
-    const handleSubmitRegister = () => {
-        regiLoginApi({ url: "User/register", body: intoRegister })
-    }
+
     const handleSubmitLogin = () => {
         let body = {
             ...intoRegister
@@ -89,61 +59,10 @@ export const Header = ({ setshowProfile, showProfile }) => {
         regiLoginApi({ url: "User/login", body: body })
     }
 
-    useEffect(() => {
-        if (resultRegiLoginApi.isSuccess) {
-            if (resultRegiLoginApi.originalArgs.url === "User/login") {
-                sessionStorage.setItem("auth", resultRegiLoginApi.data?.data?.token)
-                sessionStorage.setItem("name", resultRegiLoginApi.data?.data?.firstname + resultRegiLoginApi.data?.data?.surname)
-                dispatch(setName(resultRegiLoginApi.data?.data?.firstname + resultRegiLoginApi.data?.data?.surname))
-            }
-        }
-    }, [resultRegiLoginApi]);
-
-    useEffect(() => {
-        const token = sessionStorage.getItem("auth");
-        const name = sessionStorage.getItem("name");
-        if (token) {
-            dispatch(setIsLogin(true))
-            dispatch(setName(name))
-            getWallet("Wallet/Get")
-        }
-    }, []);
-
-
-    useEffect(() => {
-        if (resultRegiLoginApi.isSuccess && resultRegiLoginApi.originalArgs.url === "User/login" && !resultRegiLoginApi.isFetching) {
-            messageApi.open({
-                type: 'success',
-                content: 'شما لاگین شدید',
-            });
-            dispatch(setIsLogin(true))
-            setIsModalOpen(false)
-        }
-        if (resultRegiLoginApi.isSuccess && resultRegiLoginApi.originalArgs.url === "User/register") {
-            messageApi.open({
-                type: 'success',
-                content: 'شما با موفقیت ثبت نام شدید',
-            });
-        }
-        // if (resultRegiLoginApi.data?.errorCode === 403 || (!resultRegiLoginApi.data && resultRegiLoginApi.isSuccess)) {
-        //     messageApi.open({
-        //         type: 'error',
-        //         content: 'عملبات انجام نشد',
-        //     });
-
-        // }
-        if (resultData.data?.data?.branches?.length > 0) {
-            dispatch(setSelectShoabFn(resultData.data?.data?.branches[0]))
-        }
-    }, [resultRegiLoginApi, resultData]);
-
-
-    useEffect(() => {
-        getData("Branch/GetAll")
-    }, []);
 
     const handleCallApiWallet = async () => {
-        const token = await sessionStorage.getItem("auth");
+        const token = await localStorage.getItem("auth");
+        
 
         if (token) {
             setTimeout(() => {
@@ -151,6 +70,40 @@ export const Header = ({ setshowProfile, showProfile }) => {
             }, 2000);
         }
 
+    }
+
+
+
+    const handleShoab = (itm) => {
+        if (shoab.id === itm.id) {
+            setModalOpen(false)
+            return
+        }
+        if (count === 0) {
+            dispatch(setSelectShoabFn(itm))
+            setModalOpen(false)
+            return
+        }
+        setChangeShoab(true)
+        setshoabState(itm)
+    }
+
+
+    const handleExit = () => {
+        dispatch(setIsLogin(false))
+        messageApi.open({
+            type: 'error',
+            content: 'شما خارج شدید',
+        });
+        localStorage.removeItem("auth")
+    }
+
+    const handleChangeShoab = async () => {
+        await localStorage.removeItem('buy')
+        dispatch(deleteBuy([]))
+        dispatch(setSelectShoabFn(shoabState))
+        setChangeShoab(false);
+        setModalOpen(false)
     }
 
 
@@ -168,78 +121,52 @@ export const Header = ({ setshowProfile, showProfile }) => {
     }, [resultWallet]);
 
 
-
-    let itemsTabs = [
-        {
-            label: `ورود`,
-            key: 1,
-            children:
-                <div className='flex flex-col '>
-
-                    <p className='font-bold mb-10 w-full flex justify-center ' >لطفا اطلاعات خود را وارد کنید</p>
-                    <div className='flex flex-col justify-center items-center h-full'>
-
-                        <input value={intoRegister.mobile} placeholder='شماره موبایل (۰۹)' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "mobile")} />
-                        <input value={intoRegister.password} type="password" placeholder='رمز عبور' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "password")} />
-
-                        <BtnCustom title={"ورود"} className=' w-[250px] h-[48px] mt-5' leftIcon clickFn={() => handleSubmitLogin()} />
-                    </div>,
-                </div>
-        },
-        {
-            label: `ثبت نام`,
-            key: 2,
-            children:
-                <div className='flex flex-col justify-center items-center'>
-
-                    <p className='font-bold mb-4'>لطفا اطلاعات خود را وارد کنید</p>
-                    <input value={intoRegister.name} placeholder='نام' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "firstName")} />
-                    <input value={intoRegister.sureName} placeholder='نام خانوادگی' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "sureName")} />
-                    <input value={intoRegister.mobile} placeholder='شماره موبایل' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "mobile")} />
-                    <input value={intoRegister.password} placeholder='رمز عبور' type="password" className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "password")} />
-
-                    <BtnCustom title={"ثبت نام"} className=' w-[250px] h-[48px] ' leftIcon clickFn={() => handleSubmitRegister()} />
-                </div>
-        },
-    ];
-
-
-
-    const handleShoab = (itm) => {
-        if (shoab.id === itm.id) {
-            setModalOpen(false)
-            return
-        }
-        setChangeShoab(true)
-        setshoabState(itm)
-    }
-
-
-    const handleExit = () => {
-        dispatch(setIsLogin(false))
-        messageApi.open({
-            type: 'error',
-            content: 'شما خارج شدید',
-        });
-        sessionStorage.removeItem("auth")
-    }
-
-    const handleChangeShoab = async () => {
-        await sessionStorage.removeItem('buy')
-        dispatch(deleteBuy([]))
-        dispatch(setSelectShoabFn(shoabState))
-        setChangeShoab(false);
-        setModalOpen(false)
-    }
-
     useEffect(() => {
         if (resultData.data?.data?.branches.length > 1 && !window.location.href.includes("Authority")) {
             setModalOpen(true)
         }
     }, [resultData.data?.data?.branches]);
 
+    useEffect(() => {
+        if (resultRegiLoginApi.isSuccess) {
+            if (resultRegiLoginApi.originalArgs.url === "User/login") {
+                localStorage.setItem("auth", resultRegiLoginApi.data?.data?.token)
+                localStorage.setItem("auth", resultRegiLoginApi.data?.data?.token)
+                localStorage.setItem("name", resultRegiLoginApi.data?.data?.firstname + resultRegiLoginApi.data?.data?.surname)
+                dispatch(setName(resultRegiLoginApi.data?.data?.firstname + resultRegiLoginApi.data?.data?.surname))
+            }
+        }
+    }, [resultRegiLoginApi]);
+
+    useEffect(() => {
+        const token = localStorage.getItem("auth");
+        const name = localStorage.getItem("name");
+        if (token) {
+            dispatch(setIsLogin(true))
+            dispatch(setName(name))
+            // getWallet("Wallet/Get")
+        }
+    }, []);
 
 
+    useEffect(() => {
+        if (resultRegiLoginApi.isSuccess && resultRegiLoginApi.originalArgs.url === "User/login" && !resultRegiLoginApi.isFetching) {
+            messageApi.open({
+                type: 'success',
+                content: 'شما لاگین شدید',
+            });
+            dispatch(setIsLogin(true))
+            setIsModalOpen(false)
+        }
+        if (resultData.data?.data?.branches?.length > 0) {
+            dispatch(setSelectShoabFn(resultData.data?.data?.branches[0]))
+        }
+    }, [resultRegiLoginApi, resultData]);
+
+
+    useEffect(() => {
+        getData("Branch/GetAll")
+    }, []);
 
 
     return (
@@ -256,9 +183,10 @@ export const Header = ({ setshowProfile, showProfile }) => {
                     <img src={resturant} alt='resturant' className="w-[70px] h-[70px]" />
                     <div className="flex">
                         <BtnCustom
-                            title={!stateLogin ? 'ورود/ ثبت نام' : ''}
+                            title={!stateLogin ? 'ورود' : ''}
                             className={`${stateLogin && "bg-transparent !px-1 m-0"}`}
-                            icon={stateLogin && (<UserOutlined className="text-gray-700 text-lg" />)}
+                            leftIcon
+                            icon={!stateLogin ? <LoginOutlined className="mt-2" /> : <UserOutlined className="text-gray-700 text-lg" />}
                             clickFn={!stateLogin ? (() => setIsModalOpen(true)) : () => setshowProfile(true)} />
                         {stateLogin && <BtnCustom
                             className="bg-transparent !px-1 !mx-1"
@@ -271,6 +199,8 @@ export const Header = ({ setshowProfile, showProfile }) => {
                     </div>
                 </div>
             </div>
+
+
             <div className='relative overflow-hidden'>
                 <div className="absolute top-0 left-0 right-0 bottom-0 bg-black-200 opacity-30 z-10"></div>
                 {resultData.data?.data?.branches.length > 0 && (
@@ -279,7 +209,11 @@ export const Header = ({ setshowProfile, showProfile }) => {
                             <h1 className='font-bold text-[30px] mr-2 mb-2 text-center'>{shoab?.name}</h1>
                             <p className='mr-2 mb-5 text-sm text-center'>{`${"آدرس:"}${shoab?.addressDetail}`}</p>
                             {resultData.data?.data?.branches.length > 1 && (
-                                <BtnCustom title='شعبه' icon={<DownOutlined />} leftIcon clickFn={() => setModalOpen(true)} />
+                                <BtnCustom
+                                    title='شعبه'
+                                    icon={<DownOutlined className="mt-[8px] text-xs" />}
+                                    leftIcon
+                                    clickFn={() => setModalOpen(true)} />
                             )}
                         </div>
                         <div className='absolute z-30 md:top-28 top-10 left-[50%] -translate-x-[50%] flex justify-center flex-col items-center py-3 px-10 bg-slate-600 opacity-50 rounded-[5px] w-[320px] sm:w-[380px]  h-[200px] border border-gray-400'>
@@ -291,34 +225,35 @@ export const Header = ({ setshowProfile, showProfile }) => {
                     <div className="text-xs mx-1 text-gray-100">در حال بارگزاری...</div>
                 </div>)}
 
-                <Carousel autoplay effect="fade" >
-                    <div>
-                        <h3 className="md:h-[500px] h-[300px]">
-                            <img className="bg-contain w-full md:h-[500px] h-[300px]" src="/img/l-intro-1651501665.jpg" />
-                        </h3>
-                    </div>
-                    <div>
-                        <h3 className="md:h-[500px] h-[300px]">
-                            <img className="bg-contain w-full md:h-[500px] h-[300px]" src="/img/0.89399200_1551782137_fast1.jpg" />
-                        </h3>
-                    </div>
-                    <div>
-                        <h3 className="md:h-[500px] h-[300px]">
-                            <img className="bg-contain w-full md:h-[500px] h-[300px]" src="https://static.delino.com/Image/Subscriber/meykhosh/Sliders/0cdafr02.5if.jpg" />
-                        </h3>
-
-                    </div>
-                    <div>
-                        <h3 className="md:h-[500px] h-[300px]">
-                            <img className="bg-contain w-full md:h-[500px] h-[300px]" src="https://static.delino.com/Image/Subscriber/meykhosh/Sliders/t2qyovwc.u2v.jpg" />
-                        </h3>
-
-                    </div>
-                </Carousel>
+                <SliderShow />
             </div>
+
+
+
+
+
             <ModalCustom isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen}>
-                <TabsCustom data={itemsTabs} login />
+                {/* <TabsCustom data={itemsTabs} login /> */}
+
+                <div className='flex flex-col '>
+
+                    <p className='font-bold mb-10 w-full flex justify-center ' >لطفا اطلاعات خود را وارد کنید</p>
+                    <div className='flex flex-col justify-center items-center h-full'>
+
+                        <input value={intoRegister.mobile} placeholder='شماره موبایل (۰۹)' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "mobile")} />
+                        <input value={intoRegister.password} type="password" placeholder='رمز عبور' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "password")} />
+
+                        <BtnCustom
+                            title={"تایید شماره موبایل"}
+                            loading={resultRegiLoginApi.isLoading}
+                            className=' w-[250px] h-[48px] mt-5'
+                            leftIcon
+                            clickFn={() => handleSubmitLogin()} />
+                    </div>,
+                </div>
             </ModalCustom>
+
+
             <ModalCustom isModalOpen={changeShoab} setIsModalOpen={setChangeShoab}>
                 <div className="flex flex-col mt-5">
                     <div className>با تغییر شعبه سبد خرید شما پاک خواهد شد آیا ادامه می دهید؟</div>
@@ -331,7 +266,6 @@ export const Header = ({ setshowProfile, showProfile }) => {
 
             <ModalCustom isModalOpen={modalLocation} setIsModalOpen={setModalLocation}>
                 <div className="flex flex-col mt-5">
-
                     <div className="mt-5">
                         <AddressList />
                     </div>

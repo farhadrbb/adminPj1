@@ -34,8 +34,8 @@ export const Profile = () => {
   }
 
   useEffect(() => {
-    if (resultGetLinkPay.error?.data) {
-        window.location.replace(resultGetLinkPay.error?.data)
+    if (resultGetLinkPay.data?.data) {
+        window.location.replace(resultGetLinkPay.data?.data)
     }
 }, [resultGetLinkPay])
 

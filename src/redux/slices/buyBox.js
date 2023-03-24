@@ -10,7 +10,8 @@ const initialState = {
     login:false,
     count:0,
     name:'',
-    distance:false
+    distance:false,
+    sumPrice:''
 
 }
 
@@ -19,7 +20,7 @@ const buyBox = createSlice({
     initialState,
     reducers: {
         setBuy: (state, action) => {
-            // let local = JSON.parse(sessionStorage.getItem('buy')) ? JSON.parse(sessionStorage.getItem('buy')) :[] 
+            // let local = JSON.parse(localStorage.getItem('buy')) ? JSON.parse(localStorage.getItem('buy')) :[] 
             let arr = [...action.payload, ...state.value]
             var result = arr.reduce((unique, o) => {
                 if (!unique.some(obj => obj.id === o.id && obj.goodsName === o.goodsName)) {
@@ -58,9 +59,13 @@ const buyBox = createSlice({
         setDistance: (state, action) => {
             state.distance = action.payload
         },
+        setSum: (state, action) => {
+            state.sumPrice = action.payload
+        },
+        
 
     }
 })
 
-export const { setBuy, setSelectGroupMenu, setSelectAddress, setSelectShoabFn, deleteBuy,setIsLogin,setCount,setWallet,setName,setDistance } = buyBox.actions;
+export const { setBuy, setSelectGroupMenu, setSelectAddress, setSelectShoabFn, deleteBuy,setIsLogin,setCount,setWallet,setName,setDistance,setSum } = buyBox.actions;
 export default buyBox.reducer;

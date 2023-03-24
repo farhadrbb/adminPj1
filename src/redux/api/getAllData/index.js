@@ -15,6 +15,15 @@ export const getAllAData = createApi({
         };
       },
     }),
+    getWallet: builder.query({
+      query: (infoApi) => {
+        return {
+          url: `${infoApi}`,
+          // params: infoApi.filter,
+
+        };
+      },
+    }),
     getLinkPay: builder.query({
       query: (infoApi) => {
         return {
@@ -36,7 +45,27 @@ export const getAllAData = createApi({
 
       }),
     }),
+
+    postDataPay: builder.mutation({
+      query: (infoApi) => ({
+        url: `${infoApi.url}`,
+        method: "POST",
+        // params: infoApi.filter || undefined,
+        body: infoApi.body || undefined,
+
+      }),
+    }),
+
+    sendInvoice: builder.mutation({
+      query: (infoApi) => ({
+        url: `${infoApi.url}`,
+        method: "POST",
+        // params: infoApi.filter || undefined,
+        body: infoApi.body || undefined,
+
+      }),
+    }),
   }),
 });
 
-export const { useLazyGetAllDataQuery, usePostAllDataMutation, useLazyGetLinkPayQuery } = getAllAData;
+export const { useLazyGetAllDataQuery, usePostAllDataMutation, useLazyGetLinkPayQuery,usePostDataPayMutation,useLazyGetWalletQuery,useSendInvoiceMutation } = getAllAData;

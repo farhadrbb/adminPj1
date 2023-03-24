@@ -17,14 +17,15 @@ import ModalCustom from '../modalCustom';
 import { Carousel } from 'antd';
 import { Profile } from './profile';
 import { TabsCustom } from '../tabsCustom';
-import { useLazyGetAllDataQuery, usePostAllDataMutation } from '../../redux/api/getAllData';
+import { useLazyGetAllDataQuery, useLazyGetWalletQuery, usePostAllDataMutation } from '../../redux/api/getAllData';
 import Input from 'antd/es/input/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import AddressList from './addressList';
 import Loading from '../loading';
-import { deleteBuy, setSelectShoabFn } from '../../redux/slices/buyBox';
+import { deleteBuy, setIsLogin, setName, setSelectShoabFn, setWallet } from '../../redux/slices/buyBox';
+import { useLazyAuthQuery } from '../../redux/api/auth';
 const contentStyle = {
-    height: '370px',
+    height: '500px',
     // color: '#fff',
     // lineHeight: '728px',
     // textAlign: 'center',
@@ -50,19 +51,23 @@ const contentStyle = {
 //     },
 
 // ]
-export const Header = ({ setshowProfile, showProfile}) => {
+export const Header = ({ setshowProfile, showProfile }) => {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [ModalOpen, setModalOpen] = useState(false);
     const [modalLocation, setModalLocation] = useState(false)
     const [changeShoab, setChangeShoab] = useState(false)
     const [intoRegister, setInfoRegister] = useState({});
-    const [stateLogin, setstateLogin] = useState(false);
-    const [regiLoginApi, resultRegiLoginApi] = usePostAllDataMutation()
+    // const [stateLogin, setstateLogin] = useState(false);
+    const [regiLoginApi, resultRegiLoginApi] = useLazyAuthQuery()
     const [getData, resultData] = useLazyGetAllDataQuery()
+    const [getWallet, resultWallet] = useLazyGetWalletQuery()
     const [shoabState, setshoabState] = useState()
     const [messageApi, contextHolder] = message.useMessage()
     const dispatch = useDispatch()
     const shoab = useSelector(state => state.buyBox.selectShoab)
+    const count = useSelector(state => state.buyBox.count)
+    const stateLogin = useSelector(state => state.buyBox.login)
+
 
 
 
@@ -88,31 +93,36 @@ export const Header = ({ setshowProfile, showProfile}) => {
         if (resultRegiLoginApi.isSuccess) {
             if (resultRegiLoginApi.originalArgs.url === "User/login") {
                 sessionStorage.setItem("auth", resultRegiLoginApi.data?.data?.token)
+                sessionStorage.setItem("name", resultRegiLoginApi.data?.data?.firstname + resultRegiLoginApi.data?.data?.surname)
+                dispatch(setName(resultRegiLoginApi.data?.data?.firstname + resultRegiLoginApi.data?.data?.surname))
             }
         }
     }, [resultRegiLoginApi]);
 
     useEffect(() => {
         const token = sessionStorage.getItem("auth");
+        const name = sessionStorage.getItem("name");
         if (token) {
-            setstateLogin(true)
+            dispatch(setIsLogin(true))
+            dispatch(setName(name))
+            getWallet("Wallet/Get")
         }
     }, []);
 
 
     useEffect(() => {
-        if (resultRegiLoginApi.isSuccess && resultRegiLoginApi.originalArgs.url === "User/login") {
+        if (resultRegiLoginApi.isSuccess && resultRegiLoginApi.originalArgs.url === "User/login" && !resultRegiLoginApi.isFetching) {
             messageApi.open({
                 type: 'success',
                 content: 'شما لاگین شدید',
             });
-            setstateLogin(true)
+            dispatch(setIsLogin(true))
             setIsModalOpen(false)
         }
-        if (resultRegiLoginApi.data?.errorCode === 403 || (!resultRegiLoginApi.data && resultRegiLoginApi.isSuccess)) {
+        if (resultRegiLoginApi.isSuccess && resultRegiLoginApi.originalArgs.url === "User/register") {
             messageApi.open({
-                type: 'error',
-                content: 'عملبات انجام نشد',
+                type: 'success',
+                content: 'شما با موفقیت ثبت نام شدید',
             });
 
         }
@@ -121,9 +131,36 @@ export const Header = ({ setshowProfile, showProfile}) => {
         }
     }, [resultRegiLoginApi, resultData]);
 
+
     useEffect(() => {
         getData("Branch/GetAll")
     }, []);
+
+    const handleCallApiWallet = async () => {
+        const token = await sessionStorage.getItem("auth");
+
+        if (token) {
+            setTimeout(() => {
+                getWallet("Wallet/Get")
+            }, 2000);
+        }
+
+    }
+
+
+    useEffect(() => {
+        if (stateLogin) {
+            handleCallApiWallet()
+        }
+    }, [stateLogin]);
+
+
+    useEffect(() => {
+        if (resultWallet.data?.data) {
+            dispatch(setWallet(resultWallet.data?.data?.cash))
+        }
+    }, [resultWallet]);
+
 
 
     let itemsTabs = [
@@ -137,7 +174,7 @@ export const Header = ({ setshowProfile, showProfile}) => {
                     <div className='flex flex-col justify-center items-center h-full'>
 
                         <input value={intoRegister.mobile} placeholder='شماره موبایل (۰۹)' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "mobile")} />
-                        <input value={intoRegister.password} typث="password" placeholder='رمز عبور' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "password")} />
+                        <input value={intoRegister.password} type="password" placeholder='رمز عبور' className='border-b  mb-6 focus:border-none focus:outline-none focus:border-b w-[250px] h-[45px] placeholder:text-center' onChange={(e) => handleChange(e.target.value, "password")} />
 
                         <BtnCustom title={"ورود"} className=' w-[250px] h-[48px] mt-5' leftIcon clickFn={() => handleSubmitLogin()} />
                     </div>,
@@ -163,7 +200,7 @@ export const Header = ({ setshowProfile, showProfile}) => {
 
 
     const handleShoab = (itm) => {
-        if(shoab.id === itm.id){
+        if (shoab.id === itm.id) {
             setModalOpen(false)
             return
         }
@@ -173,7 +210,7 @@ export const Header = ({ setshowProfile, showProfile}) => {
 
 
     const handleExit = () => {
-        setstateLogin(false)
+        dispatch(setIsLogin(false))
         messageApi.open({
             type: 'error',
             content: 'شما خارج شدید',
@@ -181,7 +218,7 @@ export const Header = ({ setshowProfile, showProfile}) => {
         sessionStorage.removeItem("auth")
     }
 
-    const handleChangeShoab = async ()=>{
+    const handleChangeShoab = async () => {
         await sessionStorage.removeItem('buy')
         dispatch(deleteBuy([]))
         dispatch(setSelectShoabFn(shoabState))
@@ -190,7 +227,7 @@ export const Header = ({ setshowProfile, showProfile}) => {
     }
 
     useEffect(() => {
-        if (resultData.data?.data?.branches.length > 1) {
+        if (resultData.data?.data?.branches.length > 1 && !window.location.href.includes("Authority")) {
             setModalOpen(true)
         }
     }, [resultData.data?.data?.branches]);
@@ -201,8 +238,8 @@ export const Header = ({ setshowProfile, showProfile}) => {
 
     return (
         <>
-            <div className={`absolute z-50 top-0 right-0 w-[250px]  bg-gray-100 h-full transition-all rounded-tl-[10px] rounded-bl-[10px] shadow-2xl ${showProfile ? "translate-x-0" : 'translate-x-[500px]'}`}>
-                <div className='absolute top-2 left-2 text-red-700' onClick={() => setshowProfile(false)}><CloseCircleOutlined /></div>
+            <div className={`absolute z-50 top-0 right-0 w-[250px]  bg-gray-100 h-full transition-all shadow-2xl ${showProfile ? "translate-x-0" : 'translate-x-[500px]'}`}>
+                <div className='absolute top-2 left-2 text-red-700 cursor-pointer' onClick={() => setshowProfile(false)}><CloseCircleOutlined /></div>
                 <Profile />
             </div>
             {showProfile && (<div className={`absolute z-40 top-0 bottom-0 left-0 right-0 bg-black-200 opacity-50`} onClick={() => setshowProfile(false)}></div>)}
@@ -232,35 +269,43 @@ export const Header = ({ setshowProfile, showProfile}) => {
                 <div className="absolute top-0 left-0 right-0 bottom-0 bg-black-200 opacity-30 z-10"></div>
                 {resultData.data?.data?.branches.length > 0 && (
                     <>
-                        <div className='absolute z-40 top-20 left-[50%] -translate-x-[50%] flex justify-center flex-col items-center w-[320px] h-[200px]'>
-                            <h1 className='font-bold text-[30px] mr-2 mb-2 text-center'>{shoab?.description}</h1>
+                        <div className='absolute z-40 md:top-28 top-10 left-[50%] -translate-x-[50%] flex justify-center flex-col items-center w-[320px] h-[200px]'>
+                            <h1 className='font-bold text-[30px] mr-2 mb-2 text-center'>{shoab?.name}</h1>
                             <p className='mr-2 mb-5 text-sm text-center'>{`${"آدرس:"}${shoab?.addressDetail}`}</p>
                             {resultData.data?.data?.branches.length > 1 && (
                                 <BtnCustom title='شعبه' icon={<DownOutlined />} leftIcon clickFn={() => setModalOpen(true)} />
                             )}
                         </div>
-                        <div className='absolute z-30 top-20 left-[50%] -translate-x-[50%] flex justify-center flex-col items-center py-3 px-10 bg-slate-500 opacity-50 rounded-[10px] w-[320px] h-[200px] border border-gray-400'>
+                        <div className='absolute z-30 md:top-28 top-10 left-[50%] -translate-x-[50%] flex justify-center flex-col items-center py-3 px-10 bg-slate-600 opacity-50 rounded-[5px] w-[320px] sm:w-[380px]  h-[200px] border border-gray-400'>
                         </div>
                     </>
                 )}
                 {resultData.isLoading && (<div className=" absolute z-30 top-32 left-[50%] -translate-x-[50%]  flex-col  flex justify-center items-center text-gray-500 w-full">
                     <Loading />
-                    <div className="text-xs mx-1">در حال بارگزاری...</div>
+                    <div className="text-xs mx-1 text-gray-100">در حال بارگزاری...</div>
                 </div>)}
 
                 <Carousel autoplay effect="fade" >
                     <div>
-                        <h3 style={contentStyle}><img src="https://static.delino.com/Image/Subscriber/meykhosh/Sliders/a2xsu5dm.0xn.jpg" style={{ height: "370px", width: "100%" }} /></h3>
+                        <h3 className="md:h-[500px] h-[300px]">
+                            <img className="bg-contain w-full md:h-[500px] h-[300px]" src="/img/l-intro-1651501665.jpg" />
+                        </h3>
                     </div>
                     <div>
-                        <h3 style={contentStyle}><img src="https://static.delino.com/Image/Subscriber/meykhosh/Sliders/sduaagl1.1ga.jpg" style={{ height: "370px", width: "100%", }} /></h3>
+                        <h3 className="md:h-[500px] h-[300px]">
+                            <img className="bg-contain w-full md:h-[500px] h-[300px]" src="/img/0.89399200_1551782137_fast1.jpg" />
+                        </h3>
                     </div>
                     <div>
-                        <h3 style={contentStyle}><img src="https://static.delino.com/Image/Subscriber/meykhosh/Sliders/0cdafr02.5if.jpg" style={{ height: "370px", width: "100%", }} /></h3>
+                        <h3 className="md:h-[500px] h-[300px]">
+                            <img className="bg-contain w-full md:h-[500px] h-[300px]" src="https://static.delino.com/Image/Subscriber/meykhosh/Sliders/0cdafr02.5if.jpg" />
+                        </h3>
 
                     </div>
                     <div>
-                        <h3 style={contentStyle}><img src="https://static.delino.com/Image/Subscriber/meykhosh/Sliders/t2qyovwc.u2v.jpg" style={{ height: "370px", width: "100%", }} /></h3>
+                        <h3 className="md:h-[500px] h-[300px]">
+                            <img className="bg-contain w-full md:h-[500px] h-[300px]" src="https://static.delino.com/Image/Subscriber/meykhosh/Sliders/t2qyovwc.u2v.jpg" />
+                        </h3>
 
                     </div>
                 </Carousel>
@@ -273,7 +318,7 @@ export const Header = ({ setshowProfile, showProfile}) => {
                     <div className>با تغییر شعبه سبد خرید شما پاک خواهد شد آیا ادامه می دهید؟</div>
                     <div className="flex justify-end mt-3">
                         <BtnCustom title="تایید" clickFn={() => handleChangeShoab()} />
-                        <BtnCustom title="انصراف" className="bg-red-600" clickFn={() => {setChangeShoab(false);setModalOpen(false)}} />
+                        <BtnCustom title="انصراف" className="bg-red-600" clickFn={() => { setChangeShoab(false); setModalOpen(false) }} />
                     </div>
                 </div>
             </ModalCustom>
@@ -293,7 +338,7 @@ export const Header = ({ setshowProfile, showProfile}) => {
 
                         return <div className='col-span-6 items-center flex cursor-pointer hover:text-cyan-50' onClick={() => handleShoab(itm)}>
                             <EnvironmentOutlined />
-                            <p className='mb-1 mr-1'>{itm.description}</p>
+                            <p className='mb-1 mr-1'>{itm.name}</p>
                         </div>
                     })}
                 </div>

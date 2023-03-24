@@ -9,6 +9,8 @@ import { useEffect } from "react";
 
 export const Profile = () => {
   const wallet = useSelector(state => state.buyBox.wallet)
+  const name = useSelector(state => state.buyBox.name)
+
 
   const [payModal, setPayModal] = useState(false)
   const [inputSharzh, setinputSharzh] = useState()
@@ -46,16 +48,16 @@ export const Profile = () => {
           <UserOutlined className="text-gray-400" />
         </div>
         <div className="mt-10 text-base text-gray-500 border-b">
-          فرهاد ربیعی
+           {name}
         </div>
         <div className="flex text-gray-400 mt-5 text-xs">
           <div className="mx-1">کیف پول شما:</div>
           <div className="mx-1">{wallet}</div>
           <div>تومان</div>
         </div>
-        <div className="text-red-600 flex mt-2 text-xs" onClick={() => setPayModal(true)}>
+        <div className="text-red-600 flex mt-2 text-xs cursor-pointer" onClick={() => setPayModal(true)}>
           <span>افزایش اعتبار</span>
-          {/* <span><PlusOutlined /></span> */}
+          <span className="mr-1"><PlusOutlined /></span>
         </div>
         <div className="border-b mx-auto border-gray-300 mt-10 w-[90%]"></div>
         <div className="text-black mt-10 w-full flex flex-col ">

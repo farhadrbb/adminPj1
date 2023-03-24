@@ -4,9 +4,13 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
     value: [],
     selectMenu: 0,
-    selectShoab:{},
-    selectAddress:{},
-    wallet:255000
+    selectShoab: {},
+    selectAddress: {},
+    wallet: 0,
+    login:false,
+    count:0,
+    name:'',
+    distance:false
 
 }
 
@@ -25,6 +29,13 @@ const buyBox = createSlice({
             }, []);
             state.value = result
         },
+        
+        setIsLogin: (state, action) => {
+            state.login = action.payload
+        },
+        setCount: (state, action) => {
+            state.count = action.payload
+        },
 
         setSelectGroupMenu: (state, action) => {
             state.selectMenu = action.payload
@@ -41,10 +52,15 @@ const buyBox = createSlice({
         setWallet: (state, action) => {
             state.wallet = action.payload
         },
-        
+        setName: (state, action) => {
+            state.name = action.payload
+        },
+        setDistance: (state, action) => {
+            state.distance = action.payload
+        },
 
     }
 })
 
-export const { setBuy, setSelectGroupMenu,setSelectAddress,setSelectShoabFn,deleteBuy } = buyBox.actions;
+export const { setBuy, setSelectGroupMenu, setSelectAddress, setSelectShoabFn, deleteBuy,setIsLogin,setCount,setWallet,setName,setDistance } = buyBox.actions;
 export default buyBox.reducer;

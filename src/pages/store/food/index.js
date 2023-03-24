@@ -48,6 +48,8 @@ const FoodInfo = () => {
 
 
     useEffect(() => {
+        setstateData([])
+
         if (select) {
             let body = {
                 visible: true,
@@ -76,14 +78,15 @@ const FoodInfo = () => {
     }
 
 
+
     return (
         <>
             <div className="grid grid-cols-12 gap-y-10 gap-x-4 px-2">
                 {stateData?.map((itm, ind) => (
                     <div className="col-span-12 sm:col-span-6 lg:col-span-4  flex justify-center">
-                        <div className="w-[220px] h-[320px] border shadow-lg rounded-xl">
+                        <div className="w-[220px] h-[320px] border shadow-lg rounded-sm">
                             <div className="w-full h-[150px]">
-                                <img src={ff} className="w-full h-full rounded-xl" />
+                                <img src={ff} className="w-full h-full rounded-sm" />
                             </div>
                             <div className="w-full flex justify-between mt-5 px-2">
                                 <span className="font-bold text-base">
@@ -91,9 +94,10 @@ const FoodInfo = () => {
                                 </span>
 
                             </div>
-                            <div className="w-full flex justify-end mt-1 px-3">
-                                <span className="font-bold">
+                            <div className="w-full flex justify-end mt-1 px-3 text-xs">
+                                <span>
                                     {itm?.goodsPrice}
+                                    {"تومان"}
                                 </span>
                             </div>
                             <div className="w-full flex  mt-2 px-2">
@@ -117,10 +121,17 @@ const FoodInfo = () => {
                     </div>
                 ))}
             </div>
-            {resultGetPostAllData.isLoading && (<div className="flex justify-center items-center text-gray-500 w-full">
-                <Loading />
-                <div className="text-xs mx-1">در حال بارگزاری...</div>
-            </div>)}
+            {stateData?.length === 0 && !resultGetPostAllData.isLoading ? (
+                <div className="w-full h-full flex justify-center items-center mt-28 text-xs">اطلاعاتی برای نمایش وجود ندارد</div>
+            ) : ''}
+            {resultGetPostAllData.isLoading && (
+                <div className="flex justify-center items-center w-full h-full mt-28">
+                    <div className="flex justify-center items-center text-gray-500">
+                        <Loading />
+                        <div className="text-xs mx-1 ">در حال بارگزاری...</div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }

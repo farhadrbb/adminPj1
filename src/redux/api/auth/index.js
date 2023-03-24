@@ -3,76 +3,22 @@ import { baseQuery } from "../../baseUrl";
 
 export const authApi = createApi({
   reducerPath: "authApi",
-  // baseQuery:  fetchBaseQuery({ baseUrl: 'http://193.151.139.79:8082/api/' }),
-  baseQuery,
+  baseQuery: fetchBaseQuery({ baseUrl: 'http://hamiapi.atabaifekri.ir/api/' }),
+  // baseQuery,
   endpoints: (builder) => ({
-    validateCustomer: builder.mutation({
-      query: (info) => ({
-        url: `ValidCustomer`,
+    auth: builder.query({
+      query: (infoApi) => ({
+        url: `${infoApi.url}`,
         method: "POST",
-        body: info,
-        headers: {
-          accept: "text/plain",
-        },
-      }),
-    }),
-    sendotp: builder.mutation({
-      query: (info) => ({
-        url: `UserOtp`,
-        method: "POST",
-        body: info,
-        headers: {
-          accept: "text/plain",
-          "Content-Type": "application/json-patch+json",
-        },
-      }),
-    }),
-    sendotpCode: builder.mutation({
-      query: (info) => ({
-        url: `UserReg/AskOtp`,
-        method: "POST",
-        body: info,
-        headers: {
-          accept: "text/plain",
-          "Content-Type": "application/json-patch+json",
-        },
-      }),
-    }),
-    sejamCode: builder.query({
-      query: (infoSejam) => ({
-        url: `CheckotpbyNationalCode`,
-        method: "get",
-        params: infoSejam,
-      }),
-    }),
-    getUserProfile: builder.mutation({
-      query: (infoSejam) => ({
-        url: `UserReg/GetUserProfile`,
-        method: "post",
-        body: infoSejam,
-      }),
-    }),
+        // params: infoApi.filter || undefined,
+        body: infoApi.body || undefined,
 
-    getCustomerFile: builder.mutation({
-      query: (info) => ({
-        url: `CustomerFile`,
-        method: "POST",
-        body: info,
-        headers: {
-          accept: "text/plain",
-          "Content-Type": "application/json-patch+json",
-        },
       }),
     }),
   }),
 });
 
 export const {
-  useSendotpMutation,
-  useSendotpCodeMutation,
-  useLazySejamCodeQuery,
-  useValidateCustomerMutation,
-  useGetCustomerFileMutation,
-  useGetUserProfileMutation,
+  useLazyAuthQuery
 } = authApi;
 

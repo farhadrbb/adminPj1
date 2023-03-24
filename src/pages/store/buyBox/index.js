@@ -8,22 +8,32 @@ import {
     MinusOutlined,
     PlusOutlined
 } from '@ant-design/icons';
-import { setBuy } from '../../../redux/slices/buyBox';
+import { setBuy, setCount } from '../../../redux/slices/buyBox';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalCustom from '../../../component/modalCustom';
-import { Input } from 'antd';
-import { useLazyGetLinkPayQuery } from '../../../redux/api/getAllData';
+import { Input, message } from 'antd';
+import { useLazyGetLinkPayQuery, useLazyGetWalletQuery, useSendInvoiceMutation } from '../../../redux/api/getAllData';
 import { useNavigate } from 'react-router-dom';
 const BuyBox = ({ mobile }) => {
     const [sum, setsum] = useState(0);
+    const [tax, settax] = useState(0);
+    const [countstate, setcountState] = useState(0);
     const [isFill, setisFill] = useState(false);
     const [payModal, setPayModal] = useState(false)
     const [inputSharzh, setinputSharzh] = useState()
     const [getLinkPay, resultGetLinkPay] = useLazyGetLinkPayQuery()
+    const [postFactor, resultPostFactor] = useSendInvoiceMutation()
+    const [getWallet, resultWallet] = useLazyGetWalletQuery()
     const navigate = useNavigate()
     const buy = useSelector(state => state.buyBox.value)
+    const shoab = useSelector(state => state.buyBox.selectShoab)
     const wallet = useSelector(state => state.buyBox.wallet)
+    const login = useSelector(state => state.buyBox.login)
+    const count = useSelector(state => state.buyBox.count)
+    const distance = useSelector(state => state.buyBox.distance)
     const dispatch = useDispatch()
+    const [messageApi, contextHolder] = message.useMessage()
+
 
     const save = async (buy) => {
         await sessionStorage.setItem('buy', JSON.stringify(buy))
@@ -54,9 +64,15 @@ const BuyBox = ({ mobile }) => {
 
     const handleSumPrice = (itm) => {
         let sum = 0
+        let taxM = 0
+        let count = 0
         buy.map((item, index) => {
             if (item.count > 0) {
                 sum += item.count * item.goodsPrice
+                count += item.count
+                if (item.tax && item.tax != 0) {
+                    taxM += (item.goodsPrice * item.tax) / 100 * item.count
+                }
             }
         })
         if (sum > 0) {
@@ -64,7 +80,11 @@ const BuyBox = ({ mobile }) => {
         } else {
             setisFill(false)
         }
-        setsum(sum)
+        setsum(sum + taxM)
+        dispatch(setCount(count))
+        if (taxM > 0) {
+            settax(taxM)
+        }
 
     }
 
@@ -73,7 +93,26 @@ const BuyBox = ({ mobile }) => {
     }, [buy]);
 
 
+
+
+
+
     const handleAcceptBuy = async () => {
+        if (!login) {
+            messageApi.open({
+                type: 'warning',
+                content: 'برای ثبت سفارش ابتدا لاگین کنید',
+            });
+            return
+        }
+        if (!distance) {
+            messageApi.open({
+                type: 'warning',
+                content: 'لوکیشن انتخابی در محدوده سرویس نمی باشد',
+            });
+            return
+
+        }
         setPayModal(true)
     }
 
@@ -88,21 +127,51 @@ const BuyBox = ({ mobile }) => {
         }
     }
 
+
     const handleCLickCallApiPay = (type) => {
+
+        let postBuy = buy.map((itm, ind) => {
+            if (itm.count > 0) {
+                return {
+                    goodsId: itm.id,
+                    count: itm.count,
+                    description: itm.goodsDescription
+                }
+            }
+        })
+
+        let filter = postBuy.filter((itm, ind) => itm)
+
+
+
+        let body = {
+            branchId: shoab.id,
+            description: "string",
+            invoiceDetailDTO: [
+                ...filter
+            ]
+        }
+        postFactor({ url: "Invoice/AddNewOrder", body })
         if (type === "wallet") {
             getLinkPay(`PayCash/Payment?Amount=${sum}`)
         }
         if (type === "sharj") {
             getLinkPay(`PayCash/Payment?Amount=${inputSharzh}`)
         }
+
     }
 
 
+
     useEffect(() => {
-        if (resultGetLinkPay.error?.data) {
-            window.location.replace(resultGetLinkPay.error?.data)
+        if (resultGetLinkPay.data?.data) {
+            window.location.replace(resultGetLinkPay.data?.data)
         }
     }, [resultGetLinkPay])
+
+
+
+
 
     useEffect(() => {
         if (sum > wallet) {
@@ -110,14 +179,25 @@ const BuyBox = ({ mobile }) => {
         }
     }, [sum, wallet])
 
+    // useEffect(() => {
+    //     if (resultPostFactor.data?.data && resultPostFactor.isSuccess) {
+    //         getWallet("Wallet/Get")
+    //     }
+
+    // }, [resultPostFactor.data?.data]);
+
+
+
+
+
 
 
     if (isFill) {
 
         return (
             <>
-
-                <div className={`px-2 text-black h-[300px] overflow-y-auto`}>
+                {contextHolder}
+                <div className={`px-2 text-black overflow-y-auto ${mobile ? "h-[270px]" : "h-[300px]"}`}>
                     {buy.map((itm, ind) => (
                         <>
                             {itm.count > 0 && (
@@ -147,16 +227,22 @@ const BuyBox = ({ mobile }) => {
                         </>
                     ))}
                 </div>
-                {/* <div className="flex justify-between mb-1 mt-5 px-3 text-black">
-                <div>مالیات کل</div>
-                <div>۱۲.۵۰۰</div>
-            </div> */}
+                <div className="flex justify-between mb-1 mt-5 px-3 text-black">
+                    <div>مالیات کل</div>
+                    <div className="flex">
+                        <div >{tax}</div>
+                        <div className=" mr-1">{"تومان"}</div>
+                    </div>
+                </div>
                 <div className="flex justify-between px-3 text-black">
                     <div className="text-base font-bold">هزینه کل</div>
-                    <div className="text-base font-bold">{sum}</div>
+                    <div className="flex">
+                        <div className="text-base font-bold">{sum}</div>
+                        <div className="text-base font-bold mr-1">{"تومان"}</div>
+                    </div>
                 </div>
                 <div className="w-full flex justify-center mt-5 text-cyan-50">کد تخفیف دارید؟</div>
-                <BtnCustom title={wallet >= sum ? "ثبت سفارش" : "پرداخت آنلاین"} className={"mt-3"} clickFn={() => handleAcceptBuy()} />
+                <BtnCustom title={wallet >= sum ? "ثبت سفارش" : "پرداخت آنلاین"} className={wallet >= sum ? "" : "bg-red-600"} clickFn={() => handleAcceptBuy()} />
 
                 <ModalCustom isModalOpen={payModal} setIsModalOpen={setPayModal}>
                     <div className='text-base font-bold'>{wallet >= sum ? "ثبت سفارش" : "افزایش اعتبار و ثبت سفارش"}</div>
@@ -167,9 +253,12 @@ const BuyBox = ({ mobile }) => {
                                 value={inputSharzh}
                                 // onChange={(e) => setinputSharzh(e.target.value)}
                                 prefix={<CreditCardOutlined />} />
-                            <span className='flex text-xs text-red-100'>
+                            <span className='flex text-xs text-red-100 mr-2 mt-1'>
                                 <span>اعتبار شما :</span>
-                                <span>{wallet}</span>
+                                <div className="flex">
+                                    <span>{wallet}</span>
+                                    <span className="mr-1">{"تومان"}</span>
+                                </div>
                             </span>
                         </div>
                     )}
@@ -178,7 +267,10 @@ const BuyBox = ({ mobile }) => {
                             {"برای پرداخت از کیف پول مطمئن هستید؟"}
                             <span className='flex text-xs text-red-100'>
                                 <span>اعتبار شما :</span>
-                                <span>{wallet}</span>
+                                <div className="flex">
+                                    <span>{wallet}</span>
+                                    <span className="mr-1">{"تومان"}</span>
+                                </div>
                             </span>
                         </div>
                     )}
@@ -204,3 +296,8 @@ const BuyBox = ({ mobile }) => {
 }
 
 export default BuyBox;
+
+
+
+
+

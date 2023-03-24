@@ -1,7 +1,7 @@
 import { fetchBaseQuery } from "@reduxjs/toolkit/dist/query";
 
 const baseUtils = fetchBaseQuery({
-  baseUrl: "http://195.226.223.100:8082/api/",
+  baseUrl: "http://hamiapi.atabaifekri.ir/api/",
 
   prepareHeaders: (headers, { getState }) => {
     const token = sessionStorage.getItem("auth");

@@ -4,7 +4,7 @@ import Input from 'antd/es/input/Input';
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useLazyGetAllDataQuery, usePostAllDataMutation } from '../../../redux/api/getAllData';
-import { setSelectAddress } from '../../../redux/slices/buyBox';
+import { setDistance, setSelectAddress } from '../../../redux/slices/buyBox';
 import BtnCustom from '../../btn';
 import MapDisplay from '../../googleMap';
 import Loading from '../../loading';
@@ -59,72 +59,79 @@ const AddressList = ({ mobile }) => {
         getLocation('Address/GetAll')
         setstep(1)
     }, [resultPostLocation.data?.data]);
-
-
-
-
+    
+    
+    
+    
     const handleClickAddress = (itm) => {
         dispatch(setSelectAddress(itm))
     }
-
+    
     var rad = function (x) {
         return x * Math.PI / 180;
     };
-
-
-
+    
+    
+    
     var getDistance = function (p1, p2) {
         var R = 6378137; // Earth’s mean radius in meter
         var dLat = rad(p2.lat - p1.lat);
         var dLong = rad(p2.lng - p1.lng);
         var a = Math.sin(dLat / 2) * Math.sin(dLat / 2) +
-            Math.cos(rad(p1.lat)) * Math.cos(rad(p2.lat)) *
-            Math.sin(dLong / 2) * Math.sin(dLong / 2);
+        Math.cos(rad(p1.lat)) * Math.cos(rad(p2.lat)) *
+        Math.sin(dLong / 2) * Math.sin(dLong / 2);
         var c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         var d = R * c;
         setdistance(d.toFixed())
         return d; // returns the distance in meter
     };
-
-
-
+    
+    
+    
     useEffect(() => {
-        getDistance({ lat: shoab.lat, lng: shoab.lon }, { lat: address.lat, lng: address.lon })
+        if (address && shoab) {
+            getDistance({ lat: shoab.lat, lng: shoab.lon }, { lat: address.lat, lng: address.lon })
+        }
     }, [shoab, address]);
-
+    
     useEffect(() => {
-        if (distance && distance > shoab.coverage) {
+        if (distance && distance > shoab.coverage+1000) {
+            dispatch(setDistance(false))
             messageApi.open({
                 type: 'error',
                 content: 'آدرس انتخابی در محدوده سرویس نمی باشد',
             });
-        } else if (distance && distance < shoab.coverage) {
+        } else if (distance && distance < shoab.coverage+1000) {
+            dispatch(setDistance(true))
             messageApi.open({
                 type: 'success',
-                content: 'آدرس انتخابی در محدوده سرویس می باشد',
+                content: 'آدرس انتخابی در محدوده سرویس می باشد ',
             });
         }
-
     }, [distance]);
 
-    console.log("distance", distance);
-
+    // console.log("shoab",shoab);
+    // console.log("address",address);
+    console.log("dis",distance);
+    
+    
     useEffect(() => {
         return () => {
             setdistance(null)
+            getLocation('Address/GetAll')
         }
     }, []);
-
-
-
+    
+    
+    
     useEffect(() => {
         if (resultLocation.data?.data?.addresses) {
             dispatch(setSelectAddress(resultLocation.data?.data?.addresses[0]))
         }
     }, [resultLocation.data?.data?.addresses]);
-
-
-
+    
+    
+    
     useEffect(() => {
         if (step === 2) {
             setposition({
@@ -133,9 +140,10 @@ const AddressList = ({ mobile }) => {
                 zoom: 12,
             })
         }
+        getLocation('Address/GetAll')
     }, [step]);
-
-
+    
+    
     // let itemsTabs = [
     //     {
     //         label: `لیست آدرس های موجود`,
@@ -181,6 +189,9 @@ const AddressList = ({ mobile }) => {
                                 </div>
                             </div>
                         ))}
+                        {resultLocation.data?.data?.addresses.length === 0 && !resultLocation.isLoading ?(
+                            <div className="flex justify-center items-center w-full h-full  text-xs">{"آدرسی وجود ندارد"}</div>
+                        ):''}
                         {resultLocation.isLoading &&
                             (<div className="flex justify-center items-center text-gray-500 w-full">
                                 <Loading />

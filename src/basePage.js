@@ -1,6 +1,5 @@
 import { useRoutes, Navigate } from "react-router-dom";
 
-import Home from "./pages/home";
 import Store from "./pages/store";
 
 

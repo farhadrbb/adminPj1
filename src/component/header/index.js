@@ -26,7 +26,7 @@ import { deleteBuy, setIsLogin, setName, setSelectShoabFn, setWallet } from '../
 import { useLazyAuthQuery } from '../../redux/api/auth';
 import SliderShow from './sliderShow';
 
-export const Header = ({ setshowProfile, showProfile, setIsModalOpen, isModalOpen, setModalLocation, modalLocation }) => {
+export const Header = ({ setshowProfile, showProfile, setIsModalOpen, isModalOpen, setModalLocation, modalLocation,payState }) => {
     const [ModalOpen, setModalOpen] = useState(false);
     const [changeShoab, setChangeShoab] = useState(false)
     const [intoRegister, setInfoRegister] = useState({});
@@ -122,7 +122,7 @@ export const Header = ({ setshowProfile, showProfile, setIsModalOpen, isModalOpe
 
 
     useEffect(() => {
-        if (resultData.data?.data?.branches.length > 1 && !window.location.href.includes("Authority")) {
+        if (resultData.data?.data?.branches.length > 1 && !window.location.href.includes("Authority") && !payState) {
             setModalOpen(true)
         }
     }, [resultData.data?.data?.branches]);

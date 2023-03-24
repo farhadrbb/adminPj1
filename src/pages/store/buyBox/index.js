@@ -12,9 +12,9 @@ import { setBuy, setCount, setSum } from '../../../redux/slices/buyBox';
 import { useDispatch, useSelector } from 'react-redux';
 import ModalCustom from '../../../component/modalCustom';
 import { Input, message } from 'antd';
-import { useLazyGetLinkPayQuery, useLazyGetWalletQuery, useSendInvoiceMutation } from '../../../redux/api/getAllData';
+import { useLazyGetLinkPayQuery, useLazyGetWalletQuery, usePostDataPayMutation, useSendInvoiceMutation } from '../../../redux/api/getAllData';
 import { useNavigate } from 'react-router-dom';
-const BuyBox = ({ mobile,setIsModalOpen,isModalOpen,setModalLocation,modalLocation }) => {
+const BuyBox = ({ mobile, setIsModalOpen, isModalOpen, setModalLocation, modalLocation }) => {
     const [sum, setsum] = useState(0);
     const [tax, settax] = useState(0);
     const [isFill, setisFill] = useState(false);
@@ -30,6 +30,8 @@ const BuyBox = ({ mobile,setIsModalOpen,isModalOpen,setModalLocation,modalLocati
     const distance = useSelector(state => state.buyBox.distance)
     const dispatch = useDispatch()
     const [messageApi, contextHolder] = message.useMessage()
+    const [payStatus, resultPayStatus] = usePostDataPayMutation()
+
 
 
     const save = async (buy) => {
@@ -151,15 +153,28 @@ const BuyBox = ({ mobile,setIsModalOpen,isModalOpen,setModalLocation,modalLocati
                 ...filter
             ]
         }
-        postFactor({ url: "Invoice/AddNewOrder", body })
         if (type === "wallet") {
-            getLinkPay(`PayCash/Payment?Amount=${sum}`)
+            postFactor({ url: "Invoice/AddNewOrder", body })
+            // getLinkPay(`PayCash/Payment?Amount=${sum}`)
+
         }
         if (type === "sharj") {
             getLinkPay(`PayCash/Payment?Amount=${inputSharzh}`)
         }
 
     }
+
+    useEffect(() => {
+
+        if(resultPostFactor.data?.data){
+            let Authority = resultPostFactor.data?.data?.trackingCode
+            let body = {
+                Authority,
+                status:'OK'
+            }
+            payStatus({ url: 'PayCash/Verify', body })
+        }
+    }, [resultPostFactor.data?.data]);
 
 
 

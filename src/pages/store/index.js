@@ -97,6 +97,7 @@ const data = [
 
 const Store = () => {
     const [ModalOpen, setModalOpen] = useState(false);
+    const [payState, setpayState] = useState(false);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [modalLocation, setModalLocation] = useState(false)
     const [cartModal, setcartModal] = useState(false);
@@ -167,6 +168,7 @@ const Store = () => {
             status
         }
         payStatus({ url: 'PayCash/Verify', body })
+        setpayState(true)
         navigate('/')
     }
 
@@ -232,6 +234,7 @@ const Store = () => {
                     setIsModalOpen={setIsModalOpen}
                     setModalLocation={setModalLocation}
                     modalLocation={modalLocation}
+                    payState={payState}
                 />
                 <BuyBoxMobile setModalOpen={setModalOpen} />
                 <div className="w-full h-[500px] md:h-[540px] relative xl:px-10">

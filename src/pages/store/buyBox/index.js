@@ -164,17 +164,17 @@ const BuyBox = ({ mobile, setIsModalOpen, isModalOpen, setModalLocation, modalLo
 
     }
 
-    useEffect(() => {
+    // useEffect(() => {
 
-        if(resultPostFactor.data?.data){
-            let Authority = resultPostFactor.data?.data?.trackingCode
-            let body = {
-                Authority,
-                status:'OK'
-            }
-            payStatus({ url: 'PayCash/Verify', body })
-        }
-    }, [resultPostFactor.data?.data]);
+    //     if(resultPostFactor.data?.data){
+    //         let Authority = resultPostFactor.data?.data?.trackingCode
+    //         let body = {
+    //             Authority,
+    //             status:'OK'
+    //         }
+    //         payStatus({ url: 'PayCash/Verify', body })
+    //     }
+    // }, [resultPostFactor.data?.data]);
 
 
 

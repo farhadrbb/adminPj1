@@ -7,6 +7,7 @@ import {
     DeleteOutlined,
     ShoppingCartOutlined,
     CloseOutlined,
+    CloseCircleOutlined,
 } from "@ant-design/icons";
 import BuyBox from "./buyBox";
 import { message, Table } from "antd";
@@ -225,7 +226,8 @@ const Store = () => {
     return (
         <>
             <div
-                className={`w-full h-full relative overflow-x-hidden ${showProfile ? "overflow-y-hidden" : 'overflow-y-auto'}`}
+            id="scroll"
+                className={`w-full h-full relative overflow-x-hidden scroll ${showProfile || ModalOpen ? "overflow-y-hidden" : 'overflow-y-auto'}`}
             >
                 <Header
                     showProfile={showProfile}
@@ -237,9 +239,37 @@ const Store = () => {
                     payState={payState}
                 />
                 <BuyBoxMobile setModalOpen={setModalOpen} />
+
+                {ModalOpen && (<div className={`absolute z-40 top-0 bottom-0 left-0 right-0 bg-black-200 opacity-50`} onClick={() => setModalOpen(false)}></div>)}
+                <div className={`absolute z-50 top-0 left-0 w-full  bg-gray-100 h-full transition-all shadow-2xl ${ModalOpen ? "translate-x-0" : '-translate-x-[500px]'}`}>
+                    <div className='absolute top-2 left-2 text-red-700 cursor-pointer' onClick={() => setModalOpen(false)}><CloseCircleOutlined /></div>
+                    <div className="bg-gray-100 w-full h-full  rounded-[5px]  p-5 mt-5">
+                        {count > 0 && (
+                            <div className="mb-3 w-full flex justify-between">
+                                <div className="text-black">سبد خرید</div>
+                                <div className="text-red-500" onClick={() => setcartModal(true)}>
+                                    <DeleteOutlined />
+                                </div>
+                            </div>
+                        )}
+                        <BuyBox
+                            isModalOpen={isModalOpen}
+                            setIsModalOpen={setIsModalOpen}
+                            setModalLocation={setModalLocation}
+                            modalLocation={modalLocation}
+                            mobile
+                        />
+                    </div>
+                </div>
+
+
+
+
+
+
                 <div className="w-full h-[500px] md:h-[540px] relative xl:px-10">
                     <div className="grid grid-cols-12 gap-x-4 mx-auto w-[95%] mt-10">
-                        <div className="col-span-12 lg:col-span-8 bg-gray-100 rounded-[5px] shadow-lg p-3">
+                        <div className="col-span-12 lg:col-span-8 bg-gray-100 rounded-[5px] shadow-lg px-1 py-3">
                             <TabsCustom data={itemsTabs} />
                         </div>
                         <div className="col-span-4 bg-gray-100 p-5 rounded-[5px] shadow-lg text-black hidden lg:block relative overflow-hidden">
@@ -265,7 +295,7 @@ const Store = () => {
 
 
 
-
+            {/* 
             <ModalCustom isModalOpen={ModalOpen} setIsModalOpen={setModalOpen}>
                 <div className="bg-gray-100 w-full h-full  rounded-[5px]  p-5 mt-5">
                     {count > 0 && (
@@ -284,7 +314,7 @@ const Store = () => {
                         mobile
                     />
                 </div>
-            </ModalCustom>
+            </ModalCustom> */}
 
 
 

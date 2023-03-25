@@ -212,7 +212,7 @@ const BuyBox = ({ mobile, setIsModalOpen, isModalOpen, setModalLocation, modalLo
         return (
             <>
                 {contextHolder}
-                <div className={`px-2 text-black overflow-y-auto ${mobile ? "h-[270px]" : "h-[300px]"}`}>
+                <div className={`px-2 text-black overflow-y-auto ${mobile ? "h-[500px]" : "h-[300px]"}`}>
                     {buy.map((itm, ind) => (
                         <>
                             {itm.count > 0 && (
@@ -242,7 +242,7 @@ const BuyBox = ({ mobile, setIsModalOpen, isModalOpen, setModalLocation, modalLo
                         </>
                     ))}
                 </div>
-                <div className="flex justify-between mb-1 mt-5 text-xs px-3 text-black">
+                <div className="flex justify-between mb-1 mt-5 text-xs px-5 text-black">
                     <div>مالیات کل</div>
                     <div className="flex">
                         <div >{tax}</div>
@@ -256,7 +256,7 @@ const BuyBox = ({ mobile, setIsModalOpen, isModalOpen, setModalLocation, modalLo
                         <div className="text-base font-bold mr-1">{"تومان"}</div>
                     </div>
                 </div>
-                <div className="w-full flex justify-center mt-5 text-cyan-50">کد تخفیف دارید؟</div>
+                <div className="w-full flex justify-center mt-5 mb-2 text-cyan-50">کد تخفیف دارید؟</div>
                 <BtnCustom title={wallet >= sum ? "ثبت سفارش" : "پرداخت آنلاین"} className={wallet >= sum ? "" : "bg-red-600"} clickFn={() => handleAcceptBuy()} />
 
                 <ModalCustom isModalOpen={payModal} setIsModalOpen={setPayModal}>

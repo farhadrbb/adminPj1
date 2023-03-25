@@ -10,11 +10,17 @@ const BuyBoxMobile = ({setModalOpen}) => {
     const count = useSelector(state => state.buyBox.count)
     const sumPrice = useSelector(state => state.buyBox.sumPrice)
 
+    const handleClickBuyBox = ()=>{
+        let el = document.getElementById('scroll')
+        el.scrollTo(0,0)
+        setModalOpen(true)
+    }
+
     return (
         <>
             <div
                 className="fixed bottom-0 left-0 text-black w-full h-[45px]  shadow-xl cursor-pointer  bg-white flex justify-between  items-center px-5 lg:hidden z-50"
-                onClick={() => setModalOpen(true)}
+                onClick={() => handleClickBuyBox()}
                 style={{ boxShadow: '0 0 10px gray' }}
             >
                 <div className="flex items-center">

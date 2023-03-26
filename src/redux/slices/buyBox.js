@@ -11,7 +11,9 @@ const initialState = {
     count:0,
     name:'',
     distance:false,
-    sumPrice:''
+    sumPrice:'',
+    toast:null
+
 
 }
 
@@ -62,10 +64,13 @@ const buyBox = createSlice({
         setSum: (state, action) => {
             state.sumPrice = action.payload
         },
+        setToast: (state, action) => {
+            state.toast = action.payload
+        },
         
 
     }
 })
 
-export const { setBuy, setSelectGroupMenu, setSelectAddress, setSelectShoabFn, deleteBuy,setIsLogin,setCount,setWallet,setName,setDistance,setSum } = buyBox.actions;
+export const { setBuy, setSelectGroupMenu, setSelectAddress, setSelectShoabFn, deleteBuy,setIsLogin,setCount,setWallet,setName,setDistance,setSum ,setToast} = buyBox.actions;
 export default buyBox.reducer;

@@ -22,6 +22,7 @@ import { deleteBuy, setBuy } from "../../redux/slices/buyBox";
 import BtnCustom from "../../component/btn";
 import { useLocation, useNavigate } from "react-router-dom";
 import BuyBoxMobile from "./buyBoxMobile";
+import Toast from "../../component/toast";
 // import SimpleMap from "../../component/googleMap";
 // import SimpleMap from "../../component/googleMap";
 
@@ -229,6 +230,7 @@ const Store = () => {
             id="scroll"
                 className={`w-full h-full relative overflow-x-hidden scroll ${showProfile || ModalOpen ? "overflow-y-hidden" : 'overflow-y-auto'}`}
             >
+                <Toast/>
                 <Header
                     showProfile={showProfile}
                     setshowProfile={setshowProfile}
@@ -241,7 +243,7 @@ const Store = () => {
                 <BuyBoxMobile setModalOpen={setModalOpen} />
 
                 {ModalOpen && (<div className={`absolute z-40 top-0 bottom-0 left-0 right-0 bg-black-200 opacity-50`} onClick={() => setModalOpen(false)}></div>)}
-                <div className={`absolute z-50 top-0 left-0 w-full  bg-gray-100 h-full transition-all shadow-2xl ${ModalOpen ? "translate-x-0" : '-translate-x-[500px]'}`}>
+                <div className={`absolute z-50 top-0 left-0 w-full  bg-gray-100 h-full transition-all shadow-2xl ${ModalOpen ? "translate-x-0" : '-translate-x-[2000px]'}`}>
                     <div className='absolute top-2 left-2 text-red-700 cursor-pointer' onClick={() => setModalOpen(false)}><CloseCircleOutlined /></div>
                     <div className="bg-gray-100 w-full h-full  rounded-[5px]  p-5 mt-5">
                         {count > 0 && (

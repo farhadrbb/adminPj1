@@ -22,11 +22,11 @@ import Input from 'antd/es/input/Input';
 import { useDispatch, useSelector } from 'react-redux';
 import AddressList from './addressList';
 import Loading from '../loading';
-import { deleteBuy, setIsLogin, setName, setSelectShoabFn, setWallet } from '../../redux/slices/buyBox';
+import { deleteBuy, setIsLogin, setName, setSelectShoabFn, setToast, setWallet } from '../../redux/slices/buyBox';
 import { useLazyAuthQuery } from '../../redux/api/auth';
 import SliderShow from './sliderShow';
 
-export const Header = ({ setshowProfile, showProfile, setIsModalOpen, isModalOpen, setModalLocation, modalLocation,payState }) => {
+export const Header = ({ setshowProfile, showProfile, setIsModalOpen, isModalOpen, setModalLocation, modalLocation, payState }) => {
     const [ModalOpen, setModalOpen] = useState(false);
     const [changeShoab, setChangeShoab] = useState(false)
     const [intoRegister, setInfoRegister] = useState({});
@@ -62,7 +62,7 @@ export const Header = ({ setshowProfile, showProfile, setIsModalOpen, isModalOpe
 
     const handleCallApiWallet = async () => {
         const token = await localStorage.getItem("auth");
-        
+
 
         if (token) {
             setTimeout(() => {
@@ -155,6 +155,7 @@ export const Header = ({ setshowProfile, showProfile, setIsModalOpen, isModalOpe
                 type: 'success',
                 content: 'شما لاگین شدید',
             });
+
             dispatch(setIsLogin(true))
             setIsModalOpen(false)
         }
@@ -166,6 +167,10 @@ export const Header = ({ setshowProfile, showProfile, setIsModalOpen, isModalOpe
 
     useEffect(() => {
         getData("Branch/GetAll")
+        dispatch(setToast({
+            type: 'error',
+            title: 'شما لاگین شدید'
+        }))
     }, []);
 
 
